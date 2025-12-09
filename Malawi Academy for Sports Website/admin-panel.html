@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Malawi Academy for Sports</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root {
+    --black: #000000;
+    --red: #d40000;
+    --green: #007a00;
+    --white: #ffffff;
+    --light-gray: #f9f9f9;
+}
+
+body { font-family: 'Poppins', sans-serif; background: var(--light-gray); margin: 0; padding: 20px; }
+
+#uploadForm { 
+    max-width: 500px; 
+    margin: 0 auto 40px; 
+    background: var(--white); 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 3px 15px rgba(0,0,0,0.2); 
+    text-align: center; 
+}
+
+#uploadForm input { 
+    width: 90%; 
+    padding: 10px; 
+    margin: 10px 0; 
+    border-radius: 8px; 
+    border: 1px solid #ccc; 
+}
+
+#uploadForm button { 
+    padding: 10px 20px; 
+    background: var(--green); 
+    color: var(--white); 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+
+#uploadForm button:hover { background: #005500; }
+
+#imagePreview { width: 80%; max-width: 300px; margin: 10px auto; display: none; border-radius: 10px; }
+
+#newsContainer { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+}
+
+.news-card {
+    background: var(--white);
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+}
+
+.news-card img { width: 100%; height: auto; border-radius: 10px 10px 0 0; }
+.news-card h3 { margin: 10px 0 5px; color: var(--black); }
+.news-card p { color: #555; }
+.news-card button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    margin: 5px 5px 0 0;
+}
+.news-card .edit { background: orange; }
+.news-card .save { background: var(--green); display: none; }
+.news-card .delete { background: var(--red); }
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center; margin-bottom:30px;">Admin Panel - Upload News</h1>
+
+<div id="uploadForm">
+  <h2>Upload News</h2>
+  <input type="text" id="newsTitle" placeholder="News Title">
+  <input type="text" id="newsSummary" placeholder="News Summary">
+  <input type="url" id="newsImage" placeholder="Image URL">
+  <img id="imagePreview"><br>
+  <button id="uploadBtn">Upload News</button>
+</div>
+
+<div id="newsContainer"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAjuxh9gE9iQjnEMO6OTJK3ZUqGhSV9Geg",
+  authDomain: "malawisportswebsite-4f960.firebaseapp.com",
+  projectId: "malawisportswebsite-4f960",
+  storageBucket: "malawisportswebsite-4f960.appspot.com",
+  messagingSenderId: "509037310300",
+  appId: "1:509037310300:web:9a010663d162a7aa53d199"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Elements
+const newsTitleInput = document.getElementById("newsTitle");
+const newsSummaryInput = document.getElementById("newsSummary");
+const newsImageInput = document.getElementById("newsImage");
+const imagePreview = document.getElementById("imagePreview");
+const uploadBtn = document.getElementById("uploadBtn");
+const newsContainer = document.getElementById("newsContainer");
+
+// Image preview
+newsImageInput.addEventListener("input", () => {
+  imagePreview.src = newsImageInput.value || "";
+  imagePreview.style.display = newsImageInput.value ? "block" : "none";
+});
+
+// Upload news
+uploadBtn.addEventListener("click", async () => {
+  const title = newsTitleInput.value.trim();
+  const summary = newsSummaryInput.value.trim();
+  const image = newsImageInput.value.trim();
+
+  if(!title || !summary || !image) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
+    newsTitleInput.value = "";
+    newsSummaryInput.value = "";
+    newsImageInput.value = "";
+    imagePreview.style.display = "none";
+    loadNews();
+  } catch(err) {
+    console.error("Error uploading news:", err);
+    alert("Failed to upload news.");
+  }
+});
+
+// Load news
+async function loadNews() {
+  newsContainer.innerHTML = "";
+  const q = query(collection(db, "news"), orderBy("date", "desc"));
+  const snapshot = await getDocs(q);
+
+  snapshot.forEach(docSnap => {
+    const news = docSnap.data();
+    const id = docSnap.id;
+
+    const card = document.createElement("div");
+    card.className = "news-card";
+    card.innerHTML = `
+      <img src="${news.image}">
+      <h3 class="title">${news.title}</h3>
+      <p class="summary">${news.summary}</p>
+    `;
+
+    // Buttons
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit"; editBtn.className = "edit";
+
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "Save"; saveBtn.className = "save";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete"; deleteBtn.className = "delete";
+
+    // Edit functionality
+    editBtn.addEventListener("click", () => {
+      const titleEl = card.querySelector(".title");
+      const summaryEl = card.querySelector(".summary");
+
+      titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; margin:5px 0;">`;
+      summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; height:70px; margin:5px 0;">${news.summary}</textarea>`;
+
+      editBtn.style.display = "none";
+      saveBtn.style.display = "inline-block";
+    });
+
+    // Save functionality
+    saveBtn.addEventListener("click", async () => {
+      const newTitle = card.querySelector(".edit-title").value;
+      const newSummary = card.querySelector(".edit-summary").value;
+
+      await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
+      loadNews();
+    });
+
+    // Delete functionality
+    deleteBtn.addEventListener("click", async () => {
+      if(confirm("Delete this news?")) {
+        await deleteDoc(doc(db, "news", id));
+        loadNews();
+      }
+    });
+
+    card.appendChild(editBtn);
+    card.appendChild(saveBtn);
+    card.appendChild(deleteBtn);
+
+    newsContainer.appendChild(card);
+  });
+}
+
+// Initial load
+loadNews();
+</script>
+</body>
+</html>

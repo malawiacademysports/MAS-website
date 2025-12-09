@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All News | Malawi Academy for Sports</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.news-container { display:flex; flex-wrap:wrap; gap:25px; justify-content:center; margin-top:30px; }
+.news-card { background:#fff; width:320px; border-radius:12px; overflow:hidden; box-shadow:0 3px 15px rgba(0,0,0,0.1); transition:0.3s; }
+.news-card img { width:100%; height:200px; object-fit:cover; }
+.news-card .content { padding:15px; }
+.news-card h3 { margin-bottom:10px; color:#007a00; }
+.news-card p { font-size:0.9em; color:#333; }
+.news-card a { text-decoration:none; color:#d4af37; font-weight:600; }
+.news-card:hover { transform:translateY(-5px); }
+</style>
+</head>
+<body>
+
+<header>
+    <h1 style="text-align:center; padding:20px;">Latest News & Updates</h1>
+</header>
+
+<div id="allNewsContainer" class="news-container">
+    <!-- News cards load dynamically from Firebase -->
+</div>
+
+<script src="firebase.js"></script>
+<script>
+const allNewsContainer = document.getElementById("allNewsContainer");
+
+// Fetch all news from Firebase
+firebase.firestore().collection("news").orderBy("date","desc").get()
+.then(snapshot => {
+    snapshot.forEach(doc => {
+        const news = doc.data();
+        const card = document.createElement("div");
+        card.classList.add("news-card");
+        card.innerHTML = `
+            <img src="${news.image}" alt="${news.title}">
+            <div class="content">
+                <h3>${news.title}</h3>
+                <p>${news.fullText}</p>
+            </div>`;
+        allNewsContainer.appendChild(card);
+    });
+})
+.catch(err => console.error(err));
+</script>
+
+</body>
+</html>
