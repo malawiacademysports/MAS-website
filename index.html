@@ -186,6 +186,42 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     .navbar a { font-size: 0.9rem; padding: 6px 8px; }
     .search-form input[type="text"] { width: 180px; }
 }
+
+/* ===============================
+   PROFILE IMAGES – COACHES / STAFF / ACHIEVERS
+================================ */
+
+/* Mobile (small) */
+.coach-card img,
+.staff-card img,
+.achiever-card img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Tablet (medium) */
+@media (min-width: 768px) {
+    .coach-card img,
+    .staff-card img,
+    .achiever-card img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* PC (medium, visible and balanced) */
+@media (min-width: 1024px) {
+    .coach-card img,
+    .staff-card img,
+    .achiever-card img {
+        width: 135px;
+        height: 135px;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -1116,6 +1152,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
