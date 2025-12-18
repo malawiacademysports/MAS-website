@@ -823,6 +823,9 @@ const firebaseConfig = {
             <label for="full_name">Full Name *</label>
             <input type="text" name="Full Name" id="full_name" placeholder="Enter full name" required>
 
+            <label for="email">Athlete Email *</label>
+            <input type="email" name="Athlete Email" id="email" placeholder="Enter email" required>
+
             <label for="dob">Date of Birth *</label>
             <input type="date" name="Date of Birth" id="dob" required>
 
@@ -859,24 +862,27 @@ const firebaseConfig = {
             <label for="medical">Medical Information / Allergies</label>
             <textarea name="Medical Information" id="medical" placeholder="Specify any medical conditions or allergies"></textarea>
 
+            <!-- Emergency Contact -->
             <label for="emergency_name">Emergency Contact Name *</label>
             <input type="text" name="Emergency Contact Name" id="emergency_name" placeholder="Enter name" required>
 
             <label for="emergency_phone">Emergency Contact Phone *</label>
-            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="+265 ..." required>
+            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
+                   pattern="(\+265|265|0)\d{8,9}" required>
+
+            <label for="emergency_email">Emergency Contact Email *</label>
+            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email" required>
 
             <!-- Parental Consent -->
             <label for="parent_name">Parent/Guardian Full Name *</label>
             <input type="text" name="Parent/Guardian Full Name" id="parent_name" placeholder="Enter name" required>
 
             <label for="parent_phone">Parent/Guardian Phone Number *</label>
-            <input type="tel"
-                   name="Parent/Guardian Phone Number"
-                   id="parent_phone"
-                   value="+265 "
-                   pattern="\+265[0-9]{9}"
-                   placeholder="+265 999000000"
-                   required>
+            <input type="tel" name="Parent/Guardian Phone Number" id="parent_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
+                   pattern="(\+265|265|0)\d{8,9}" required>
+
+            <label for="parent_email">Parent/Guardian Email *</label>
+            <input type="email" name="Parent/Guardian Email" id="parent_email" placeholder="Enter email" required>
 
             <label>Parental Consent *</label>
             <p style="font-size:14px; background:#f0f0f0; padding:10px; border-radius:5px;">
@@ -1152,6 +1158,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
