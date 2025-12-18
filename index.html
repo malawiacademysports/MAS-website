@@ -801,6 +801,7 @@ const firebaseConfig = {
         </div>
     </div>
 </section>
+
 <!-- ---------- ATHLETE REGISTRATION ---------- -->
 <section id="register">
     <h1>Athlete Registration Forms</h1>
@@ -813,18 +814,22 @@ const firebaseConfig = {
         <!-- Form -->
         <form action="https://formsubmit.co/rsdocentre@gmail.com" method="POST">
 
-            <!-- FormSubmit Settings -->
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_subject" value="New Athlete Registration Form Submitted">
-            <input type="hidden" name="_autoresponse" value="Thank you for registering! Your form has been received.">
+           <!-- FormSubmit Settings -->
+           <input type="hidden" name="_captcha" value="false">
+           <input type="hidden" name="_template" value="table">
+           <input type="hidden" name="_subject" value="New Athlete Registration Form Submitted">
+            <input type="hidden" name="_autoresponse" 
+            value="Thank you for registering with Malawi Academy for Sports! We are excited to have your child join our programs. Our team will review your submission and contact you if needed. Stay active and keep striving for excellence!">
+
 
             <!-- Athlete Details -->
             <label for="full_name">Full Name *</label>
             <input type="text" name="Full Name" id="full_name" placeholder="Enter full name" required>
 
-            <label for="email">Athlete Email *</label>
-            <input type="email" name="Athlete Email" id="email" placeholder="Enter email" required>
+            <label for="athlete_phone">Athlete Phone Number *</label>
+            <input type="tel" name="Athlete Phone Number" id="athlete_phone" 
+                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                   pattern="(\+265|265|0)\d{8,9}" required>
 
             <label for="dob">Date of Birth *</label>
             <input type="date" name="Date of Birth" id="dob" required>
@@ -866,6 +871,13 @@ const firebaseConfig = {
             <label for="emergency_name">Emergency Contact Name *</label>
             <input type="text" name="Emergency Contact Name" id="emergency_name" placeholder="Enter name" required>
 
+            <label for="emergency_phone">Emergency Contact Phone *</label>
+            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" 
+                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                   pattern="(\+265|265|0)\d{8,9}" required>
+
+            <label for="emergency_email">Emergency Contact Email (optional)</label>
+            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email">
             <label for="emergency_phone">Emergency Contact Phone *</label>
             <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
                    pattern="(\+265|265|0)\d{8,9}" required>
@@ -1158,6 +1170,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
