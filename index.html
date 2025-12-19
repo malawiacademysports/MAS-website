@@ -222,6 +222,20 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         height: 200px;
     }
 }
+
+/* ===============================
+   GALLERY IMAGE ZOOM ON HOVER
+================================ */
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease; /* smooth zoom */
+    cursor: pointer;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.1); /* zoom effect */
+}
 </style> 
 </head>
 <body>
@@ -1191,6 +1205,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
