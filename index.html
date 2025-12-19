@@ -321,205 +321,161 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         <div class="sport-card"><h2>Taekwondo</h2></div>
     </div>
 </section>
-<!-- ---------- LATEST NEWS & UPDATES ---------- -->
-<section id="news" class="news-section" style="padding:50px 20px; background:#f9f9f9;">
-  <div class="container" style="max-width:1200px; margin:0 auto;">
-    
-    <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
-      ★ Latest News & Updates
-    </h2>
-<section id="newsSection">
-  <!-- ---------- ADMIN LOGIN ---------- -->
-  <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
-    <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
-           style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
-    <button id="adminLoginBtn"
-            style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
-      Login as Admin
-    </button>
-  </div>
-
-  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
-  <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
-    <h3>Upload News (Admin Only)</h3>
-
-    <input type="text" id="newsTitle" placeholder="News Title"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="text" id="newsSummary" placeholder="News Summary"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="url" id="newsImage" placeholder="Image URL"
-           style="padding:8px; margin:5px; width:250px;">
-
-    <!-- IMAGE PREVIEW -->
-    <br>
-    <img id="imagePreview" style="display:none; width:230px; margin-top:10px; border-radius:10px;">
-    <br>
-    <button id="uploadBtn"
-            style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
-      Upload News
-    </button>
-  </div>
-
-  <!-- ---------- NEWS DISPLAY AREA ---------- -->
-  <div id="newsContainer"
-       style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
-  </div>
-</section>
-
-<!-- ---------- FIREBASE SDK (MODULAR 12.6.0) ---------- -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } 
+  from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-  // ---------- FIREBASE CONFIG ----------
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyAjuxh9gE9iQjnEMO6OTJK3ZUqGhSV9Geg",
-  authDomain: "malawisportswebsite-4f960.firebaseapp.com",
-  projectId: "malawisportswebsite-4f960",
-  storageBucket: "malawisportswebsite-4f960.firebasestorage.app",
-  messagingSenderId: "509037310300",
-  appId: "1:509037310300:web:9a010663d162a7aa53d199",
-  measurementId: "G-FZTWVF8JTL"
+  apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
+  authDomain: "malawiacademysports.firebaseapp.com",
+  projectId: "malawiacademysports",
+  storageBucket: "malawiacademysports.firebasestorage.app",
+  messagingSenderId: "565646076684",
+  appId: "1:565646076684:web:74e8c2a955d02ba8a2b729",
+  measurementId: "G-FZZCL5Z7ZF"
 };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
-  // ---------- VARIABLES ----------
-  const adminPassword = "Tblwat0921";
-  const adminLoginBtn = document.getElementById("adminLoginBtn");
-  const adminPasswordInput = document.getElementById("adminPasswordInput");
-  const uploadForm = document.getElementById("uploadForm");
-  const uploadBtn = document.getElementById("uploadBtn");
-  const newsContainer = document.getElementById("newsContainer");
-  const adminLoginDiv = document.getElementById("adminLogin");
-  const newsImageInput = document.getElementById("newsImage");
-  const imagePreview = document.getElementById("imagePreview");
+// ---------- VARIABLES ----------
+const adminPassword = "Tblwat0921";
+const adminLoginBtn = document.getElementById("adminLoginBtn");
+const adminPasswordInput = document.getElementById("adminPasswordInput");
+const uploadForm = document.getElementById("uploadForm");
+const uploadBtn = document.getElementById("uploadBtn");
+const newsContainer = document.getElementById("newsContainer");
+const adminLoginDiv = document.getElementById("adminLogin");
+const newsImageInput = document.getElementById("newsImage");
+const imagePreview = document.getElementById("imagePreview");
 
-  // ---------- IMAGE PREVIEW ----------
-  newsImageInput.addEventListener("input", () => {
-    imagePreview.src = newsImageInput.value || "";
-    imagePreview.style.display = newsImageInput.value ? "block" : "none";
-  });
+// ---------- IMAGE PREVIEW ----------
+newsImageInput.addEventListener("input", () => {
+  imagePreview.src = newsImageInput.value || "";
+  imagePreview.style.display = newsImageInput.value ? "block" : "none";
+});
 
-  // ---------- ADMIN LOGIN ----------
-  adminLoginBtn.addEventListener("click", () => {
-    if(adminPasswordInput.value === adminPassword) {
-      uploadForm.style.display = "block";
-      adminLoginDiv.style.display = "none";
-      alert("Admin login successful!");
-      loadNews();
-    } else {
-      alert("Incorrect password!");
-    }
-  });
+// ---------- ADMIN LOGIN ----------
+adminLoginBtn.addEventListener("click", () => {
+  if(adminPasswordInput.value === adminPassword) {
+    uploadForm.style.display = "block";
+    adminLoginDiv.style.display = "none";
+    alert("Admin login successful!");
+    loadNews();
+  } else {
+    alert("Incorrect password!");
+  }
+});
 
-  // ---------- UPLOAD NEWS ----------
-  uploadBtn.addEventListener("click", async () => {
-    const title = document.getElementById("newsTitle").value.trim();
-    const summary = document.getElementById("newsSummary").value.trim();
-    const image = newsImageInput.value.trim();
+// ---------- UPLOAD NEWS ----------
+uploadBtn.addEventListener("click", async () => {
+  const title = document.getElementById("newsTitle").value.trim();
+  const summary = document.getElementById("newsSummary").value.trim();
+  const image = newsImageInput.value.trim();
 
-    if(!title || !summary || !image) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  if(!title || !summary || !image) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-    try {
-      await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
-      alert("News uploaded successfully!");
-      document.getElementById("newsTitle").value = "";
-      document.getElementById("newsSummary").value = "";
-      newsImageInput.value = "";
-      imagePreview.style.display = "none";
-      loadNews();
-    } catch(err) {
-      console.error("Error uploading news:", err);
-      alert("Failed to upload news.");
-    }
-  });
+  try {
+    await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
+    alert("News uploaded successfully!");
+    document.getElementById("newsTitle").value = "";
+    document.getElementById("newsSummary").value = "";
+    newsImageInput.value = "";
+    imagePreview.style.display = "none";
+    loadNews();
+  } catch(err) {
+    console.error("Error uploading news:", err);
+    alert("Failed to upload news.");
+  }
+});
 
-  // ---------- LOAD NEWS + EDIT + DELETE ----------
-  async function loadNews() {
-    newsContainer.innerHTML = "";
-    const q = query(collection(db, "news"), orderBy("date", "desc"));
-    const snapshot = await getDocs(q);
+// ---------- LOAD NEWS + EDIT + DELETE ----------
+async function loadNews() {
+  newsContainer.innerHTML = "";
+  const q = query(collection(db, "news"), orderBy("date", "desc"));
+  const snapshot = await getDocs(q);
 
-    snapshot.forEach(docSnap => {
-      const news = docSnap.data();
-      const id = docSnap.id;
+  snapshot.forEach(docSnap => {
+    const news = docSnap.data();
+    const id = docSnap.id;
 
-      const card = document.createElement("div");
-      card.style.width = "300px";
-      card.style.background = "#fff";
-      card.style.borderRadius = "10px";
-      card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-      card.style.paddingBottom = "15px";
-      card.style.marginBottom = "20px";
+    const card = document.createElement("div");
+    card.style.width = "300px";
+    card.style.background = "#fff";
+    card.style.borderRadius = "10px";
+    card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+    card.style.paddingBottom = "15px";
+    card.style.marginBottom = "20px";
 
-      card.innerHTML = `
-        <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
-        <div style="padding:15px;">
-          <h3 class="title">${news.title}</h3>
-          <p class="summary">${news.summary}</p>
-        </div>
-      `;
+    card.innerHTML = `
+      <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
+      <div style="padding:15px;">
+        <h3 class="title">${news.title}</h3>
+        <p class="summary">${news.summary}</p>
+      </div>
+    `;
 
-      if(adminLoginDiv.style.display === "none") {
-        const editBtn = createButton("Edit", "orange");
-        const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
-        const deleteBtn = createButton("Delete", "red");
+    if(adminLoginDiv.style.display === "none") {
+      const editBtn = createButton("Edit", "orange");
+      const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
+      const deleteBtn = createButton("Delete", "red");
 
-        editBtn.addEventListener("click", () => {
-          const titleEl = card.querySelector(".title");
-          const summaryEl = card.querySelector(".summary");
-          titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
-          summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
-          editBtn.style.display = "none";
-          saveBtn.style.display = "inline-block";
-        });
+      editBtn.addEventListener("click", () => {
+        const titleEl = card.querySelector(".title");
+        const summaryEl = card.querySelector(".summary");
+        titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
+        summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
+        editBtn.style.display = "none";
+        saveBtn.style.display = "inline-block";
+      });
 
-        saveBtn.addEventListener("click", async () => {
-          const newTitle = card.querySelector(".edit-title").value;
-          const newSummary = card.querySelector(".edit-summary").value;
-          await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
-          alert("News updated!");
+      saveBtn.addEventListener("click", async () => {
+        const newTitle = card.querySelector(".edit-title").value;
+        const newSummary = card.querySelector(".edit-summary").value;
+        await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
+        alert("News updated!");
+        loadNews();
+      });
+
+      deleteBtn.addEventListener("click", async () => {
+        if(confirm("Delete this news?")) {
+          await deleteDoc(doc(db, "news", id));
           loadNews();
-        });
+        }
+      });
 
-        deleteBtn.addEventListener("click", async () => {
-          if(confirm("Delete this news?")) {
-            await deleteDoc(doc(db, "news", id));
-            loadNews();
-          }
-        });
+      card.appendChild(editBtn);
+      card.appendChild(saveBtn);
+      card.appendChild(deleteBtn);
+    }
 
-        card.appendChild(editBtn);
-        card.appendChild(saveBtn);
-        card.appendChild(deleteBtn);
-      }
+    newsContainer.appendChild(card);
+  });
+}
 
-      newsContainer.appendChild(card);
-    });
-  }
+function createButton(text, color) {
+  const btn = document.createElement("button");
+  btn.textContent = text;
+  btn.style.margin = "5px";
+  btn.style.padding = "6px 12px";
+  btn.style.background = color;
+  btn.style.color = "white";
+  btn.style.border = "none";
+  btn.style.borderRadius = "5px";
+  btn.style.cursor = "pointer";
+  return btn;
+}
 
-  function createButton(text, color) {
-    const btn = document.createElement("button");
-    btn.textContent = text;
-    btn.style.margin = "5px";
-    btn.style.padding = "6px 12px";
-    btn.style.background = color;
-    btn.style.color = "white";
-    btn.style.border = "none";
-    btn.style.borderRadius = "5px";
-    btn.style.cursor = "pointer";
-    return btn;
-  }
-
-  // ---------- INITIAL LOAD ----------
-  loadNews(); // Shows news preview for public users
+// ---------- INITIAL LOAD ----------
+loadNews(); // Shows news preview for public users
 </script>
 
  </section>  
@@ -1193,6 +1149,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
