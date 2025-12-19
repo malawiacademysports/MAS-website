@@ -222,19 +222,38 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         height: 200px;
     }
 }
-
 /* ===============================
-   GALLERY IMAGE ZOOM ON HOVER
+   GALLERY IMAGES – RESPONSIVE & ZOOM
 ================================ */
+
+/* Mobile (small screens) */
 .gallery-item img {
     width: 100%;
+    max-width: 180px;  /* small-medium size for mobile */
     height: auto;
     transition: transform 0.3s ease; /* smooth zoom */
     cursor: pointer;
+    display: block;
+    margin: 0 auto 15px; /* center and spacing */
 }
 
-.gallery-item img:hover {
-    transform: scale(1.1); /* zoom effect */
+/* Tablet (medium screens) */
+@media (min-width: 768px) {
+    .gallery-item img {
+        max-width: 220px;  /* slightly bigger */
+    }
+}
+
+/* PC (large screens) */
+@media (min-width: 1024px) {
+    .gallery-item img {
+        max-width: 250px;  /* medium-large, visible on PC */
+    }
+
+    /* Hover zoom effect on PC */
+    .gallery-item img:hover {
+        transform: scale(1.1); /* zooms image to 110% */
+    }
 }
 </style> 
 </head>
@@ -1205,6 +1224,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
