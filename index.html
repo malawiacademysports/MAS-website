@@ -223,38 +223,41 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     }
 }
 /* ===============================
-   GALLERY IMAGES – RESPONSIVE & ZOOM
+   GALLERY – MEDIUM PC SIZE
 ================================ */
 
-/* Mobile (small screens) */
+.gallery-item {
+    overflow: hidden;
+}
+
+/* Mobile */
 .gallery-item img {
     width: 100%;
-    max-width: 180px;  /* small-medium size for mobile */
+    max-width: 200px;   /* small–medium */
     height: auto;
-    transition: transform 0.3s ease; /* smooth zoom */
-    cursor: pointer;
     display: block;
-    margin: 0 auto 15px; /* center and spacing */
+    margin: 0 auto 16px;
+    transition: transform 0.3s ease;
 }
 
-/* Tablet (medium screens) */
+/* Tablet */
 @media (min-width: 768px) {
     .gallery-item img {
-        max-width: 220px;  /* slightly bigger */
+        max-width: 240px;  /* medium */
     }
 }
 
-/* PC (large screens) */
+/* PC */
 @media (min-width: 1024px) {
     .gallery-item img {
-        max-width: 250px;  /* medium-large, visible on PC */
+        max-width: 280px;  /* ✅ perfect medium size */
     }
 
-    /* Hover zoom effect on PC */
     .gallery-item img:hover {
-        transform: scale(1.1); /* zooms image to 110% */
+        transform: scale(1.08); /* gentle zoom */
     }
 }
+
 </style> 
 </head>
 <body>
@@ -1224,6 +1227,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
