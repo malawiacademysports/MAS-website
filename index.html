@@ -222,41 +222,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         height: 200px;
     }
 }
-/* ===============================
-   GALLERY – MEDIUM PC SIZE
-================================ */
-
-.gallery-item {
-    overflow: hidden;
-}
-
-/* Mobile */
-.gallery-item img {
-    width: 100%;
-    max-width: 200px;   /* small–medium */
-    height: auto;
-    display: block;
-    margin: 0 auto 16px;
-    transition: transform 0.3s ease;
-}
-
-/* Tablet */
-@media (min-width: 768px) {
-    .gallery-item img {
-        max-width: 240px;  /* medium */
-    }
-}
-
-/* PC */
-@media (min-width: 1024px) {
-    .gallery-item img {
-        max-width: 280px;  /* ✅ perfect medium size */
-    }
-
-    .gallery-item img:hover {
-        transform: scale(1.08); /* gentle zoom */
-    }
-}
 
 </style> 
 </head>
@@ -1227,6 +1192,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
