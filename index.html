@@ -187,6 +187,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     .search-form input[type="text"] { width: 180px; }
 }
 
+
 /* ===============================
    PROFILE IMAGES – COACHES / STAFF / ACHIEVERS
 ================================ */
@@ -195,38 +196,37 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 .coach-card img,
 .staff-card img,
 .achiever-card img {
-    width: 110px;
-    height: 110px;
+    width: 120px;   /* increased */
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
-/* Tablet (larger) */
+/* Tablet (medium) */
 @media (min-width: 768px) {
     .coach-card img,
     .staff-card img,
     .achiever-card img {
-        width: 150px;
-        height: 150px;
+        width: 165px;   /* increased */
+        height: 165px;
     }
 }
 
-/* PC (large and visible) */
+/* PC (medium–large, clean look) */
 @media (min-width: 1024px) {
     .coach-card img,
     .staff-card img,
     .achiever-card img {
-        width: 180px;
-        height: 180px;
+        width: 200px;   /* increased slightly */
+        height: 200px;
     }
 }
-
-</style>
+</style> 
 </head>
 <body>
 
-<!-- HEADER -->
+    <!-- HEADER -->
 <header>
     <div class="logo">
         <div class="logo-text">
@@ -696,12 +696,7 @@ const firebaseConfig = {
 <!-- ---------- GALLERY ---------- -->
 <section id="gallery">
     <h1>Gallery of Young Athletes</h1>
-    <div class="gallery-grid"><div class="gallery-item">
-    <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Malawi%20Academy%20for%20Sports.jpg" alt="Basketball">
-    <div class="overlay">Basketball</div>
-    </div>
-
-        <div class="gallery-item">
+       <div class="gallery-item">
             <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250910112442.jpg" alt="Football">
             <div class="overlay">Football</div>
         </div>
@@ -1170,6 +1165,7 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
