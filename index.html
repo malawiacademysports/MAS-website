@@ -321,7 +321,51 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         <div class="sport-card"><h2>Taekwondo</h2></div>
     </div>
 </section>
-<script type="module">
+<!-- ---------- LATEST NEWS & UPDATES ---------- -->
+<section id="news" class="news-section" style="padding:50px 20px; background:#f9f9f9;">
+  <div class="container" style="max-width:1200px; margin:0 auto;">
+    
+    <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
+      ★ Latest News & Updates
+    </h2>
+<section id="newsSection">
+  <!-- ---------- ADMIN LOGIN ---------- -->
+  <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
+    <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
+           style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
+    <button id="adminLoginBtn"
+            style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
+      Login as Admin
+    </button>
+  </div>
+
+  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
+  <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
+    <h3>Upload News (Admin Only)</h3>
+
+    <input type="text" id="newsTitle" placeholder="News Title"
+           style="padding:8px; margin:5px; width:250px;">
+    <input type="text" id="newsSummary" placeholder="News Summary"
+           style="padding:8px; margin:5px; width:250px;">
+    <input type="url" id="newsImage" placeholder="Image URL"
+           style="padding:8px; margin:5px; width:250px;">
+
+    <!-- IMAGE PREVIEW -->
+    <br>
+    <img id="imagePreview" style="display:none; width:230px; margin-top:10px; border-radius:10px;">
+    <br>
+    <button id="uploadBtn"
+            style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
+      Upload News
+    </button>
+  </div>
+
+  <!-- ---------- NEWS DISPLAY AREA ---------- -->
+  <div id="newsContainer"
+       style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+  </div>
+</section>
+    <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } 
@@ -1149,6 +1193,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
