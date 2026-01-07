@@ -100,19 +100,36 @@ header .logo-text .council {
     background-color: #222;
     border-radius: 5px;
 }
-/* ---------- STICKY NAVBAR + MOBILE PADDING ---------- */
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* ---------- HAMBURGER BUTTON ---------- */
+.menu-toggle {
+    display: none; /* hidden on desktop */
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--white);
 }
 
+/* ---------- MOBILE STYLES ---------- */
 @media (max-width: 768px) {
-    body {
-        
-padding-top: 130px; /* Prevent content hiding behind navbar on mobile */
-
+    .menu-toggle {
+        display: block; /* show hamburger */
     }
+
+    .navbar {
+        display: none; /* hide navbar initially */
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 0;
+        padding: 10px 0;
+    }
+
+    .navbar.active {
+        display: flex; /* show when hamburger clicked */
+    }
+
+    body {
+        padding-top: 0; /* no extra padding needed */
+    }
+              
 }
 
 /* ---------- SEARCH FORM ---------- */
@@ -1237,6 +1254,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
