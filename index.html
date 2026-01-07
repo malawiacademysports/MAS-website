@@ -665,14 +665,16 @@ loadNews(); // Shows news preview for public users
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
-  
+ </div>
 <section id="staff-management" style="text-align:center; padding:50px 20px; background:#f9f9f9;">
     <h1>All Staff Management – Kamuzu Institute for Sports</h1>
-    <div class="staff-group" style="max-width:1000px; margin:auto; text-align:center;">
+
+    <div class="staff-group" style="max-width:1000px; margin:auto;">
         <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/IMG-20251206-WA0006.jpg"
              alt="All Staff Management - Kamuzu Institute for Sports"
-             style="max-width:100%; height:auto; object-fit:contain; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
-        <p style="margin-top:15px; font-size:16px; color:#333; max-width:800px; margin-left:auto; margin-right:auto; line-height:1.6;">
+             style="width:60%; height:auto; object-fit:contain; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+
+        <p style="margin-top:15px; font-size:16px; color:#333;">
             This photo shows the full management team of the Kamuzu Institute for Sports.
         </p>
     </div>
@@ -681,18 +683,18 @@ loadNews(); // Shows news preview for public users
 /* Staff Grid */
 .coach-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     padding: 20px 0;
 }
 
-/* Individual Staff Card */
+/* Individual Staff Card with rounded box */
 .coach-card {
     text-align: center;
     background: #fff;
-    border-radius: 25px;
+    border-radius: 25px;               /* Rounded box */
     padding: 20px 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Premium shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -701,35 +703,20 @@ loadNews(); // Shows news preview for public users
     box-shadow: 0 16px 30px rgba(0,0,0,0.2);
 }
 
-/* Staff Images - Responsive */
+/* High-quality square images with rounded corners */
 .modern-img {
-    width: 100%;
-    max-width: 260px;
-    aspect-ratio: 1 / 1; /* Keeps square shape */
-    object-fit: cover;
-    border-radius: 20px;
-    margin: 0 auto 15px;
+    width: 260px;          /* Square width */
+    height: 260px;         /* Square height */
+    object-fit: cover;     
+    border-radius: 20px;   /* Rounded-square effect */
+    margin: 0 auto 15px;   
     display: block;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Slight shadow on image */
     transition: transform 0.3s ease;
 }
 
 .coach-card:hover .modern-img {
-    transform: scale(1.05);
-}
-
-/* Responsive text inside staff card */
-.coach-card h3 {
-    margin: 10px 0 5px;
-    font-size: 18px;
-    color: #111;
-}
-
-.coach-card p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-    line-height:1.5;
+    transform: scale(1.05); /* Slight zoom effect on hover */
 }
 </style>
 
@@ -1231,6 +1218,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
