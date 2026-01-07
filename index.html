@@ -100,9 +100,24 @@ header .logo-text .council {
     background-color: #222;
     border-radius: 5px;
 }
+/* ---------- STICKY NAVBAR + MOBILE PADDING ---------- */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    body {
+        
+padding-top: 130px; /* Prevent content hiding behind navbar on mobile */
+
+    }
+}
 
 /* ---------- SEARCH FORM ---------- */
-.search-form {
+
+        .search-form {
     display: flex;
     justify-content: center;
     margin: 20px auto;
@@ -1222,6 +1237,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
