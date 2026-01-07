@@ -108,28 +108,31 @@ header .logo-text .council {
     color: var(--white);
 }
 
-/* ---------- MOBILE STYLES ---------- */
+/* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
     .menu-toggle {
-        display: block; /* show hamburger */
+        display: block; /* show hamburger on mobile */
     }
 
     .navbar {
-        display: none; /* hide navbar initially */
+        display: none; /* hide navbar initially on mobile */
         flex-direction: column;
+        width: 100%;
         gap: 10px;
         margin-left: 0;
         padding: 10px 0;
+        border-radius: 0 0 10px 10px;
     }
 
     .navbar.active {
-        display: flex; /* show when hamburger clicked */
+        display: flex; /* show navbar when hamburger clicked */
     }
 
-    body {
-        padding-top: 0; /* no extra padding needed */
+    header {
+   
+    justify-content: space-between; /* keep hamburger right */
+  
     }
-              
 }
 
 /* ---------- SEARCH FORM ---------- */
@@ -1258,6 +1261,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
