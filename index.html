@@ -1256,14 +1256,24 @@ loadNews(); // Shows news preview for public users
         All Rights Reserved © 2025
     </span>
 </footer>
+<script>
+function toggleMenu() {
+    const navbar = document.querySelector('.navbar');
+    const toggleIcon = document.querySelector('.menu-toggle i');
 
-<!-- IMAGE PREVIEW ELEMENT (place inside your Upload Form area) -->
-<img id="imagePreview" 
-     style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
-     
+    navbar.classList.toggle('active');
 
-
-
+    if (navbar.classList.contains('active')) {
+        toggleIcon.classList.remove('fa-bars');
+        toggleIcon.classList.add('fa-xmark');
+    } else {
+        toggleIcon.classList.remove('fa-xmark');
+        toggleIcon.classList.add('fa-bars');
+    }
+}
+</script>
+</body>
+</html>
 
 
 
