@@ -665,7 +665,7 @@ loadNews(); // Shows news preview for public users
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
- </div>
+
 <section id="staff-management">
     <h1>All Staff Management – Kamuzu Institute for Sports</h1>
 
@@ -678,11 +678,8 @@ loadNews(); // Shows news preview for public users
             This photo shows the full management team of the Kamuzu Institute for Sports.
         </p>
     </div>
-</section>
-
 <style>
-/* Section styling */
-#staff-management {
+    #staff-management {
     text-align: center;
     padding: 50px 20px;
     background: #f9f9f9;
@@ -693,16 +690,15 @@ loadNews(); // Shows news preview for public users
     font-size: 32px;
 }
 
-/* Staff group container */
+/* ===== Staff Group ===== */
 .staff-group {
-    max-width: 1200px;  /* Wider container for PCs */
+    max-width: 1200px;
     margin: auto;
 }
 
-/* Staff photo styling */
 .staff-photo {
-    width: 70%;           /* Medium-large size on PC */
-    max-width: 900px;     /* Never too large */
+    width: 70%;
+    max-width: 900px;
     height: auto;
     object-fit: contain;
     border-radius: 10px;
@@ -711,10 +707,9 @@ loadNews(); // Shows news preview for public users
 }
 
 .staff-photo:hover {
-    transform: scale(1.03); /* Slight zoom effect */
+    transform: scale(1.03);
 }
 
-/* Paragraph styling */
 .staff-group p {
     margin-top: 20px;
     font-size: 16px;
@@ -725,24 +720,7 @@ loadNews(); // Shows news preview for public users
     line-height: 1.6;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .staff-photo {
-        width: 80%; /* Slightly smaller on smaller PCs/laptops */
-    }
-}
-
-@media (max-width: 768px) {
-    .staff-photo {
-        width: 95%; /* Almost full width on tablets and phones */
-    }
-    #staff-management h1 {
-        font-size: 28px; /* Slightly smaller heading */
-    }
-}
-</style>
-
-/* Staff Grid */
+/* ===== Staff Grid ===== */
 .coach-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -750,13 +728,13 @@ loadNews(); // Shows news preview for public users
     padding: 20px 0;
 }
 
-/* Individual Staff Card with rounded box */
+/* ===== Individual Staff Card ===== */
 .coach-card {
     text-align: center;
     background: #fff;
-    border-radius: 25px;               /* Rounded box */
+    border-radius: 25px;
     padding: 20px 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Premium shadow */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -765,20 +743,36 @@ loadNews(); // Shows news preview for public users
     box-shadow: 0 16px 30px rgba(0,0,0,0.2);
 }
 
-/* High-quality square images with rounded corners */
+/* ===== Staff Images ===== */
 .modern-img {
-    width: 260px;          /* Square width */
-    height: 260px;         /* Square height */
-    object-fit: cover;     
-    border-radius: 20px;   /* Rounded-square effect */
-    margin: 0 auto 15px;   
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 0 auto 15px;
     display: block;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Slight shadow on image */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
 }
 
 .coach-card:hover .modern-img {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.05);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    .staff-photo {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .staff-photo {
+        width: 95%;
+    }
+    #staff-management h1 {
+        font-size: 28px;
+    }
 }
 </style>
 
@@ -1280,6 +1274,7 @@ loadNews(); // Shows news preview for public users
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
