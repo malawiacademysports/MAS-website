@@ -365,7 +365,8 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   <div class="container" style="max-width:1200px; margin:0 auto;">
     
     <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
-      ★ Latest News & Updates
+      
+    ★ Latest News & Updates
     </h2>
 <section id="newsSection">
   <!-- ---------- ADMIN LOGIN ---------- -->
@@ -491,6 +492,7 @@ async function loadNews() {
     const id = docSnap.id;
 
     const card = document.createElement("div");
+    card.className = "news-card"; // ✅ Required for days ago
     card.style.width = "300px";
     card.style.background = "#fff";
     card.style.borderRadius = "10px";
@@ -498,14 +500,24 @@ async function loadNews() {
     card.style.paddingBottom = "15px";
     card.style.marginBottom = "20px";
 
+    // ---------- DATE SAFE HANDLING ----------
+    let formattedDate = "";
+    if (news.date && news.date.toDate) {
+      formattedDate = news.date.toDate().toISOString().split("T")[0];
+    }
+
     card.innerHTML = `
       <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
       <div style="padding:15px;">
         <h3 class="title">${news.title}</h3>
+        <p class="news-date" data-date="${formattedDate}" style="font-size:13px; color:#777;">
+          ${formattedDate}
+        </p>
         <p class="summary">${news.summary}</p>
       </div>
     `;
 
+    // ---------- ADMIN CONTROLS ----------
     if(adminLoginDiv.style.display === "none") {
       const editBtn = createButton("Edit", "orange");
       const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
@@ -542,8 +554,11 @@ async function loadNews() {
 
     newsContainer.appendChild(card);
   });
+
+  applyDaysAgo(); // run days-ago logic after loading
 }
 
+// ---------- BUTTON CREATOR ----------
 function createButton(text, color) {
   const btn = document.createElement("button");
   btn.textContent = text;
@@ -557,11 +572,44 @@ function createButton(text, color) {
   return btn;
 }
 
-// ---------- INITIAL LOAD ----------
-loadNews(); // Shows news preview for public users
-</script>
+// ---------- DAYS AGO FUNCTION ----------
+function applyDaysAgo() {
+  const HIDE_AFTER_DAYS = 3;
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
- </section>  
+  document.querySelectorAll(".news-date").forEach(dateElem => {
+    const rawDate = dateElem.dataset.date;
+    if (!rawDate) return;
+
+    const newsDate = new Date(rawDate);
+    newsDate.setHours(0,0,0,0);
+
+    const diffDays = Math.floor((today - newsDate) / (1000 * 60 * 60 * 24));
+
+    let label = dateElem.querySelector(".days-ago");
+    if (!label) {
+      label = document.createElement("span");
+      label.className = "days-ago";
+      label.style.marginLeft = "6px";
+      label.style.color = "#555";
+      dateElem.appendChild(label);
+    }
+
+    if (diffDays === 0) label.textContent = "(Today)";
+    else if (diffDays === 1) label.textContent = "(1 day ago)";
+    else label.textContent = `(${diffDays} days ago)`;
+
+    if (diffDays > HIDE_AFTER_DAYS) {
+      const card = dateElem.closest(".news-card");
+      if (card) card.style.display = "none";
+    }
+  });
+}
+
+// ---------- INITIAL LOAD ----------
+loadNews();
+</script>
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
     <h1>Meet Our Coaches</h1>
@@ -1271,6 +1319,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
