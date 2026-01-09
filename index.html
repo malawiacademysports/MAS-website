@@ -374,20 +374,12 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
          style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
   <button id="adminLoginBtn"
-          style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
-    Login as Admin
-  </button>
-</div>
-<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
-<div id="adminLogin" style="text-align:center; margin-bottom:30px;">
-  <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
-         style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
-  <button id="adminLoginBtn"
           style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">
     Login
   </button>
 </div>
 
+<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
 <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
   <h3>Upload News (Admin Only)</h3>
   <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
@@ -429,6 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- VARIABLES ----------
   const adminPassword = "Tblwat0921";
+  let isAdmin = false; // Track admin login
   const adminLoginBtn = document.getElementById("adminLoginBtn");
   const adminPasswordInput = document.getElementById("adminPasswordInput");
   const uploadForm = document.getElementById("uploadForm");
@@ -456,10 +449,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- ADMIN LOGIN ----------
   adminLoginBtn.addEventListener("click", () => {
     if (adminPasswordInput.value === adminPassword) {
+      isAdmin = true; // Mark as admin
       uploadForm.style.display = "block";
       adminLoginDiv.style.display = "none";
       alert("Admin login successful!");
-      loadNews();
+      loadNews(); // reload news to show admin buttons
     } else {
       alert("Incorrect password!");
     }
@@ -467,6 +461,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- UPLOAD NEWS ----------
   uploadBtn.addEventListener("click", async () => {
+    if (!isAdmin) return alert("Only admins can upload news.");
+
     const title = document.getElementById("newsTitle").value.trim();
     const summary = document.getElementById("newsSummary").value.trim();
     const file = newsImageInput.files[0];
@@ -539,8 +535,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // ---------- ADMIN CONTROLS ----------
-      if (adminLoginDiv.style.display === "none") {
+      // ---------- ADMIN CONTROLS (ONLY IF LOGGED IN) ----------
+      if (isAdmin) {
         const editBtn = createButton("Edit", "orange");
         const saveBtn = createButton("Save", "green");
         saveBtn.style.display = "none";
@@ -635,6 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
     <h1>Meet Our Coaches</h1>
@@ -1344,6 +1341,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
