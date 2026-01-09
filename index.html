@@ -394,6 +394,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     Upload News
   </button>
 </div>
+
 <!-- ---------- NEWS DISPLAY AREA ---------- -->
 <div id="newsContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
 
@@ -403,71 +404,62 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase
 import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
-// ---------- YOUR FIREBASE CONFIG ----------
-const firebaseConfig = {
-  apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
-  authDomain: "malawiacademysports.firebaseapp.com",
-  projectId: "malawiacademysports",
-  storageBucket: "malawisportswebsite-4f960.appspot.com", // keep your storage
-  messagingSenderId: "565646076684",
-  appId: "1:565646076684:web:74e8c2a955d02ba8a2b729",
-  measurementId: "G-FZZCL5Z7ZF"
-};
+document.addEventListener("DOMContentLoaded", () => {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
-// ---------- VARIABLES ----------
-const adminPassword = "Tblwat0921";
-const adminLoginBtn = document.getElementById("adminLoginBtn");
-const adminPasswordInput = document.getElementById("adminPasswordInput");
-const uploadForm = document.getElementById("uploadForm");
-const uploadBtn = document.getElementById("uploadBtn");
-const newsContainer = document.getElementById("newsContainer");
-const adminLoginDiv = document.getElementById("adminLogin");
-const newsImageInput = document.getElementById("newsImage");
-const imagePreview = document.getElementById("imagePreview");
-
-// ---------- IMAGE PREVIEW (MODERN & SAFE) ----------
-newsImageInput.addEventListener("input", () => {
-  const url = newsImageInput.value.trim();
-
-  if (!url) {
-    imagePreview.style.display = "none";
-    imagePreview.src = "";
-    return;
-  }
-
-  imagePreview.onload = () => {
-    imagePreview.style.display = "block";
-    imagePreview.style.opacity = "1";
-    imagePreview.style.transform = "scale(1)";
+  // ---------- YOUR FIREBASE CONFIG ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
+    authDomain: "malawiacademysports.firebaseapp.com",
+    projectId: "malawiacademysports",
+    storageBucket: "malawisportswebsite-4f960.appspot.com",
+    messagingSenderId: "565646076684",
+    appId: "1:565646076684:web:74e8c2a955d02ba8a2b729",
+    measurementId: "G-FZZCL5Z7ZF"
   };
 
-  imagePreview.onerror = () => {
-    imagePreview.style.display = "none";
-    alert("Invalid image URL");
-  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-  imagePreview.style.opacity = "0";
-  imagePreview.style.transform = "scale(0.97)";
-  imagePreview.src = url;
-});
+  // ---------- VARIABLES ----------
+  const adminPassword = "Tblwat0921";
+  const adminLoginBtn = document.getElementById("adminLoginBtn");
+  const adminPasswordInput = document.getElementById("adminPasswordInput");
+  const uploadForm = document.getElementById("uploadForm");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const newsContainer = document.getElementById("newsContainer");
+  const adminLoginDiv = document.getElementById("adminLogin");
+  const newsImageInput = document.getElementById("newsImageFile");
+  const imagePreview = document.getElementById("imagePreview");
 
-// ---------- ADMIN LOGIN ----------
-adminLoginBtn.addEventListener("click", () => {
-  if(adminPasswordInput.value === adminPassword) {
-    uploadForm.style.display = "block";
-    adminLoginDiv.style.display = "none";
-    alert("Admin login successful!");
-    loadNews();
-  } else {
-    alert("Incorrect password!");
-  }
-});
+  // ---------- IMAGE PREVIEW ----------
+  newsImageInput.addEventListener("change", () => {
+    const file = newsImageInput.files[0];
+    if (!file) {
+      imagePreview.style.display = "none";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => {
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
 
+  // ---------- ADMIN LOGIN ----------
+  adminLoginBtn.addEventListener("click", () => {
+    if (adminPasswordInput.value === adminPassword) {
+      uploadForm.style.display = "block";
+      adminLoginDiv.style.display = "none";
+      alert("Admin login successful!");
+      loadNews();
+    } else {
+      alert("Incorrect password!");
+    }
+  });
 // ---------- UPLOAD NEWS ----------
 uploadBtn.addEventListener("click", async () => {
   const title = document.getElementById("newsTitle").value.trim();
@@ -1350,6 +1342,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
