@@ -378,32 +378,46 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       Login as Admin
     </button>
   </div>
+<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- --> 
+<div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
+  <h3>Upload News (Admin Only)</h3>
 
-  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- --> 
-  <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
-    <h3>Upload News (Admin Only)</h3>
+  <input type="text" id="newsTitle" placeholder="News Title"
+         style="padding:8px; margin:5px; width:250px;">
 
-    <input type="text" id="newsTitle" placeholder="News Title"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="text" id="newsSummary" placeholder="News Summary"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="url" id="newsImage" placeholder="Image URL"
-           style="padding:8px; margin:5px; width:250px;">
+  <input type="text" id="newsSummary" placeholder="News Summary"
+         style="padding:8px; margin:5px; width:250px;">
 
-    <!-- IMAGE PREVIEW -->
-    <br>
-    <img id="imagePreview" style="display:none; width:230px; margin-top:10px; border-radius:10px;">
-    <br>
-    <button id="uploadBtn"
-            style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
-      Upload News
-    </button>
-  </div>
+  <input type="url" id="newsImage" placeholder="Image URL"
+         style="padding:8px; margin:5px; width:250px;">
+  
+         <!-- IMAGE PREVIEW -->
+  <br>
+  <img id="imagePreview" alt="Image Preview"
+       style="
+         display:none;
+         width:100%;
+         max-width:250px;
+         max-height:260px;
+         object-fit:cover;
+         margin-top:12px;
+         border-radius:12px;
+         box-shadow:0 6px 18px rgba(0,0,0,0.15);
+       ">
+  <br>
 
-  <!-- ---------- NEWS DISPLAY AREA ---------- -->
-  <div id="newsContainer"
-       style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
-  </div>
+  <button type="button" id="uploadBtn"
+          style="
+            padding:8px 20px;
+            background:green;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+          ">
+    Upload News
+  </button>
+</div>
 </section>
     <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
@@ -416,7 +430,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
   authDomain: "malawiacademysports.firebaseapp.com",
   projectId: "malawiacademysports",
-  storageBucket: "malawiacademysports.firebasestorage.app",
+ storageBucket: "malawisportswebsite-4f960.appspot.com",
   messagingSenderId: "565646076684",
   appId: "1:565646076684:web:74e8c2a955d02ba8a2b729",
   measurementId: "G-FZZCL5Z7ZF"
@@ -438,10 +452,30 @@ const adminLoginDiv = document.getElementById("adminLogin");
 const newsImageInput = document.getElementById("newsImage");
 const imagePreview = document.getElementById("imagePreview");
 
-// ---------- IMAGE PREVIEW ----------
+// ---------- IMAGE PREVIEW (MODERN & SAFE) ----------
 newsImageInput.addEventListener("input", () => {
-  imagePreview.src = newsImageInput.value || "";
-  imagePreview.style.display = newsImageInput.value ? "block" : "none";
+  const url = newsImageInput.value.trim();
+
+  if (!url) {
+    imagePreview.style.display = "none";
+    imagePreview.src = "";
+    return;
+  }
+
+  imagePreview.onload = () => {
+    imagePreview.style.display = "block";
+    imagePreview.style.opacity = "1";
+    imagePreview.style.transform = "scale(1)";
+  };
+
+  imagePreview.onerror = () => {
+    imagePreview.style.display = "none";
+    alert("Invalid image URL");
+  };
+
+  imagePreview.style.opacity = "0";
+  imagePreview.style.transform = "scale(0.97)";
+  imagePreview.src = url;
 });
 
 // ---------- ADMIN LOGIN ----------
@@ -462,25 +496,32 @@ uploadBtn.addEventListener("click", async () => {
   const summary = document.getElementById("newsSummary").value.trim();
   const image = newsImageInput.value.trim();
 
-  if(!title || !summary || !image) {
+  if (!title || !summary || !image) {
     alert("Please fill in all fields.");
     return;
   }
 
   try {
-    await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
+    await addDoc(collection(db, "news"), {
+      title,
+      summary,
+      image,
+      date: serverTimestamp()
+    });
+
     alert("News uploaded successfully!");
+
     document.getElementById("newsTitle").value = "";
     document.getElementById("newsSummary").value = "";
     newsImageInput.value = "";
     imagePreview.style.display = "none";
+
     loadNews();
-  } catch(err) {
-    console.error("Error uploading news:", err);
+  } catch (err) {
+    console.error("Upload error:", err);
     alert("Failed to upload news.");
   }
 });
-
 // ---------- LOAD NEWS + EDIT + DELETE ----------
 async function loadNews() {
   newsContainer.innerHTML = "";
@@ -1319,6 +1360,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
