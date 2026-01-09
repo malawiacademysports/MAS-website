@@ -369,68 +369,46 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     ★ Latest News & Updates
     </h2>
 <section id="newsSection">
-  <!-- ---------- ADMIN LOGIN ---------- -->
-  <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
-    <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
-           style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
-    <button id="adminLoginBtn"
-            style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
-      Login as Admin
-    </button>
-  </div>
-<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- --> 
+ <!-- ---------- ADMIN LOGIN ---------- -->
+<div id="adminLogin" style="text-align:center; margin-bottom:30px;">
+  <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
+         style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
+  <button id="adminLoginBtn"
+          style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
+    Login as Admin
+  </button>
+</div>
+
+<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
 <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
   <h3>Upload News (Admin Only)</h3>
-
-  <input type="text" id="newsTitle" placeholder="News Title"
-         style="padding:8px; margin:5px; width:250px;">
-
-  <input type="text" id="newsSummary" placeholder="News Summary"
-         style="padding:8px; margin:5px; width:250px;">
-
-  <input type="url" id="newsImage" placeholder="Image URL"
-         style="padding:8px; margin:5px; width:250px;">
+  <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
+  <textarea id="newsSummary" placeholder="News Summary" style="padding:8px; margin:5px; width:250px; height:70px;"></textarea>
+  <input type="file" id="newsImageFile" accept="image/*" style="padding:8px; margin:5px; width:250px;">
   
-         <!-- IMAGE PREVIEW -->
   <br>
-  <img id="imagePreview" alt="Image Preview"
-       style="
-         display:none;
-         width:100%;
-         max-width:250px;
-         max-height:260px;
-         object-fit:cover;
-         margin-top:12px;
-         border-radius:12px;
-         box-shadow:0 6px 18px rgba(0,0,0,0.15);
-       ">
+  <img id="imagePreview" style="display:none; width:100%; max-width:250px; max-height:260px; object-fit:cover; margin-top:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);" alt="Image Preview">
   <br>
 
-  <button type="button" id="uploadBtn"
-          style="
-            padding:8px 20px;
-            background:green;
-            color:white;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-          ">
+  <button type="button" id="uploadBtn" style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
     Upload News
   </button>
 </div>
-</section>
-    <script type="module">
+<!-- ---------- NEWS DISPLAY AREA ---------- -->
+<div id="newsContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } 
-  from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
-// Firebase config
+// ---------- YOUR FIREBASE CONFIG ----------
 const firebaseConfig = {
   apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
   authDomain: "malawiacademysports.firebaseapp.com",
   projectId: "malawiacademysports",
- storageBucket: "malawisportswebsite-4f960.appspot.com",
+  storageBucket: "malawisportswebsite-4f960.appspot.com", // keep your storage
   messagingSenderId: "565646076684",
   appId: "1:565646076684:web:74e8c2a955d02ba8a2b729",
   measurementId: "G-FZZCL5Z7ZF"
@@ -440,7 +418,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
-
+const storage = getStorage(app);
 // ---------- VARIABLES ----------
 const adminPassword = "Tblwat0921";
 const adminLoginBtn = document.getElementById("adminLoginBtn");
@@ -494,26 +472,31 @@ adminLoginBtn.addEventListener("click", () => {
 uploadBtn.addEventListener("click", async () => {
   const title = document.getElementById("newsTitle").value.trim();
   const summary = document.getElementById("newsSummary").value.trim();
-  const image = newsImageInput.value.trim();
+  const file = newsImageFile.files[0];
 
-  if (!title || !summary || !image) {
-    alert("Please fill in all fields.");
+  if (!title || !summary || !file) {
+    alert("Please fill in all fields and select an image.");
     return;
   }
 
   try {
+    // Upload image to Firebase Storage
+    const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
+    const snapshot = await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+
+    // Save news data to Firestore
     await addDoc(collection(db, "news"), {
       title,
       summary,
-      image,
+      image: downloadURL,
       date: serverTimestamp()
     });
 
     alert("News uploaded successfully!");
-
     document.getElementById("newsTitle").value = "";
     document.getElementById("newsSummary").value = "";
-    newsImageInput.value = "";
+    newsImageFile.value = "";
     imagePreview.style.display = "none";
 
     loadNews();
@@ -521,7 +504,7 @@ uploadBtn.addEventListener("click", async () => {
     console.error("Upload error:", err);
     alert("Failed to upload news.");
   }
-});
+})
 // ---------- LOAD NEWS + EDIT + DELETE ----------
 async function loadNews() {
   newsContainer.innerHTML = "";
@@ -530,16 +513,17 @@ async function loadNews() {
 
   snapshot.forEach(docSnap => {
     const news = docSnap.data();
-    const id = docSnap.id;
-
     const card = document.createElement("div");
-    card.className = "news-card"; // ✅ Required for days ago
+    card.className = "news-card";
     card.style.width = "300px";
     card.style.background = "#fff";
     card.style.borderRadius = "10px";
     card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
     card.style.paddingBottom = "15px";
     card.style.marginBottom = "20px";
+    card.style.display = "flex";
+    card.style.flexDirection = "column";
+    card.style.alignItems = "center";
 
     // ---------- DATE SAFE HANDLING ----------
     let formattedDate = "";
@@ -548,8 +532,8 @@ async function loadNews() {
     }
 
     card.innerHTML = `
-      <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
-      <div style="padding:15px;">
+      <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px; object-fit:cover; max-height:200px;">
+      <div style="padding:15px; text-align:center;">
         <h3 class="title">${news.title}</h3>
         <p class="news-date" data-date="${formattedDate}" style="font-size:13px; color:#777;">
           ${formattedDate}
@@ -558,40 +542,46 @@ async function loadNews() {
       </div>
     `;
 
-    // ---------- ADMIN CONTROLS ----------
-    if(adminLoginDiv.style.display === "none") {
-      const editBtn = createButton("Edit", "orange");
-      const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
-      const deleteBtn = createButton("Delete", "red");
+    newsContainer.appendChild(card);
+  });
+}
+ // ---------- ADMIN CONTROLS ----------
+  const id = docSnap.id; // Must get doc id for edit/delete
+if(adminLoginDiv.style.display === "none") {
+  const editBtn = createButton("Edit", "orange");
+  const saveBtn = createButton("Save", "green");
+  saveBtn.style.display = "none";
+  const deleteBtn = createButton("Delete", "red");
 
-      editBtn.addEventListener("click", () => {
-        const titleEl = card.querySelector(".title");
-        const summaryEl = card.querySelector(".summary");
-        titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
-        summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
-        editBtn.style.display = "none";
-        saveBtn.style.display = "inline-block";
-      });
+  editBtn.addEventListener("click", () => {
+    const titleEl = card.querySelector(".title");
+    const summaryEl = card.querySelector(".summary");
+    titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
+    summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
+    editBtn.style.display = "none";
+    saveBtn.style.display = "inline-block";
+  });
 
-      saveBtn.addEventListener("click", async () => {
-        const newTitle = card.querySelector(".edit-title").value;
-        const newSummary = card.querySelector(".edit-summary").value;
-        await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
-        alert("News updated!");
-        loadNews();
-      });
+  saveBtn.addEventListener("click", async () => {
+    const newTitle = card.querySelector(".edit-title").value;
+    const newSummary = card.querySelector(".edit-summary").value;
+    await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
+    alert("News updated!");
+    loadNews();
+  });
 
-      deleteBtn.addEventListener("click", async () => {
-        if(confirm("Delete this news?")) {
-          await deleteDoc(doc(db, "news", id));
-          loadNews();
-        }
-      });
-
-      card.appendChild(editBtn);
-      card.appendChild(saveBtn);
-      card.appendChild(deleteBtn);
+  deleteBtn.addEventListener("click", async () => {
+    if(confirm("Delete this news?")) {
+      await deleteDoc(doc(db, "news", id));
+      loadNews();
     }
+  });
+
+  card.appendChild(editBtn);
+  card.appendChild(saveBtn);
+  card.appendChild(deleteBtn);
+}
+
 
     newsContainer.appendChild(card);
   });
@@ -1360,6 +1350,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
