@@ -369,7 +369,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     ★ Latest News & Updates
     </h2>
 <section id="newsSection">
- <!-- ---------- ADMIN LOGIN ---------- -->
+<!-- ---------- ADMIN LOGIN ---------- -->
 <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
   <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
          style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
@@ -401,12 +401,12 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ---------- YOUR FIREBASE CONFIG ----------
+  // ---------- FIREBASE CONFIG ----------
   const firebaseConfig = {
     apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
     authDomain: "malawiacademysports.firebaseapp.com",
@@ -460,83 +460,179 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Incorrect password!");
     }
   });
-// ---------- UPLOAD NEWS ----------
-uploadBtn.addEventListener("click", async () => {
-  const title = document.getElementById("newsTitle").value.trim();
-  const summary = document.getElementById("newsSummary").value.trim();
-  const file = newsImageFile.files[0];
 
-  if (!title || !summary || !file) {
-    alert("Please fill in all fields and select an image.");
-    return;
-  }
+  // ---------- UPLOAD NEWS ----------
+  uploadBtn.addEventListener("click", async () => {
+    const title = document.getElementById("newsTitle").value.trim();
+    const summary = document.getElementById("newsSummary").value.trim();
+    const file = newsImageInput.files[0];
 
-  try {
-    // Upload image to Firebase Storage
-    const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
-    const snapshot = await uploadBytes(storageRef, file);
-    const downloadURL = await getDownloadURL(snapshot.ref);
-
-    // Save news data to Firestore
-    await addDoc(collection(db, "news"), {
-      title,
-      summary,
-      image: downloadURL,
-      date: serverTimestamp()
-    });
-
-    alert("News uploaded successfully!");
-    document.getElementById("newsTitle").value = "";
-    document.getElementById("newsSummary").value = "";
-    newsImageFile.value = "";
-    imagePreview.style.display = "none";
-
-    loadNews();
-  } catch (err) {
-    console.error("Upload error:", err);
-    alert("Failed to upload news.");
-  }
-})
-// ---------- LOAD NEWS + EDIT + DELETE ----------
-async function loadNews() {
-  newsContainer.innerHTML = "";
-  const q = query(collection(db, "news"), orderBy("date", "desc"));
-  const snapshot = await getDocs(q);
-
-  snapshot.forEach(docSnap => {
-    const news = docSnap.data();
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.style.width = "300px";
-    card.style.background = "#fff";
-    card.style.borderRadius = "10px";
-    card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-    card.style.paddingBottom = "15px";
-    card.style.marginBottom = "20px";
-    card.style.display = "flex";
-    card.style.flexDirection = "column";
-    card.style.alignItems = "center";
-
-    // ---------- DATE SAFE HANDLING ----------
-    let formattedDate = "";
-    if (news.date && news.date.toDate) {
-      formattedDate = news.date.toDate().toISOString().split("T")[0];
+    if (!title || !summary || !file) {
+      alert("Fill all fields and select an image.");
+      return;
     }
 
-    card.innerHTML = `
-      <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px; object-fit:cover; max-height:200px;">
-      <div style="padding:15px; text-align:center;">
-        <h3 class="title">${news.title}</h3>
-        <p class="news-date" data-date="${formattedDate}" style="font-size:13px; color:#777;">
-          ${formattedDate}
-        </p>
-        <p class="summary">${news.summary}</p>
-      </div>
-    `;
+    try {
+      // Upload image to Firebase Storage
+      const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
 
-    newsContainer.appendChild(card);
+      // Save news data to Firestore
+      await addDoc(collection(db, "news"), {
+        title,
+        summary,
+        image: downloadURL,
+        date: serverTimestamp()
+      });
+
+      alert("News uploaded successfully!");
+      document.getElementById("newsTitle").value = "";
+      document.getElementById("newsSummary").value = "";
+      newsImageInput.value = "";
+      imagePreview.style.display = "none";
+
+      loadNews();
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert("Failed to upload news.");
+    }
   });
-}
+
+  // ---------- LOAD NEWS ----------
+  async function loadNews() {
+    newsContainer.innerHTML = "";
+    const q = query(collection(db, "news"), orderBy("date", "desc"));
+    const snapshot = await getDocs(q);
+
+    snapshot.forEach(docSnap => {
+      const news = docSnap.data();
+      const id = docSnap.id;
+
+      const card = document.createElement("div");
+      card.className = "news-card";
+      card.style.width = "300px";
+      card.style.background = "#fff";
+      card.style.borderRadius = "10px";
+      card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+      card.style.paddingBottom = "15px";
+      card.style.marginBottom = "20px";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.alignItems = "center";
+
+      let formattedDate = "";
+      if (news.date && news.date.toDate) {
+        formattedDate = news.date.toDate().toISOString().split("T")[0];
+      }
+
+      card.innerHTML = `
+        <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px; object-fit:cover; max-height:200px;">
+        <div style="padding:15px; text-align:center;">
+          <h3 class="title">${news.title}</h3>
+          <p class="news-date" data-date="${formattedDate}" style="font-size:13px; color:#777;">
+            ${formattedDate}
+          </p>
+          <p class="summary">${news.summary}</p>
+        </div>
+      `;
+
+      // ---------- ADMIN CONTROLS ----------
+      if (adminLoginDiv.style.display === "none") {
+        const editBtn = createButton("Edit", "orange");
+        const saveBtn = createButton("Save", "green");
+        saveBtn.style.display = "none";
+        const deleteBtn = createButton("Delete", "red");
+
+        editBtn.addEventListener("click", () => {
+          const titleEl = card.querySelector(".title");
+          const summaryEl = card.querySelector(".summary");
+          titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
+          summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
+          editBtn.style.display = "none";
+          saveBtn.style.display = "inline-block";
+        });
+
+        saveBtn.addEventListener("click", async () => {
+          const newTitle = card.querySelector(".edit-title").value;
+          const newSummary = card.querySelector(".edit-summary").value;
+          await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
+          alert("News updated!");
+          loadNews();
+        });
+
+        deleteBtn.addEventListener("click", async () => {
+          if (confirm("Delete this news?")) {
+            await deleteDoc(doc(db, "news", id));
+            loadNews();
+          }
+        });
+
+        card.appendChild(editBtn);
+        card.appendChild(saveBtn);
+        card.appendChild(deleteBtn);
+      }
+
+      newsContainer.appendChild(card);
+    });
+
+    applyDaysAgo();
+  }
+
+  // ---------- BUTTON CREATOR ----------
+  function createButton(text, color) {
+    const btn = document.createElement("button");
+    btn.textContent = text;
+    btn.style.margin = "5px";
+    btn.style.padding = "6px 12px";
+    btn.style.background = color;
+    btn.style.color = "white";
+    btn.style.border = "none";
+    btn.style.borderRadius = "5px";
+    btn.style.cursor = "pointer";
+    return btn;
+  }
+
+  // ---------- DAYS AGO FUNCTION ----------
+  function applyDaysAgo() {
+    const HIDE_AFTER_DAYS = 3;
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    document.querySelectorAll(".news-date").forEach(dateElem => {
+      const rawDate = dateElem.dataset.date;
+      if (!rawDate) return;
+
+      const newsDate = new Date(rawDate);
+      newsDate.setHours(0,0,0,0);
+
+      const diffDays = Math.floor((today - newsDate) / (1000 * 60 * 60 * 24));
+
+      let label = dateElem.querySelector(".days-ago");
+      if (!label) {
+        label = document.createElement("span");
+        label.className = "days-ago";
+        label.style.marginLeft = "6px";
+        label.style.color = "#555";
+        dateElem.appendChild(label);
+      }
+
+      if (diffDays === 0) label.textContent = "(Today)";
+      else if (diffDays === 1) label.textContent = "(1 day ago)";
+      else label.textContent = `(${diffDays} days ago)`;
+
+      if (diffDays > HIDE_AFTER_DAYS) {
+        const card = dateElem.closest(".news-card");
+        if (card) card.style.display = "none";
+      }
+    });
+  }
+
+  // ---------- INITIAL LOAD ----------
+  loadNews();
+
+}); // <-- closes DOMContentLoaded
+</script>
  // ---------- ADMIN CONTROLS ----------
   const id = docSnap.id; // Must get doc id for edit/delete
 if(adminLoginDiv.style.display === "none") {
@@ -1342,6 +1438,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
