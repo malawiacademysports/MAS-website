@@ -378,18 +378,24 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     Login as Admin
   </button>
 </div>
-
 <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
+<div id="adminLogin" style="text-align:center; margin-bottom:30px;">
+  <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
+         style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
+  <button id="adminLoginBtn"
+          style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">
+    Login
+  </button>
+</div>
+
 <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
   <h3>Upload News (Admin Only)</h3>
   <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
   <textarea id="newsSummary" placeholder="News Summary" style="padding:8px; margin:5px; width:250px; height:70px;"></textarea>
   <input type="file" id="newsImageFile" accept="image/*" style="padding:8px; margin:5px; width:250px;">
-  
   <br>
   <img id="imagePreview" style="display:none; width:100%; max-width:250px; max-height:260px; object-fit:cover; margin-top:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);" alt="Image Preview">
   <br>
-
   <button type="button" id="uploadBtn" style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
     Upload News
   </button>
@@ -405,7 +411,6 @@ import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orde
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-
   // ---------- FIREBASE CONFIG ----------
   const firebaseConfig = {
     apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
@@ -417,7 +422,6 @@ document.addEventListener("DOMContentLoaded", () => {
     measurementId: "G-FZZCL5Z7ZF"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
@@ -473,12 +477,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Upload image to Firebase Storage
       const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
       const snapshot = await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(snapshot.ref);
 
-      // Save news data to Firestore
       await addDoc(collection(db, "news"), {
         title,
         summary,
@@ -631,103 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- INITIAL LOAD ----------
   loadNews();
 
-}); // <-- closes DOMContentLoaded
-</script>
- // ---------- ADMIN CONTROLS ----------
-  const id = docSnap.id; // Must get doc id for edit/delete
-if(adminLoginDiv.style.display === "none") {
-  const editBtn = createButton("Edit", "orange");
-  const saveBtn = createButton("Save", "green");
-  saveBtn.style.display = "none";
-  const deleteBtn = createButton("Delete", "red");
-
-  editBtn.addEventListener("click", () => {
-    const titleEl = card.querySelector(".title");
-    const summaryEl = card.querySelector(".summary");
-    titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
-    summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
-    editBtn.style.display = "none";
-    saveBtn.style.display = "inline-block";
-  });
-
-  saveBtn.addEventListener("click", async () => {
-    const newTitle = card.querySelector(".edit-title").value;
-    const newSummary = card.querySelector(".edit-summary").value;
-    await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
-    alert("News updated!");
-    loadNews();
-  });
-
-  deleteBtn.addEventListener("click", async () => {
-    if(confirm("Delete this news?")) {
-      await deleteDoc(doc(db, "news", id));
-      loadNews();
-    }
-  });
-
-  card.appendChild(editBtn);
-  card.appendChild(saveBtn);
-  card.appendChild(deleteBtn);
-}
-
-
-    newsContainer.appendChild(card);
-  });
-
-  applyDaysAgo(); // run days-ago logic after loading
-}
-
-// ---------- BUTTON CREATOR ----------
-function createButton(text, color) {
-  const btn = document.createElement("button");
-  btn.textContent = text;
-  btn.style.margin = "5px";
-  btn.style.padding = "6px 12px";
-  btn.style.background = color;
-  btn.style.color = "white";
-  btn.style.border = "none";
-  btn.style.borderRadius = "5px";
-  btn.style.cursor = "pointer";
-  return btn;
-}
-
-// ---------- DAYS AGO FUNCTION ----------
-function applyDaysAgo() {
-  const HIDE_AFTER_DAYS = 3;
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-  document.querySelectorAll(".news-date").forEach(dateElem => {
-    const rawDate = dateElem.dataset.date;
-    if (!rawDate) return;
-
-    const newsDate = new Date(rawDate);
-    newsDate.setHours(0,0,0,0);
-
-    const diffDays = Math.floor((today - newsDate) / (1000 * 60 * 60 * 24));
-
-    let label = dateElem.querySelector(".days-ago");
-    if (!label) {
-      label = document.createElement("span");
-      label.className = "days-ago";
-      label.style.marginLeft = "6px";
-      label.style.color = "#555";
-      dateElem.appendChild(label);
-    }
-
-    if (diffDays === 0) label.textContent = "(Today)";
-    else if (diffDays === 1) label.textContent = "(1 day ago)";
-    else label.textContent = `(${diffDays} days ago)`;
-
-    if (diffDays > HIDE_AFTER_DAYS) {
-      const card = dateElem.closest(".news-card");
-      if (card) card.style.display = "none";
-    }
-  });
-}
-
-// ---------- INITIAL LOAD ----------
-loadNews();
+});
 </script>
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1438,6 +1344,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
