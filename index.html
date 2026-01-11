@@ -9,7 +9,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
-<style>
+/* ================================
+   MOBILE RESPONSIVE STYLES
+================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.container {
+  width: 100%;
+  padding: 0 15px;
+  margin: auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, p {
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+  }
+  nav .mobile-menu {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  section {
+    display: block;
+    width: 100%;
+  }
+}
+    
+    <style>
 :root {
     --black: #000000;
     --red: #d40000;
@@ -1421,6 +1465,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
