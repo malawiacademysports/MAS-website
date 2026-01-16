@@ -482,40 +482,49 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         <div class="sport-card"><h2>Taekwondo</h2></div>
     </div>
 </section>
+
 <!-- ---------- LATEST NEWS & UPDATES ---------- -->
 <section id="news" class="news-section" style="padding:50px 20px; background:#f9f9f9;">
   <div class="container" style="max-width:1200px; margin:0 auto;">
     
     <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
       ★ Latest News & Updates
-</h2>
-
-  <!-- Admin Login -->
-  <div id="adminLogin" style="text-align:center; margin-bottom:20px;">
-    <label for="adminPasswordInput" class="sr-only">Admin Password</label>
-    <input type="password" id="adminPasswordInput" placeholder="Enter admin password" 
-           style="padding:8px 20px; font-size:16px; border-radius:5px; margin-right:8px;">
-    <button id="adminLoginBtn" 
-            style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">Login</button>
+    </h2>
+<section id="newsSection">
+  <!-- ---------- ADMIN LOGIN ---------- -->
+  <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
+    <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
+           style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
+    <button id="adminLoginBtn"
+            style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
+      Login as Admin
+    </button>
   </div>
-
-  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
+ <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
   <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
     <h3>Upload News (Admin Only)</h3>
-    <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
-    <textarea id="newsSummary" placeholder="News Summary" style="padding:8px; margin:5px; width:250px; height:70px;"></textarea>
-    <input type="file" id="newsImageFile" accept="image/*" style="padding:8px; margin:5px; width:250px;">
+
+    <input type="text" id="newsTitle" placeholder="News Title"
+           style="padding:8px; margin:5px; width:250px;">
+    <input type="text" id="newsSummary" placeholder="News Summary"
+           style="padding:8px; margin:5px; width:250px;">
+    <input type="url" id="newsImage" placeholder="Image URL"
+           style="padding:8px; margin:5px; width:250px;">
+
+    <!-- IMAGE PREVIEW -->
     <br>
-    <img id="imagePreview" style="display:none; width:100%; max-width:250px; max-height:260px; object-fit:cover; margin-top:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);" alt="Image Preview">
+    <img id="imagePreview" style="display:none; width:230px; margin-top:10px; border-radius:10px;">
     <br>
-    <button type="button" id="uploadBtn" style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
+    <button id="uploadBtn"
+            style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
       Upload News
     </button>
   </div>
 
   <!-- ---------- NEWS DISPLAY AREA ---------- -->
-  <div id="newsContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
-
+  <div id="newsContainer"
+       style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+  </div>
 </section>
 
 <script type="module">
@@ -541,90 +550,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
   const storage = getStorage(app);
-
   // ---------- VARIABLES ----------
   const adminPassword = "Tblwat0921";
-  let isAdmin = false;
   const adminLoginBtn = document.getElementById("adminLoginBtn");
   const adminPasswordInput = document.getElementById("adminPasswordInput");
   const uploadForm = document.getElementById("uploadForm");
   const uploadBtn = document.getElementById("uploadBtn");
   const newsContainer = document.getElementById("newsContainer");
   const adminLoginDiv = document.getElementById("adminLogin");
-  const newsImageInput = document.getElementById("newsImageFile");
+  const newsImageInput = document.getElementById("newsImage");
   const imagePreview = document.getElementById("imagePreview");
 
   // ---------- IMAGE PREVIEW ----------
-  if (newsImageInput && imagePreview) {
-    newsImageInput.addEventListener("change", () => {
-      const file = newsImageInput.files[0];
-      if (!file) {
-        imagePreview.style.display = "none";
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = e => {
-        imagePreview.src = e.target.result;
-        imagePreview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    });
-  }
+  newsImageInput.addEventListener("input", () => {
+    imagePreview.src = newsImageInput.value || "";
+    imagePreview.style.display = newsImageInput.value ? "block" : "none";
+  });
 
   // ---------- ADMIN LOGIN ----------
-  if (adminLoginBtn && adminPasswordInput && uploadForm && adminLoginDiv) {
-    adminLoginBtn.addEventListener("click", () => {
-      if (adminPasswordInput.value === adminPassword) {
-        isAdmin = true;
-        uploadForm.style.display = "block";
-        adminLoginDiv.style.display = "none";
-        alert("Admin login successful!");
-        if (typeof loadNews === "function") loadNews();
-      } else {
-        alert("Incorrect password!");
-      }
-    });
-  }
+  adminLoginBtn.addEventListener("click", () => {
+    if(adminPasswordInput.value === adminPassword) {
+      uploadForm.style.display = "block";
+      adminLoginDiv.style.display = "none";
+      alert("Admin login successful!");
+      loadNews();
+    } else {
+      alert("Incorrect password!");
+    }
+  });
 
   // ---------- UPLOAD NEWS ----------
-  if (uploadBtn && newsImageInput && newsContainer) {
-    uploadBtn.addEventListener("click", async () => {
-      if (!isAdmin) return alert("Only admins can upload news.");
-      const title = document.getElementById("newsTitle")?.value.trim();
-      const summary = document.getElementById("newsSummary")?.value.trim();
-      const file = newsImageInput.files[0];
+  uploadBtn.addEventListener("click", async () => {
+    const title = document.getElementById("newsTitle").value.trim();
+    const summary = document.getElementById("newsSummary").value.trim();
+    const image = newsImageInput.value.trim();
 
-      if (!title || !summary || !file) {
-        return alert("Fill all fields and select an image.");
-      }
+    if(!title || !summary || !image) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
-      try {
-        const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
+    try {
+      await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
+      alert("News uploaded successfully!");
+      document.getElementById("newsTitle").value = "";
+      document.getElementById("newsSummary").value = "";
+      newsImageInput.value = "";
+      imagePreview.style.display = "none";
+      loadNews();
+    } catch(err) {
+      console.error("Error uploading news:", err);
+      alert("Failed to upload news.");
+    }
+  });
 
-        await addDoc(collection(db, "news"), {
-          title,
-          summary,
-          image: downloadURL,
-          date: serverTimestamp()
-        });
-
-        alert("News uploaded successfully!");
-        document.getElementById("newsTitle").value = "";
-        document.getElementById("newsSummary").value = "";
-        newsImageInput.value = "";
-        imagePreview.style.display = "none";
-
-        if (typeof loadNews === "function") loadNews();
-      } catch (err) {
-        console.error("Upload error:", err);
-        alert("Failed to upload news.");
-      }
-    });
-  }
-
-  // ---------- LOAD NEWS ----------
+  // ---------- LOAD NEWS + EDIT + DELETE ----------
   async function loadNews() {
     newsContainer.innerHTML = "";
     const q = query(collection(db, "news"), orderBy("date", "desc"));
@@ -635,37 +615,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = docSnap.id;
 
       const card = document.createElement("div");
-      card.className = "news-card";
       card.style.width = "300px";
       card.style.background = "#fff";
       card.style.borderRadius = "10px";
       card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
       card.style.paddingBottom = "15px";
       card.style.marginBottom = "20px";
-      card.style.display = "flex";
-      card.style.flexDirection = "column";
-      card.style.alignItems = "center";
-
-      let formattedDate = "";
-      if (news.date && news.date.toDate) {
-        formattedDate = news.date.toDate().toISOString().split("T")[0];
-      }
 
       card.innerHTML = `
-        <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px; object-fit:cover; max-height:200px;">
-        <div style="padding:15px; text-align:center;">
+        <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
+        <div style="padding:15px;">
           <h3 class="title">${news.title}</h3>
-          <p class="news-date" data-date="${formattedDate}" style="font-size:13px; color:#777;">
-            ${formattedDate}
-          </p>
           <p class="summary">${news.summary}</p>
         </div>
       `;
 
-      if (isAdmin) {
+      if(adminLoginDiv.style.display === "none") {
         const editBtn = createButton("Edit", "orange");
-        const saveBtn = createButton("Save", "green");
-        saveBtn.style.display = "none";
+        const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
         const deleteBtn = createButton("Delete", "red");
 
         editBtn.addEventListener("click", () => {
@@ -686,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         deleteBtn.addEventListener("click", async () => {
-          if (confirm("Delete this news?")) {
+          if(confirm("Delete this news?")) {
             await deleteDoc(doc(db, "news", id));
             loadNews();
           }
@@ -699,8 +666,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       newsContainer.appendChild(card);
     });
-
-    applyDaysAgo();
   }
 
   function createButton(text, color) {
@@ -716,46 +681,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return btn;
   }
 
-  function applyDaysAgo() {
-    const HIDE_AFTER_DAYS = 3;
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
-    document.querySelectorAll(".news-date").forEach(dateElem => {
-      const rawDate = dateElem.dataset.date;
-      if (!rawDate) return;
-
-      const newsDate = new Date(rawDate);
-      newsDate.setHours(0,0,0,0);
-
-      const diffDays = Math.floor((today - newsDate) / (1000 * 60 * 60 * 24));
-
-      let label = dateElem.querySelector(".days-ago");
-      if (!label) {
-        label = document.createElement("span");
-        label.className = "days-ago";
-        label.style.marginLeft = "6px";
-        label.style.color = "#555";
-        dateElem.appendChild(label);
-      }
-
-      if (diffDays === 0) label.textContent = "(Today)";
-      else if (diffDays === 1) label.textContent = "(1 day ago)";
-      else label.textContent = `(${diffDays} days ago)`;
-
-      if (diffDays > HIDE_AFTER_DAYS) {
-        const card = dateElem.closest(".news-card");
-        if (card) card.style.display = "none";
-      }
-    });
-  }
-
-  loadNews();
-
-});
+  // ---------- INITIAL LOAD ----------
+  loadNews(); // Shows news preview for public users
 </script>
 
-
+ </section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
     <h1>Meet Our Coaches</h1>
@@ -1464,6 +1394,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
