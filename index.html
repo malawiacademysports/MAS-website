@@ -487,37 +487,36 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   <div class="container" style="max-width:1200px; margin:0 auto;">
     
     <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
-      
-    ★ Latest News & Updates
-    </h2>
-<section id="newsSection">
-<!-- Admin Login -->
-    <div id="adminLogin">
-      <label for="adminPasswordInput" class="sr-only">Admin Password</label>
-      <input type="password" id="adminPasswordInput" placeholder="Enter admin password">
-      <button id="adminLoginBtn">Login</button>
-    </div>
-          style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">
-    Login
-  </button>
-</div>
+      ★ Latest News & Updates
+</h2>
 
-<!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
-<div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
-  <h3>Upload News (Admin Only)</h3>
-  <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
-  <textarea id="newsSummary" placeholder="News Summary" style="padding:8px; margin:5px; width:250px; height:70px;"></textarea>
-  <input type="file" id="newsImageFile" accept="image/*" style="padding:8px; margin:5px; width:250px;">
-  <br>
-  <img id="imagePreview" style="display:none; width:100%; max-width:250px; max-height:260px; object-fit:cover; margin-top:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);" alt="Image Preview">
-  <br>
-  <button type="button" id="uploadBtn" style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
-    Upload News
-  </button>
-</div>
+  <!-- Admin Login -->
+  <div id="adminLogin" style="text-align:center; margin-bottom:20px;">
+    <label for="adminPasswordInput" class="sr-only">Admin Password</label>
+    <input type="password" id="adminPasswordInput" placeholder="Enter admin password" 
+           style="padding:8px 20px; font-size:16px; border-radius:5px; margin-right:8px;">
+    <button id="adminLoginBtn" 
+            style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">Login</button>
+  </div>
 
-<!-- ---------- NEWS DISPLAY AREA ---------- -->
-<div id="newsContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
+  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
+  <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
+    <h3>Upload News (Admin Only)</h3>
+    <input type="text" id="newsTitle" placeholder="News Title" style="padding:8px; margin:5px; width:250px;">
+    <textarea id="newsSummary" placeholder="News Summary" style="padding:8px; margin:5px; width:250px; height:70px;"></textarea>
+    <input type="file" id="newsImageFile" accept="image/*" style="padding:8px; margin:5px; width:250px;">
+    <br>
+    <img id="imagePreview" style="display:none; width:100%; max-width:250px; max-height:260px; object-fit:cover; margin-top:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);" alt="Image Preview">
+    <br>
+    <button type="button" id="uploadBtn" style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
+      Upload News
+    </button>
+  </div>
+
+  <!-- ---------- NEWS DISPLAY AREA ---------- -->
+  <div id="newsContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
+
+</section>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
@@ -526,6 +525,7 @@ import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orde
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+
   // ---------- FIREBASE CONFIG ----------
   const firebaseConfig = {
     apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
@@ -544,7 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- VARIABLES ----------
   const adminPassword = "Tblwat0921";
-  let isAdmin = false; // Track admin login
+  let isAdmin = false;
   const adminLoginBtn = document.getElementById("adminLoginBtn");
   const adminPasswordInput = document.getElementById("adminPasswordInput");
   const uploadForm = document.getElementById("uploadForm");
@@ -555,70 +555,74 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagePreview = document.getElementById("imagePreview");
 
   // ---------- IMAGE PREVIEW ----------
-  newsImageInput.addEventListener("change", () => {
-    const file = newsImageInput.files[0];
-    if (!file) {
-      imagePreview.style.display = "none";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => {
-      imagePreview.src = e.target.result;
-      imagePreview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
+  if (newsImageInput && imagePreview) {
+    newsImageInput.addEventListener("change", () => {
+      const file = newsImageInput.files[0];
+      if (!file) {
+        imagePreview.style.display = "none";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        imagePreview.src = e.target.result;
+        imagePreview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 
   // ---------- ADMIN LOGIN ----------
-  adminLoginBtn.addEventListener("click", () => {
-    if (adminPasswordInput.value === adminPassword) {
-      isAdmin = true; // Mark as admin
-      uploadForm.style.display = "block";
-      adminLoginDiv.style.display = "none";
-      alert("Admin login successful!");
-      loadNews(); // reload news to show admin buttons
-    } else {
-      alert("Incorrect password!");
-    }
-  });
+  if (adminLoginBtn && adminPasswordInput && uploadForm && adminLoginDiv) {
+    adminLoginBtn.addEventListener("click", () => {
+      if (adminPasswordInput.value === adminPassword) {
+        isAdmin = true;
+        uploadForm.style.display = "block";
+        adminLoginDiv.style.display = "none";
+        alert("Admin login successful!");
+        if (typeof loadNews === "function") loadNews();
+      } else {
+        alert("Incorrect password!");
+      }
+    });
+  }
 
   // ---------- UPLOAD NEWS ----------
-  uploadBtn.addEventListener("click", async () => {
-    if (!isAdmin) return alert("Only admins can upload news.");
+  if (uploadBtn && newsImageInput && newsContainer) {
+    uploadBtn.addEventListener("click", async () => {
+      if (!isAdmin) return alert("Only admins can upload news.");
+      const title = document.getElementById("newsTitle")?.value.trim();
+      const summary = document.getElementById("newsSummary")?.value.trim();
+      const file = newsImageInput.files[0];
 
-    const title = document.getElementById("newsTitle").value.trim();
-    const summary = document.getElementById("newsSummary").value.trim();
-    const file = newsImageInput.files[0];
+      if (!title || !summary || !file) {
+        return alert("Fill all fields and select an image.");
+      }
 
-    if (!title || !summary || !file) {
-      alert("Fill all fields and select an image.");
-      return;
-    }
+      try {
+        const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
 
-    try {
-      const storageRef = ref(storage, `newsImages/${file.name}_${Date.now()}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+        await addDoc(collection(db, "news"), {
+          title,
+          summary,
+          image: downloadURL,
+          date: serverTimestamp()
+        });
 
-      await addDoc(collection(db, "news"), {
-        title,
-        summary,
-        image: downloadURL,
-        date: serverTimestamp()
-      });
+        alert("News uploaded successfully!");
+        document.getElementById("newsTitle").value = "";
+        document.getElementById("newsSummary").value = "";
+        newsImageInput.value = "";
+        imagePreview.style.display = "none";
 
-      alert("News uploaded successfully!");
-      document.getElementById("newsTitle").value = "";
-      document.getElementById("newsSummary").value = "";
-      newsImageInput.value = "";
-      imagePreview.style.display = "none";
-
-      loadNews();
-    } catch (err) {
-      console.error("Upload error:", err);
-      alert("Failed to upload news.");
-    }
-  });
+        if (typeof loadNews === "function") loadNews();
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert("Failed to upload news.");
+      }
+    });
+  }
 
   // ---------- LOAD NEWS ----------
   async function loadNews() {
@@ -658,7 +662,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // ---------- ADMIN CONTROLS (ONLY IF LOGGED IN) ----------
       if (isAdmin) {
         const editBtn = createButton("Edit", "orange");
         const saveBtn = createButton("Save", "green");
@@ -700,7 +703,6 @@ document.addEventListener("DOMContentLoaded", () => {
     applyDaysAgo();
   }
 
-  // ---------- BUTTON CREATOR ----------
   function createButton(text, color) {
     const btn = document.createElement("button");
     btn.textContent = text;
@@ -714,7 +716,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return btn;
   }
 
-  // ---------- DAYS AGO FUNCTION ----------
   function applyDaysAgo() {
     const HIDE_AFTER_DAYS = 3;
     const today = new Date();
@@ -749,10 +750,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---------- INITIAL LOAD ----------
   loadNews();
 
 });
+</script>
+
 
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1462,6 +1464,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
