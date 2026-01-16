@@ -501,8 +501,34 @@ footer {
 }
 
 /* ===============================
+   PROFILES – IMAGES & TEXT
+================================ */
+.coach-card img,
+.staff-card img,
+.achiever-card img {
+  width: 140px;   /* default size for mobile */
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  margin-bottom: 12px;
+  background: #eaeaea;
+}
+
+.coach-card p,
+.staff-card p,
+.achiever-card p {
+  font-size: 16px; /* increased for readability */
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* ===============================
    RESPONSIVE
 ================================ */
+/* Mobile */
 @media (max-width: 767px) {
   .coach-card img,
   .staff-card img,
@@ -518,16 +544,8 @@ footer {
   }
 }
 
+/* Tablet */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .coach-card img,
-  .staff-card img,
-  .achiever-card img {
-    width: 130px;
-    height: 130px;
-  }
-}
-
-@media (min-width: 1024px) {
   .coach-card img,
   .staff-card img,
   .achiever-card img {
@@ -536,11 +554,15 @@ footer {
   }
 }
 
-</style>
-</head>
-
-<body>
-
+/* Desktop / PC */
+@media (min-width: 1024px) {
+  .coach-card img,
+  .staff-card img,
+  .achiever-card img {
+    width: 180px;   /* bigger images for PC */
+    height: 180px;
+  }
+}
 <!-- ================= HEADER ================= -->
 <header>
     <div class="logo">
@@ -1548,6 +1570,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
