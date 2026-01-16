@@ -335,8 +335,9 @@ h1, h2, h3, h4 {
 
 /* Green section headings */
 section h2,
-.profiles-container h3 {
-  color: green;
+.profiles-container h3,
+.news-card h4 {
+  color: #006400; /* dark green */
   font-weight: 700;
 }
 
@@ -359,7 +360,6 @@ nav a {
 nav a:hover {
   color: #00ff66;
 }
-
 /* ===============================
    PROFILE CARDS – COACHES / STAFF / ACHIEVERS
 ================================ */
@@ -381,7 +381,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 340px;
+  min-height: 360px; /* uniform height for desktop */
   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -393,11 +393,13 @@ nav a:hover {
   box-shadow: 0 10px 24px rgba(0,0,0,0.15);
 }
 
-/* === UNIFORM PROFILE IMAGES === */
+/* ===============================
+   PROFILE IMAGES
+================================ */
 .coach-card img,
 .staff-card img,
 .achiever-card img {
-  width: 140px;
+  width: 140px;   /* default for mobile */
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
@@ -421,8 +423,8 @@ nav a:hover {
 .achiever-card p {
   font-size: 16px;
   color: #555;
-  line-height: 1.5;
   text-align: center;
+  line-height: 1.5;
   flex-grow: 1;
 }
 
@@ -452,13 +454,6 @@ nav a:hover {
   width: 100%;
   height: 180px;
   object-fit: cover;
-}
-
-.news-card h4 {
-  padding: 10px;
-  font-size: 16px;
-  color: green;
-  font-weight: 700;
 }
 
 .news-card p {
@@ -501,31 +496,6 @@ footer {
 }
 
 /* ===============================
-   PROFILES – IMAGES & TEXT
-================================ */
-.coach-card img,
-.staff-card img,
-.achiever-card img {
-  width: 140px;   /* default size for mobile */
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center top;
-  margin-bottom: 12px;
-  background: #eaeaea;
-}
-
-.coach-card p,
-.staff-card p,
-.achiever-card p {
-  font-size: 16px; /* increased for readability */
-  color: #555;
-  text-align: center;
-  line-height: 1.5;
-  flex-grow: 1;
-}
-
-/* ===============================
    RESPONSIVE
 ================================ */
 /* Mobile */
@@ -535,6 +505,12 @@ footer {
   .achiever-card img {
     width: 110px;
     height: 110px;
+  }
+
+  .coach-card p,
+  .staff-card p,
+  .achiever-card p {
+    font-size: 15px;
   }
 
   .coach-card,
@@ -552,6 +528,12 @@ footer {
     width: 150px;
     height: 150px;
   }
+
+  .coach-card p,
+  .staff-card p,
+  .achiever-card p {
+    font-size: 16px;
+  }
 }
 
 /* Desktop / PC */
@@ -559,12 +541,22 @@ footer {
   .coach-card img,
   .staff-card img,
   .achiever-card img {
-    width: 180px;   /* bigger images for PC */
+    width: 180px;
     height: 180px;
   }
+
+  .coach-card p,
+  .staff-card p,
+  .achiever-card p {
+    font-size: 16px;
+  }
 }
-<!-- ================= HEADER ================= -->
-<header>
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= --
     <div class="logo">
         <div class="logo-text">
             <span class="academy">Malawi Academy for Sports</span>
@@ -1570,6 +1562,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
