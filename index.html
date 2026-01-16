@@ -280,10 +280,13 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   padding: 15px;
+  align-items: stretch; /* make all grid items same height */
 }
 
 /* Individual card styling */
-.coach-card, .staff-card, .achiever-card {
+.coach-card,
+.staff-card,
+.achiever-card {
   background-color: #fff;
   border-radius: 12px;
   padding: 15px;
@@ -291,12 +294,15 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto; /* responsive height */
+  justify-content: flex-start; /* align content to top */
+  min-height: 350px; /* ensures all cards are uniform height */
   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
 }
 
-.coach-card:hover, .staff-card:hover, .achiever-card:hover {
+.coach-card:hover,
+.staff-card:hover,
+.achiever-card:hover {
   transform: translateY(-5px);
 }
 
@@ -304,30 +310,12 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 .coach-card img,
 .staff-card img,
 .achiever-card img {
-  width: 50%;          /* relative to card width */
-  max-width: 120px;    /* mobile-friendly */
+  width: 100%;        /* fill card width */
+  max-width: 150px;   /* consistent image size */
   height: auto;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 12px;
-}
-
-/* Tablet */
-@media (min-width: 768px) {
-  .coach-card img,
-  .staff-card img,
-  .achiever-card img {
-    max-width: 150px;   /* medium screens */
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .coach-card img,
-  .staff-card img,
-  .achiever-card img {
-    max-width: 200px;   /* larger screens */
-  }
 }
 
 /* Card titles */
@@ -338,6 +326,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   font-size: 16px;
   font-weight: 600;
   color: #333;
+  min-height: 24px; /* ensure all titles align */
 }
 
 /* Card descriptions */
@@ -348,41 +337,50 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   font-size: 14px;
   color: #555;
   line-height: 1.4;
+  flex-grow: 1; /* makes text occupy remaining space */
 }
 
 /* ===================== MOBILE SPECIFIC ===================== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .profiles-container {
     grid-template-columns: 1fr; /* stack cards vertically */
     gap: 15px;
     padding: 10px;
   }
 
-  .coach-card img,
-  .staff-card img,
-  .achiever-card img {
-    max-width: 110px;  /* slightly bigger for clarity */
-  }
-
-  .coach-card h3,
-  .staff-card h3,
-  .achiever-card h3 {
-    font-size: 16px;   /* readable */
-  }
-
-  .coach-card p,
-  .staff-card p,
-  .achiever-card p {
-    font-size: 14px;   /* readable text */
-  }
-
   .coach-card,
   .staff-card,
   .achiever-card {
-    padding: 12px;     /* balance spacing */
+    min-height: auto; /* let height shrink on mobile */
+    padding: 12px;
   }
-    }
 
+  .coach-card img,
+  .staff-card img,
+  .achiever-card img { max-width: 110px; }
+
+  .coach-card h3,
+  .staff-card h3,
+  .achiever-card h3 { font-size: 16px; }
+
+  .coach-card p,
+  .staff-card p,
+  .achiever-card p { font-size: 14px; }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .coach-card img,
+  .staff-card img,
+  .achiever-card img { max-width: 150px; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .coach-card img,
+  .staff-card img,
+  .achiever-card img { max-width: 200px; }
+}
 </style> 
 </head>
 <body>
@@ -493,11 +491,12 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     ★ Latest News & Updates
     </h2>
 <section id="newsSection">
-<!-- ---------- ADMIN LOGIN ---------- -->
-<div id="adminLogin" style="text-align:center; margin-bottom:30px;">
-  <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
-         style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
-  <button id="adminLoginBtn"
+<!-- Admin Login -->
+    <div id="adminLogin">
+      <label for="adminPasswordInput" class="sr-only">Admin Password</label>
+      <input type="password" id="adminPasswordInput" placeholder="Enter admin password">
+      <button id="adminLoginBtn">Login</button>
+    </div>
           style="padding:8px 20px; font-size:16px; border-radius:5px; cursor:pointer;">
     Login
   </button>
@@ -554,6 +553,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminLoginDiv = document.getElementById("adminLogin");
   const newsImageInput = document.getElementById("newsImageFile");
   const imagePreview = document.getElementById("imagePreview");
+
+document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- IMAGE PREVIEW ----------
   newsImageInput.addEventListener("change", () => {
@@ -754,7 +755,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadNews();
 
 });
-</script>
 
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1465,6 +1465,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
