@@ -115,14 +115,15 @@ header nav a:hover {
 /* ===================== SECTIONS ===================== */
 section {
     width: 100%;
-    height: auto;
-    min-height: auto;
     padding: 60px 40px;
-    background: var(--white);
     margin-bottom: 20px;
 }
 
-section:nth-child(even) {
+.section-white {
+    background: var(--white);
+}
+
+.section-light {
     background: var(--light-gray);
 }
 
@@ -143,6 +144,7 @@ section h1 {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
     margin-top: 30px;
+    align-items: stretch;
 }
 
 /* ===================== CARDS ===================== */
@@ -153,14 +155,20 @@ section h1 {
 .news-card {
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
     text-align: center;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
 
 .sport-card {
+    padding: 20px;
     border-left: 6px solid var(--red);
+}
+
+.coach-card,
+.achiever-card,
+.news-card {
+    padding: 20px;
 }
 
 .sport-card:hover,
@@ -172,8 +180,7 @@ section h1 {
 }
 
 .coach-card img,
-.achiever-card img,
-.news-card img {
+.achiever-card img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -184,14 +191,15 @@ section h1 {
 /* ===================== GALLERY ===================== */
 .gallery-item {
     position: relative;
+    overflow: hidden;
 }
 
 .gallery-item img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 10px;
-    transition: 0.3s;
+    border-radius: 12px;
+    transition: transform 0.3s;
 }
 
 .gallery-item:hover img {
@@ -215,14 +223,7 @@ section h1 {
 }
 
 /* ===================== NEWS ===================== */
-.news-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .news-card {
-    width: 300px;
     overflow: hidden;
 }
 
@@ -310,7 +311,6 @@ button:hover {
     margin-top: 25px;
     margin-bottom: 15px;
     font-size: 1.3rem;
-    color: #000;
 }
 
 .social-links {
@@ -334,16 +334,7 @@ button:hover {
 }
 
 .social-links a:hover {
-    background-color: #00ff00;
-}
-
-.map-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto 0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background-color: var(--green);
 }
 
 /* ===================== FOOTER ===================== */
@@ -363,7 +354,6 @@ footer {
     font-size: 0.85rem;
     color: #ccc;
     text-align: right;
-    line-height: 1.2;
 }
 
 /* ===================== MOBILE FIXES ===================== */
@@ -406,21 +396,7 @@ footer {
         gap: 15px;
     }
 
-    .sport-card,
-    .coach-card,
-    .gallery-item,
-    .achiever-card,
-    .news-card {
-        padding: 15px;
-    }
-
     #contact {
         padding: 40px 15px;
     }
-
-    .social-links a {
-        width: 40px;
-        height: 40px;
-        font-size: 1.3rem;
-    }
-    }
+}
