@@ -383,7 +383,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
    <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
   ★ Latest News & Updates
 </h2>
-
     <!-- ---------- LOGIN ---------- -->
     <div id="loginBox" style="text-align:center; margin-bottom:30px;">
       <input id="email" type="email" placeholder="Admin Email" style="padding:8px;">
@@ -408,89 +407,128 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
   </div>
 </section>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
+  // ---------- IMPORTS ----------
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDqkdr-gg7eOzyI4oyvPMOWNAqggZknzG4",
-  authDomain: "malawiacademysports.firebaseapp.com",
-  projectId: "malawiacademysports",
-  storageBucket: "malawisportswebsite-4f960.appspot.com",
-  appId: "1:565646076684:web:74e8c2a955d02ba8a2b729"
-};
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-storage.js";
 
-// ---------- LOGIN ----------
-document.getElementById("loginBtn").onclick = async () => {
-  await signInWithEmailAndPassword(
-    auth,
-    email.value,
-    password.value
-  ).catch(err => alert(err.message));
-};
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-// ---------- AUTH STATE ----------
-onAuthStateChanged(auth, user => {
-  document.getElementById("uploadForm").style.display = user ? "block" : "none";
-  document.getElementById("loginBox").style.display = user ? "none" : "block";
-});
+  // ---------- FIREBASE CONFIG ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
+    authDomain: "malawi-academy-for-sports.firebaseapp.com",
+    projectId: "malawi-academy-for-sports",
+    storageBucket: "malawi-academy-for-sports.firebasestorage.app",
+    messagingSenderId: "328510653245",
+    appId: "1:328510653245:web:58e432add2e811faf6bb54",
+    measurementId: "G-D8GWZ6JV4R"
+  };
 
-// ---------- UPLOAD NEWS ----------
-document.getElementById("uploadBtn").onclick = async () => {
-  const title = newsTitle.value.trim();
-  const summary = newsSummary.value.trim();
-  const file = newsImage.files[0];
+  // ---------- INIT ----------
+  const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
 
-  if (!title || !summary || !file) {
-    alert("Fill all fields");
-    return;
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+  const auth = getAuth(app);
+
+  // ---------- LOGIN ----------
+  const loginBtn = document.getElementById("loginBtn");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+
+  loginBtn.onclick = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // ---------- AUTH STATE ----------
+  onAuthStateChanged(auth, user => {
+    document.getElementById("uploadForm").style.display = user ? "block" : "none";
+    document.getElementById("loginBox").style.display = user ? "none" : "block";
+  });
+
+  // ---------- UPLOAD NEWS ----------
+  document.getElementById("uploadBtn").onclick = async () => {
+    const title = newsTitle.value.trim();
+    const summary = newsSummary.value.trim();
+    const file = newsImage.files[0];
+
+    if (!title || !summary || !file) {
+      alert("Fill all fields");
+      return;
+    }
+
+    const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
+    await uploadBytes(imageRef, file);
+    const imageURL = await getDownloadURL(imageRef);
+
+    await addDoc(collection(db, "news"), {
+      title,
+      summary,
+      image: imageURL,
+      createdAt: serverTimestamp()
+    });
+
+    alert("News uploaded!");
+    newsTitle.value = "";
+    newsSummary.value = "";
+    newsImage.value = "";
+
+    loadNews();
+  };
+
+  // ---------- LOAD NEWS ----------
+  async function loadNews() {
+    newsContainer.innerHTML = "";
+
+    const q = query(
+      collection(db, "news"),
+      orderBy("createdAt", "desc")
+    );
+
+    const snap = await getDocs(q);
+
+    snap.forEach(doc => {
+      const n = doc.data();
+      newsContainer.innerHTML += `
+        <div style="width:300px; background:#fff; border-radius:10px;">
+          <img src="${n.image}" style="width:100%; border-radius:10px 10px 0 0;">
+          <div style="padding:15px;">
+            <h3>${n.title}</h3>
+            <p>${n.summary}</p>
+          </div>
+        </div>`;
+    });
   }
 
-  const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
-  await uploadBytes(imageRef, file);
-  const imageURL = await getDownloadURL(imageRef);
-
-  await addDoc(collection(db, "news"), {
-    title,
-    summary,
-    image: imageURL,
-    createdAt: serverTimestamp()
-  });
-
-  alert("News uploaded!");
   loadNews();
-};
-
-// ---------- LOAD NEWS ----------
-async function loadNews() {
-  newsContainer.innerHTML = "";
-  const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
-  const snap = await getDocs(q);
-
-  snap.forEach(doc => {
-    const n = doc.data();
-    newsContainer.innerHTML += `
-      <div style="width:300px; background:#fff; border-radius:10px;">
-        <img src="${n.image}" style="width:100%; border-radius:10px 10px 0 0;">
-        <div style="padding:15px;">
-          <h3>${n.title}</h3>
-          <p>${n.summary}</p>
-        </div>
-      </div>`;
-  });
-}
-
-loadNews();
 </script>
-
  </section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1199,6 +1237,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
