@@ -379,34 +379,35 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <!-- ---------- LATEST NEWS & UPDATES ---------- -->
 <section style="padding:50px 20px; background:#f9f9f9;">
   <div style="max-width:1200px; margin:auto;">
+ <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
+      ★ Latest News & Updates
+    </h2>
+<section id="newsSection">
 
    <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
-  ★ Latest News & Updates
-</h2>
-    <!-- ---------- LOGIN ---------- -->
-    <div id="loginBox" style="text-align:center; margin-bottom:30px;">
-      <input id="email" type="email" placeholder="Admin Email" style="padding:8px;">
-      <input id="password" type="password" placeholder="Password" style="padding:8px;">
-      <button id="loginBtn" style="padding:8px 20px;">Login</button>
-    </div>
-
-    <!-- ---------- UPLOAD FORM ---------- -->
-    <div id="uploadForm" style="display:none; text-align:center;">
-      <h3>Upload News</h3>
-
-      <input id="newsTitle" placeholder="Title" style="padding:8px;"><br>
-      <textarea id="newsSummary" placeholder="Summary" style="padding:8px; width:250px;"></textarea><br>
-      <input id="newsImage" type="file" accept="image/*"><br><br>
-
-      <button id="uploadBtn" style="padding:8px 20px; background:green; color:white;">
-        Upload
-      </button>
-    </div>
-
-    <div id="newsContainer" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;"></div>
-
+ <!-- ---------- LOGIN ---------- -->
+  <div id="loginBox" style="text-align:center; margin-bottom:30px;">
+    <input id="email" type="email" placeholder="Admin Email" style="padding:8px;">
+    <input id="password" type="password" placeholder="Password" style="padding:8px;">
+    <button id="loginBtn" style="padding:8px 20px;">Login</button>
   </div>
+
+  <!-- ---------- UPLOAD FORM ---------- -->
+  <div id="uploadForm" style="display:none; text-align:center;">
+    <h3>Upload News</h3>
+    <input id="newsTitle" placeholder="Title" style="padding:8px;"><br>
+    <textarea id="newsSummary" placeholder="Summary" style="padding:8px; width:250px;"></textarea><br>
+    <input id="newsImage" type="file" accept="image/*"><br>
+    <input id="newsImageURL" placeholder="Or paste image URL" style="padding:8px; width:250px;"><br><br>
+    <button id="uploadBtn" style="padding:8px 20px; background:green; color:white;">
+      Upload
+    </button>
+  </div>
+
+  <!-- ---------- NEWS DISPLAY ---------- -->
+  <div id="newsContainer" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;"></div>
 </section>
+
 <script type="module">
   // ---------- IMPORTS ----------
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
@@ -475,59 +476,83 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
   // ---------- UPLOAD NEWS ----------
   document.getElementById("uploadBtn").onclick = async () => {
-    const title = newsTitle.value.trim();
-    const summary = newsSummary.value.trim();
-    const file = newsImage.files[0];
+    const title = document.getElementById("newsTitle").value.trim();
+    const summary = document.getElementById("newsSummary").value.trim();
+    const file = document.getElementById("newsImage").files[0];
+    const imageURLInput = document.getElementById("newsImageURL").value.trim();
 
-    if (!title || !summary || !file) {
-      alert("Fill all fields");
+    if (!title || !summary || (!file && !imageURLInput)) {
+      alert("Fill all fields and provide an image or URL");
       return;
     }
 
-    const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
-    await uploadBytes(imageRef, file);
-    const imageURL = await getDownloadURL(imageRef);
+    let finalImageURL = "";
 
+    // If a file is uploaded, upload to Firebase Storage
+    if (file) {
+      const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
+      await uploadBytes(imageRef, file);
+      finalImageURL = await getDownloadURL(imageRef);
+    } else {
+      // Use URL directly
+      finalImageURL = imageURLInput;
+    }
+
+    // Save to Firestore
     await addDoc(collection(db, "news"), {
       title,
       summary,
-      image: imageURL,
+      image: finalImageURL,
       createdAt: serverTimestamp()
     });
 
     alert("News uploaded!");
-    newsTitle.value = "";
-    newsSummary.value = "";
-    newsImage.value = "";
+    document.getElementById("newsTitle").value = "";
+    document.getElementById("newsSummary").value = "";
+    document.getElementById("newsImage").value = "";
+    document.getElementById("newsImageURL").value = "";
 
     loadNews();
   };
 
   // ---------- LOAD NEWS ----------
   async function loadNews() {
+    const newsContainer = document.getElementById("newsContainer");
     newsContainer.innerHTML = "";
 
-    const q = query(
-      collection(db, "news"),
-      orderBy("createdAt", "desc")
-    );
+    try {
+      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
 
-    const snap = await getDocs(q);
+      if (snap.empty) {
+        newsContainer.innerHTML = "<p>No news found.</p>";
+        return;
+      }
 
-    snap.forEach(doc => {
-      const n = doc.data();
-      newsContainer.innerHTML += `
-        <div style="width:300px; background:#fff; border-radius:10px;">
-          <img src="${n.image}" style="width:100%; border-radius:10px 10px 0 0;">
-          <div style="padding:15px;">
-            <h3>${n.title}</h3>
-            <p>${n.summary}</p>
+      snap.forEach(doc => {
+        const n = doc.data();
+        const imageURL = n.image?.trim() || "https://via.placeholder.com/300";
+        const newsDate = n.createdAt?.toDate ? n.createdAt.toDate().toLocaleString() : "";
+
+        newsContainer.innerHTML += `
+          <div style="width:300px; background:#fff; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+            <img src="${imageURL}" alt="${n.title}" style="width:100%; object-fit:cover; border-radius:10px 10px 0 0;">
+            <div style="padding:15px;">
+              <h3>${n.title || "No Title"}</h3>
+              <p style="font-size:12px; color:gray;">${newsDate}</p>
+              <p>${n.summary || ""}</p>
+            </div>
           </div>
-        </div>`;
-    });
+        `;
+      });
+    } catch (err) {
+      console.error("Error loading news:", err);
+      newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+    }
   }
 
-  loadNews();
+  // ---------- INITIAL LOAD ----------
+  window.addEventListener("load", loadNews);
 </script>
  </section>  
 <!-- ---------- COACHES ---------- -->
@@ -1237,6 +1262,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
