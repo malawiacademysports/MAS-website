@@ -450,19 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
     imagePreview.src = newsImageInput.value || "";
     imagePreview.style.display = newsImageInput.value ? "block" : "none";
   });
-
-  // ---------- ADMIN LOGIN ----------
-  adminLoginBtn.addEventListener("click", () => {
-    if(adminPasswordInput.value === adminPassword) {
-      uploadForm.style.display = "block";
-      adminLoginDiv.style.display = "none";
-      alert("Admin login successful!");
-      loadNews();
-    } else {
-      alert("Incorrect password!");
-    }
-  });
-
   // ---------- UPLOAD NEWS ----------
   uploadBtn.addEventListener("click", async () => {
     const title = document.getElementById("newsTitle").value.trim();
@@ -1277,6 +1264,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
