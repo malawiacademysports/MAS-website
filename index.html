@@ -379,13 +379,11 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <!-- ---------- LATEST NEWS & UPDATES ---------- -->
 <section style="padding:50px 20px; background:#f9f9f9;">
   <div style="max-width:1200px; margin:auto;">
- <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
-      ★ Latest News & Updates
-    </h2>
 <section id="newsSection">
-
-   <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
- <!-- ---------- LOGIN ---------- -->
+  <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
+    ★ Latest News & Updates
+  </h2>
+  <!-- ---------- LOGIN ---------- -->
   <div id="loginBox" style="text-align:center; margin-bottom:30px;">
     <input id="email" type="email" placeholder="Admin Email" style="padding:8px;">
     <input id="password" type="password" placeholder="Password" style="padding:8px;">
@@ -409,7 +407,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 </section>
 
 <script type="module">
-  // ---------- IMPORTS ----------
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
 
@@ -447,7 +444,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     measurementId: "G-D8GWZ6JV4R"
   };
 
-  // ---------- INIT ----------
   const app = initializeApp(firebaseConfig);
   getAnalytics(app);
 
@@ -488,17 +484,14 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
     let finalImageURL = "";
 
-    // If a file is uploaded, upload to Firebase Storage
     if (file) {
       const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
       await uploadBytes(imageRef, file);
       finalImageURL = await getDownloadURL(imageRef);
     } else {
-      // Use URL directly
-      finalImageURL = imageURLInput;
+      finalImageURL = imageURLInput.trim();
     }
 
-    // Save to Firestore
     await addDoc(collection(db, "news"), {
       title,
       summary,
@@ -521,6 +514,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     newsContainer.innerHTML = "";
 
     try {
+      // Use 'createdAt' for new documents
       const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
       const snap = await getDocs(q);
 
@@ -551,7 +545,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     }
   }
 
-  // ---------- INITIAL LOAD ----------
   window.addEventListener("load", loadNews);
 </script>
  </section>  
@@ -1262,6 +1255,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
