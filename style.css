@@ -237,4 +237,65 @@ footer {
   color: #fff;
   text-align: center;
   padding: 25px;
-      }
+    }
+
+/* =================================================
+   MOBILE FIXES ONLY – DOES NOT AFFECT DESKTOP
+   Target: Achievers / Models, Staff text, Registration
+================================================= */
+@media (max-width: 768px) {
+
+  /* ===== ACHIEVERS / MODELS CARDS ===== */
+  #models-achievers .profile-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #models-achievers .profile-card {
+    width: 95%;
+    margin: 15px auto;
+    border-top: 5px solid var(--green); /* force green line */
+  }
+
+  #models-achievers .profile-card img {
+    height: 260px;              /* bigger image on mobile ONLY */
+    object-fit: cover;
+  }
+
+  #models-achievers .profile-content p {
+    width: 100%;
+    text-align: left;           /* stops tall narrow text */
+  }
+
+  /* ===== STAFF TEXT FULL WIDTH ===== */
+  #staff p,
+  #staff .staff-description {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  /* ===== COACH PROFILES ===== */
+  #coaches .profile-card {
+    width: 95%;
+    margin: 15px auto;
+  }
+
+  #coaches .profile-card img {
+    height: 240px;
+  }
+
+  /* ===== REGISTRATION FORM ===== */
+  #registration .form-box {
+    width: 95%;
+    padding: 20px;
+    border-left: none;     /* remove red line on mobile ONLY */
+  }
+
+  #registration p {
+    width: 100%;
+    text-align: left;
+  }
+
+       }
