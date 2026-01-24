@@ -134,233 +134,7 @@ section h1 {
     margin-bottom: 20px;
 }
 
-/* ===================== GRIDS ===================== */
-.sports-grid,
-.coach-grid,
-.gallery-grid,
-.achiever-grid,
-.news-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-    align-items: stretch;
-}
-
-/* ===================== CARDS ===================== */
-.sport-card,
-.coach-card,
-.gallery-item,
-.achiever-card,
-.news-card {
-    background: #fff;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.sport-card {
-    padding: 20px;
-    border-left: 6px solid var(--red);
-}
-
-.coach-card,
-.achiever-card,
-.news-card {
-    padding: 20px;
-}
-
-.sport-card:hover,
-.coach-card:hover,
-.gallery-item:hover,
-.achiever-card:hover,
-.news-card:hover {
-    transform: translateY(-5px);
-}
-
-.coach-card img,
-.achiever-card img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto 10px;
-}
-
-/* ===================== GALLERY ===================== */
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 12px;
-    transition: transform 0.3s;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.05);
-}
-
-.overlay {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.gallery-item:hover .overlay {
-    opacity: 1;
-}
-
-/* MOBILE FIX: SHOW TEXT WITHOUT HOVER */
-@media (max-width: 768px) {
-    .overlay {
-        opacity: 1;
-        position: relative;
-    }
-}
-
-/* ===================== NEWS ===================== */
-.news-card {
-    overflow: hidden;
-}
-
-.news-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.news-card h3 {
-    margin: 10px 0 5px;
-    font-size: 1.2em;
-}
-
-.news-card p {
-    font-size: 0.9em;
-    color: #555;
-}
-
-.news-card a {
-    color: #d4af37;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-/* ===================== FORM ===================== */
-.form-box {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 80%;
-    margin: auto;
-    border-left: 6px solid var(--red);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-button {
-    background: var(--red);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: var(--green);
-}
-
-/* ===================== CONTACT ===================== */
-#contact {
-    text-align: center;
-    padding: 60px 20px;
-    background: #f5f5f5;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 40px auto;
-}
-
-#contact h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    font-weight: 700;
-}
-
-#contact p {
-    font-size: 1.1rem;
-    margin: 8px 0;
-}
-
-#contact h3 {
-    margin-top: 25px;
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-}
-
-/* ===================== FOOTER ===================== */
-footer {
-    text-align: center;
-    padding: 25px 20px;
-    margin-top: 40px;
-    background: #000;
-    color: #fff;
-    position: relative;
-}
-
-.developer-credit {
-    position: absolute;
-    right: 10px;
-    bottom: 5px;
-    font-size: 0.85rem;
-    color: #ccc;
-}
-
-/* ===================== GLOBAL SAFETY ===================== */
-p, h1, h2, h3, h4, h5, h6 {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* ==============================
-   PROFILE CARDS - Models & Achievers
-============================== */
-#models-achievers {
-    padding: 60px 15px;
-    background: var(--light-gray);
-    text-align: center;
-}
-
-#models-achievers h1 {
-    font-size: 2rem;
-    margin-bottom: 40px;
-    font-weight: 700;
-}
-
-/* Cards container */
+/* ===================== PROFILE CARDS - MODELS & ACHIEVERS ===================== */
 .cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -368,76 +142,151 @@ p, h1, h2, h3, h4, h5, h6 {
     gap: 25px;
 }
 
-/* Individual card */
 .card {
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    border-top: 5px solid var(--green); /* green top line */
+    border-top: 5px solid var(--green); /* Green line on top */
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 260px;          /* desktop width */
-    min-height: 320px;     /* medium height */
-    max-height: 380px;     /* prevents tall cards */
+    transition: transform 0.25s, box-shadow 0.25s;
+    width: 260px;
+    min-height: 350px;
+    max-height: 380px;
     display: flex;
     flex-direction: column;
 }
 
-/* Image */
 .card img {
     width: 100%;
-    height: 160px;         /* balanced image height */
+    height: 180px;
     object-fit: cover;
 }
 
-/* Card content container */
-.card-content {
-    padding: 10px 15px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* Card text */
 .card h3 {
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 1.25rem;
     margin: 10px 0 5px;
+    color: #333;
 }
 
 .card p {
     font-size: 0.95rem;
-    color: #555;
+    margin: 0 15px 12px 15px;
     line-height: 1.5;
-    margin-bottom: 8px;
-    word-wrap: break-word;
-    overflow: hidden;
+    color: #555;
+    flex-grow: 1; /* Prevents card stretching */
 }
 
-/* Hover effect */
 .card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-/* ==============================
-   RESPONSIVE - MOBILE
-============================== */
+/* ===================== STAFF - KAMUZU INSTITUTE ===================== */
+#kamuzu-staff {
+    padding: 60px 15px;
+    text-align: center;
+    background: var(--light-gray);
+}
+
+#kamuzu-staff h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.staff-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.staff-profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.staff-description {
+    text-align: center;
+}
+
+.staff-description h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--green);
+}
+
+.staff-description p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* ===================== ATHLETE REGISTRATION FORM ===================== */
+.form-box {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-left: none; /* remove red line */
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.form-box button {
+    background: var(--green);
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-box button:hover {
+    background: var(--red);
+}
+
+/* ===================== RESPONSIVE MOBILE ===================== */
 @media (max-width: 768px) {
+    /* Profile Cards */
     .cards-container {
-        flex-direction: column;   /* stack cards vertically */
+        flex-direction: column;
         align-items: center;
     }
 
     .card {
-        width: 90%;               /* almost full width on mobile */
-        max-height: none;         /* allow expansion for mobile */
+        width: 90%;
+        min-height: auto;
+        max-height: none;
     }
 
     .card img {
-        height: 140px;            /* mobile balanced image height */
+        height: 200px;
     }
 
     .card h3 {
@@ -447,4 +296,29 @@ p, h1, h2, h3, h4, h5, h6 {
     .card p {
         font-size: 0.9rem;
     }
-        }
+
+    /* Staff Section */
+    .staff-profile img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .staff-description h3 {
+        font-size: 1.3rem;
+    }
+
+    .staff-description p {
+        font-size: 0.95rem;
+    }
+
+    /* Form */
+    .form-box {
+        padding: 20px;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
+        padding: 10px;
+    }
+    }
