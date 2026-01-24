@@ -1,324 +1,240 @@
+/* =====================
+   ROOT VARIABLES
+===================== */
 :root {
-    --black: #000000;
-    --red: #d40000;
-    --green: #007a00;
-    --white: #ffffff;
-    --light-gray: #f9f9f9;
+  --black: #000000;
+  --red: #d40000;
+  --green: #007a00;
+  --white: #ffffff;
+  --light-gray: #f9f9f9;
+  --text-dark: #333;
 }
 
-/* ===================== GLOBAL RESET ===================== */
+/* =====================
+   GLOBAL RESET
+===================== */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    background: var(--light-gray);
-    color: #333;
+  font-family: 'Poppins', sans-serif;
+  background: var(--light-gray);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+  max-width: 100%;
+  display: block;
 }
 
-/* ===================== HEADER ===================== */
-header {
-    background: var(--black);
-    color: var(--white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-header .logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-header .logo img {
-    height: 50px;
-}
-
-header nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-header nav a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-header nav a:hover {
-    color: var(--red);
-}
-
-/* ===================== HERO ===================== */
-.home {
-    background: url('YOUR-PHOTO-URL-HERE') center/cover no-repeat;
-    min-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: var(--white);
-    text-shadow: 2px 2px 5px black;
-}
-
-.home h1 {
-    font-size: 50px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    background: rgba(0,0,0,0.4);
-    padding: 10px 25px;
-    border-radius: 10px;
-}
-
-.home p {
-    font-size: 22px;
-    font-weight: 600;
-    color: #fff;
-}
-
-.cta-button {
-    margin-top: 20px;
-    background: var(--red);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.cta-button:hover {
-    background: var(--green);
-}
-
-/* ===================== SECTIONS ===================== */
+/* =====================
+   SECTIONS & HEADINGS
+===================== */
 section {
-    width: 100%;
-    padding: 60px 40px;
-    margin-bottom: 20px;
-}
-
-.section-white {
-    background: var(--white);
-}
-
-.section-light {
-    background: var(--light-gray);
+  padding: 60px 20px;
 }
 
 section h1 {
-    text-align: center;
-    font-size: 32px;
-    color: var(--green);
-    margin-bottom: 20px;
+  text-align: center;
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 35px;
 }
 
-/* ===================== PROFILE CARDS - MODELS & ACHIEVERS ===================== */
-.cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
+/* =====================
+   UNIVERSAL PROFILE CARDS
+   (Staff | Coaches | Achievers)
+===================== */
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.card {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    border-top: 5px solid var(--green); /* Green line on top */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.25s, box-shadow 0.25s;
-    width: 260px;
-    min-height: 350px;
-    max-height: 380px;
-    display: flex;
-    flex-direction: column;
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  border-top: 5px solid var(--green); /* ✅ GREEN LINE */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+.profile-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-.card h3 {
-    font-size: 1.25rem;
-    margin: 10px 0 5px;
-    color: #333;
+.profile-card img {
+  width: 100%;
+  height: 200px;              /* desktop balanced */
+  object-fit: cover;
 }
 
-.card p {
-    font-size: 0.95rem;
-    margin: 0 15px 12px 15px;
-    line-height: 1.5;
-    color: #555;
-    flex-grow: 1; /* Prevents card stretching */
+.profile-content {
+  padding: 18px;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+.profile-content h3 {
+  font-size: 1.15rem;
+  margin-bottom: 5px;
 }
 
-/* ===================== STAFF - KAMUZU INSTITUTE ===================== */
-#kamuzu-staff {
-    padding: 60px 15px;
-    text-align: center;
-    background: var(--light-gray);
+.profile-content .role {
+  font-size: 0.9rem;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
-#kamuzu-staff h1 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    font-weight: 700;
+.profile-content p {
+  font-size: 0.95rem;
+  color: #555;
 }
 
-.staff-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+/* =====================
+   STAFF GROUP IMAGE
+===================== */
+.staff-group {
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
 }
 
-.staff-profile img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    object-fit: cover;
+.staff-group img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
 
-.staff-description {
-    text-align: center;
+.staff-group p {
+  max-width: 900px;
+  margin: auto;
+  font-size: 1rem;
 }
 
-.staff-description h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: var(--green);
+/* =====================
+   GALLERY
+===================== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
-.staff-description p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 10px;
+.gallery-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
-/* ===================== ATHLETE REGISTRATION FORM ===================== */
+/* =====================
+   REGISTRATION FORM
+===================== */
 .form-box {
-    background: #fff;
-    padding: 25px 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    border-left: none; /* remove red line */
+  background: #fff;
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.form-box input,
-.form-box select,
-.form-box textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-top: 10px;
-    box-sizing: border-box;
+.form-box h3 {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-.form-box button {
-    background: var(--green);
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: background 0.3s;
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-.form-box button:hover {
-    background: var(--red);
+button {
+  width: 100%;
+  background: var(--green);
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-/* ===================== RESPONSIVE MOBILE ===================== */
+button:hover {
+  background: var(--red);
+}
+
+/* =====================
+   MOBILE OPTIMIZATION
+===================== */
 @media (max-width: 768px) {
-    /* Profile Cards */
-    .cards-container {
-        flex-direction: column;
-        align-items: center;
-    }
 
-    .card {
-        width: 90%;
-        min-height: auto;
-        max-height: none;
-    }
+  section {
+    padding: 45px 15px;
+  }
 
-    .card img {
-        height: 200px;
-    }
+  /* PROFILE CARDS MOBILE */
+  .profile-card {
+    width: 95%;
+    margin: auto;
+  }
 
-    .card h3 {
-        font-size: 1.1rem;
-    }
+  .profile-card img {
+    height: 260px;    /* ✅ BIGGER images on mobile */
+  }
 
-    .card p {
-        font-size: 0.9rem;
-    }
+  .profile-content p {
+    width: 100%;
+    text-align: left;
+  }
 
-    /* Staff Section */
-    .staff-profile img {
-        width: 250px;
-        height: 250px;
-    }
+  /* GALLERY SLIDER */
+  .gallery-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-snap-type: x mandatory;
+  }
 
-    .staff-description h3 {
-        font-size: 1.3rem;
-    }
+  .gallery-item {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
 
-    .staff-description p {
-        font-size: 0.95rem;
-    }
+  .gallery-grid::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Form */
-    .form-box {
-        padding: 20px;
-    }
+  /* FORM MOBILE */
+  .form-box {
+    width: 95%;
+    padding: 20px;
+  }
+}
 
-    .form-box input,
-    .form-box select,
-    .form-box textarea {
-        padding: 10px;
-    }
-    }
+/* =====================
+   FOOTER
+===================== */
+footer {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 25px;
+      }
