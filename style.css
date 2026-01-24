@@ -1,6 +1,6 @@
-/* =====================
+/* ==================================================
    ROOT VARIABLES
-===================== */
+================================================== */
 :root {
   --black: #000000;
   --red: #d40000;
@@ -10,9 +10,9 @@
   --text-dark: #333;
 }
 
-/* =====================
+/* ==================================================
    GLOBAL RESET
-===================== */
+================================================== */
 *,
 *::before,
 *::after {
@@ -33,9 +33,9 @@ img {
   display: block;
 }
 
-/* =====================
+/* ==================================================
    SECTIONS & HEADINGS
-===================== */
+================================================== */
 section {
   padding: 60px 20px;
 }
@@ -47,10 +47,10 @@ section h1 {
   margin-bottom: 35px;
 }
 
-/* =====================
+/* ==================================================
    UNIVERSAL PROFILE CARDS
-   (Staff | Coaches | Achievers)
-===================== */
+   (Staff | Coaches | Achievers / Models)
+================================================== */
 .profile-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -60,9 +60,9 @@ section h1 {
 }
 
 .profile-card {
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
-  border-top: 5px solid var(--green); /* ✅ GREEN LINE */
+  border-top: 5px solid var(--green);   /* GREEN LINE */
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   overflow: hidden;
   text-align: center;
@@ -74,19 +74,25 @@ section h1 {
   box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
+/* PROFILE IMAGE */
 .profile-card img {
   width: 100%;
-  height: 200px;              /* desktop balanced */
+  height: 200px;
   object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
 }
 
+/* PROFILE TEXT */
 .profile-content {
   padding: 18px;
 }
 
 .profile-content h3 {
   font-size: 1.15rem;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  color: #222;
 }
 
 .profile-content .role {
@@ -99,11 +105,12 @@ section h1 {
 .profile-content p {
   font-size: 0.95rem;
   color: #555;
+  line-height: 1.5;
 }
 
-/* =====================
+/* ==================================================
    STAFF GROUP IMAGE
-===================== */
+================================================== */
 .staff-group {
   max-width: 1000px;
   margin: auto;
@@ -120,11 +127,12 @@ section h1 {
   max-width: 900px;
   margin: auto;
   font-size: 1rem;
+  text-align: left;
 }
 
-/* =====================
+/* ==================================================
    GALLERY
-===================== */
+================================================== */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -138,9 +146,9 @@ section h1 {
   border-radius: 12px;
 }
 
-/* =====================
+/* ==================================================
    REGISTRATION FORM
-===================== */
+================================================== */
 .form-box {
   background: #fff;
   max-width: 800px;
@@ -148,11 +156,6 @@ section h1 {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.form-box h3 {
-  text-align: center;
-  margin-bottom: 15px;
 }
 
 input,
@@ -181,31 +184,70 @@ button:hover {
   background: var(--red);
 }
 
-/* =====================
-   MOBILE OPTIMIZATION
-===================== */
+/* ==================================================
+   CRITICAL FIX – TEXT VISIBILITY (CHROME BUG)
+================================================== */
+.profile-card,
+.profile-card h3,
+.profile-card p,
+.profile-card .role {
+  color: #333 !important;
+  background-color: #ffffff;
+}
+
+/* ==================================================
+   MOBILE-ONLY FIXES
+================================================== */
 @media (max-width: 768px) {
 
   section {
     padding: 45px 15px;
   }
 
-  /* PROFILE CARDS MOBILE */
+  /* --------------------------
+     PROFILE CARDS CENTERED
+  -------------------------- */
+  #models-achievers .profile-cards,
+  #coaches .profile-cards,
+  #staff .profile-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center all cards */
+  }
+
   .profile-card {
     width: 95%;
-    margin: auto;
+    margin: 15px auto;
+    text-align: center; /* center text */
   }
 
   .profile-card img {
-    height: 260px;    /* ✅ BIGGER images on mobile */
+    height: 260px; /* larger on mobile */
+    margin: 0 auto;
+    display: block;
+    border-radius: 50%; /* round */
   }
 
+  .profile-content h3,
+  .profile-content .role,
   .profile-content p {
-    width: 100%;
-    text-align: left;
+    text-align: center; /* center all text */
   }
 
-  /* GALLERY SLIDER */
+  /* STAFF TEXT FULL WIDTH */
+  #staff p {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* REGISTRATION FORM */
+  #registration .form-box {
+    width: 95%;
+    padding: 20px;
+    border-left: none; /* remove red line */
+  }
+
+  /* GALLERY HORIZONTAL SLIDE */
   .gallery-grid {
     display: flex;
     overflow-x: auto;
@@ -221,81 +263,14 @@ button:hover {
   .gallery-grid::-webkit-scrollbar {
     display: none;
   }
-
-  /* FORM MOBILE */
-  .form-box {
-    width: 95%;
-    padding: 20px;
-  }
 }
 
-/* =====================
+/* ==================================================
    FOOTER
-===================== */
+================================================== */
 footer {
   background: #000;
   color: #fff;
   text-align: center;
   padding: 25px;
-    }
-
-/* =================================================
-   MOBILE FIXES ONLY – DOES NOT AFFECT DESKTOP
-   Target: Achievers / Models, Staff text, Registration
-================================================= */
-@media (max-width: 768px) {
-
-  /* ===== ACHIEVERS / MODELS CARDS ===== */
-  #models-achievers .profile-cards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #models-achievers .profile-card {
-    width: 95%;
-    margin: 15px auto;
-    border-top: 5px solid var(--green); /* force green line */
-  }
-
-  #models-achievers .profile-card img {
-    height: 260px;              /* bigger image on mobile ONLY */
-    object-fit: cover;
-  }
-
-  #models-achievers .profile-content p {
-    width: 100%;
-    text-align: left;           /* stops tall narrow text */
-  }
-
-  /* ===== STAFF TEXT FULL WIDTH ===== */
-  #staff p,
-  #staff .staff-description {
-    width: 100%;
-    max-width: 100%;
-    text-align: left;
-  }
-
-  /* ===== COACH PROFILES ===== */
-  #coaches .profile-card {
-    width: 95%;
-    margin: 15px auto;
-  }
-
-  #coaches .profile-card img {
-    height: 240px;
-  }
-
-  /* ===== REGISTRATION FORM ===== */
-  #registration .form-box {
-    width: 95%;
-    padding: 20px;
-    border-left: none;     /* remove red line on mobile ONLY */
-  }
-
-  #registration p {
-    width: 100%;
-    text-align: left;
-  }
-
-       }
+}
