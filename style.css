@@ -51,7 +51,6 @@ header .logo img {
     height: 50px;
 }
 
-
 header nav {
     display: flex;
     gap: 20px;
@@ -95,7 +94,7 @@ header nav a:hover {
 .home p {
     font-size: 22px;
     font-weight: 600;
-    color: #fff; /* ✅ FIXED */
+    color: #fff;
 }
 
 .cta-button {
@@ -223,7 +222,7 @@ section h1 {
     opacity: 1;
 }
 
-/* ✅ MOBILE FIX: SHOW TEXT WITHOUT HOVER */
+/* MOBILE FIX: SHOW TEXT WITHOUT HOVER */
 @media (max-width: 768px) {
     .overlay {
         opacity: 1;
@@ -344,93 +343,108 @@ footer {
 p, h1, h2, h3, h4, h5, h6 {
     visibility: visible;
     opacity: 1;
-    }
+}
+
 /* ==============================
    PROFILE CARDS - Models & Achievers
 ============================== */
 #models-achievers {
-  padding: 60px 15px;
-  background: var(--light-gray);
-  text-align: center;
+    padding: 60px 15px;
+    background: var(--light-gray);
+    text-align: center;
 }
 
 #models-achievers h1 {
-  font-size: 2rem;
-  margin-bottom: 40px;
-  font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    font-weight: 700;
 }
 
 /* Cards container */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
 }
 
 /* Individual card */
 .card {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  border-top: 5px solid #007a00; /* green line */
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  width: 260px;               /* desktop width */
-  display: flex;
-  flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border-top: 5px solid var(--green); /* green top line */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 260px;          /* desktop width */
+    min-height: 320px;     /* medium height */
+    max-height: 380px;     /* prevents tall cards */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Image */
 .card img {
-  width: 100%;
-  height: 180px;               /* shorter for balanced cards */
-  object-fit: cover;
+    width: 100%;
+    height: 160px;         /* balanced image height */
+    object-fit: cover;
+}
+
+/* Card content container */
+.card-content {
+    padding: 10px 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 /* Card text */
 .card h3 {
-  font-size: 1.2rem;
-  color: #333;
-  margin: 12px 0 5px 0;
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0 5px;
 }
 
 .card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 0 15px 15px 15px;
-  line-height: 1.5;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 /* Hover effect */
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-/* -----------------------------
+/* ==============================
    RESPONSIVE - MOBILE
------------------------------ */
+============================== */
 @media (max-width: 768px) {
-  .cards-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .card {
-    width: 90%;               /* nearly full width on mobile */
-  }
-
-  .card img {
-    height: 160px;            /* balanced mobile image height */
-  }
-
-  .card h3 {
-    font-size: 1.1rem;
-  }
-
-  .card p {
-    font-size: 0.9rem;
-  }
+    .cards-container {
+        flex-direction: column;   /* stack cards vertically */
+        align-items: center;
     }
+
+    .card {
+        width: 90%;               /* almost full width on mobile */
+        max-height: none;         /* allow expansion for mobile */
+    }
+
+    .card img {
+        height: 140px;            /* mobile balanced image height */
+    }
+
+    .card h3 {
+        font-size: 1.1rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+        }
