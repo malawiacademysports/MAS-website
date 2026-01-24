@@ -51,6 +51,7 @@ header .logo img {
     height: 50px;
 }
 
+
 header nav {
     display: flex;
     gap: 20px;
@@ -343,4 +344,93 @@ footer {
 p, h1, h2, h3, h4, h5, h6 {
     visibility: visible;
     opacity: 1;
+    }
+/* ==============================
+   PROFILE CARDS - Models & Achievers
+============================== */
+#models-achievers {
+  padding: 60px 15px;
+  background: var(--light-gray);
+  text-align: center;
+}
+
+#models-achievers h1 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+/* Cards container */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+/* Individual card */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border-top: 5px solid #007a00; /* green line */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 260px;               /* desktop width */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image */
+.card img {
+  width: 100%;
+  height: 180px;               /* shorter for balanced cards */
+  object-fit: cover;
+}
+
+/* Card text */
+.card h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 12px 0 5px 0;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0 15px 15px 15px;
+  line-height: 1.5;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* -----------------------------
+   RESPONSIVE - MOBILE
+----------------------------- */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;               /* nearly full width on mobile */
+  }
+
+  .card img {
+    height: 160px;            /* balanced mobile image height */
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
     }
