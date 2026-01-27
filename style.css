@@ -181,6 +181,7 @@ section p {
 /* ==================================================
    ROLES / POSITIONS
 ================================================== */
+
 /* Achievers role green */
 .profile-card .role {
   color: var(--green);
@@ -189,9 +190,13 @@ section p {
 }
 
 /* Staff positions black only */
-.staff-card .role,
-.staff-card strong {
-  color: #000;
+.staff-card p {
+  color: #000;       /* entire paragraph text black */
+  font-weight: normal;
+}
+
+.staff-card p strong {
+  color: #000;       /* strong text inside paragraph black */
   font-weight: normal;
 }
 
@@ -199,6 +204,7 @@ section p {
 .coach-card strong {
   color: #222;
 }
+
 
 /* ==================================================
    TEXT CONTENT
