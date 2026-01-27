@@ -10,175 +10,126 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 <style>
-/* ================================
-   MOBILE RESPONSIVE STYLES
-================================ */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-}
-
-.container {
-  width: 100%;
-  padding: 0 15px;
-  margin: auto;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-h1, h2, p {
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-  nav ul {
-    display: none;
-  }
-  nav .mobile-menu {
-    display: block;
-  }
-}
-
-@media (max-width: 600px) {
-  section {
-    display: block;
-    width: 100%;
-  }
-}
-
 :root {
-  --black: #000000;
-  --red: #d40000;
-  --green: #007a00;
-  --white: #ffffff;
-  --light-gray: #f9f9f9;
+    --black: #000000;
+    --red: #d40000;
+    --green: #007a00;
+    --white: #ffffff;
+    --light-gray: #f9f9f9;
 }
 
 /* ---------- RESET & BODY ---------- */
+* { box-sizing: border-box; }
 body {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
-  scroll-behavior: smooth;
-  background: var(--light-gray);
-  color: #333;
-  margin: 0;
-  padding: 0;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    background: var(--light-gray);
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 /* ---------- HEADINGS ---------- */
 section h1 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
 }
 section h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 /* ---------- HEADER ---------- */
 header {
-  background: var(--black);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 40px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  flex-wrap: wrap;
+    background: var(--black);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: wrap;
 }
 
 /* LOGO + TEXT VERTICAL STACK */
 header .logo-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 header .logo-text img {
-  width: 80px;
-  height: auto;
-  margin: 5px 0;
-  border-radius: 10px;
+    width: 80px;
+    height: auto;
+    margin: 5px 0;
+    border-radius: 10px;
 }
 header .logo-text .academy {
-  color: var(--green);
-  font-weight: 700;
-  font-size: 1.4rem;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1.4rem;
 }
 header .logo-text .council {
-  color: var(--white);
-  font-weight: 600;
-  font-size: 1.2rem;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 /* NAVBAR */
 .navbar {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-left: auto;
-  background: #111;
-  padding: 10px 20px;
-  border-radius: 0 0 10px 10px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-left: auto;
+    background: #111;
+    padding: 10px 20px;
+    border-radius: 0 0 10px 10px;
 }
 .navbar a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 600;
-  padding: 8px 12px;
-  transition: 0.3s;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: 0.3s;
 }
 .navbar a:hover {
-  color: var(--green);
-  background-color: #222;
-  border-radius: 5px;
+    color: var(--green);
+    background-color: #222;
+    border-radius: 5px;
 }
 
-/* ---------- HAMBURGER BUTTON ---------- */
-.menu-toggle {
-  display: none; /* hidden on desktop */
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--white);
+/* ---------- SEARCH FORM ---------- */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    gap: 8px;
 }
-
-/* ---------- MOBILE ---------- */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block; /* show hamburger on mobile */
-  }
-
-  .navbar {
-    display: none; /* hide navbar initially on mobile */
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-    margin-left: 0;
-    padding: 10px 0;
-    border-radius: 0 0 10px 10px;
-  }
-
-       .navbar.active {
-        display: flex; /* show navbar when hamburger clicked */
-    }
-
-    header {
-   
-    justify-content: space-between; /* keep hamburger right */
-  
-    }
+.search-form input[type="text"] {
+    width: 220px;       /* medium size */
+    max-width: 80vw;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.search-form button {
+    padding: 8px 16px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.search-form button:hover {
+    background: var(--red);
 }
 
 /* ---------- SEARCH FORM ---------- */
@@ -1264,6 +1215,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
