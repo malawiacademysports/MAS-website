@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="TMElaG6hTidV8ShhDdIPtxEl46AGRBfczhddJvYUGgc" />
 <title>Malawi Academy for Sports | Malawi National Council of Sports</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 <style>
 :root {
     --black: #000000;
@@ -284,206 +286,176 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     </div>
 </section>
 <!-- ---------- LATEST NEWS & UPDATES ---------- -->
-<section id="news" class="news-section" style="padding:50px 20px; background:#f9f9f9;">
-  <div class="container" style="max-width:1200px; margin:0 auto;">
-    
-    <h2 style="text-align:center; font-size:2em; color:#000; margin-bottom:40px;">
-      ★ Latest News & Updates
-    </h2>
+<section style="padding:50px 20px; background:#f9f9f9;">
+  <div style="max-width:1200px; margin:auto;">
 <section id="newsSection">
-  <!-- ---------- ADMIN LOGIN ---------- -->
-  <div id="adminLogin" style="text-align:center; margin-bottom:30px;">
-    <input type="password" id="adminPasswordInput" placeholder="Enter admin password"
-           style="padding:8px 15px; font-size:16px; border-radius:5px; border:1px solid #ccc;">
-    <button id="adminLoginBtn"
-            style="padding:8px 20px; font-size:16px; border:none; border-radius:5px; background:red; color:white; cursor:pointer;">
-      Login as Admin
+  <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
+    ★ Latest News & Updates
+  </h2>
+  <!-- ---------- LOGIN ---------- -->
+  <div id="loginBox" style="text-align:center; margin-bottom:30px;">
+    <input id="email" type="email" placeholder="Admin Email" style="padding:8px;">
+    <input id="password" type="password" placeholder="Password" style="padding:8px;">
+    <button id="loginBtn" style="padding:8px 20px;">Login</button>
+  </div>
+
+  <!-- ---------- UPLOAD FORM ---------- -->
+  <div id="uploadForm" style="display:none; text-align:center;">
+    <h3>Upload News</h3>
+    <input id="newsTitle" placeholder="Title" style="padding:8px;"><br>
+    <textarea id="newsSummary" placeholder="Summary" style="padding:8px; width:250px;"></textarea><br>
+    <input id="newsImage" type="file" accept="image/*"><br>
+    <input id="newsImageURL" placeholder="Or paste image URL" style="padding:8px; width:250px;"><br><br>
+    <button id="uploadBtn" style="padding:8px 20px; background:green; color:white;">
+      Upload
     </button>
   </div>
 
-  <!-- ---------- UPLOAD NEWS FORM (ADMIN ONLY) ---------- -->
-  <div id="uploadForm" style="display:none; text-align:center; margin-bottom:40px;">
-    <h3>Upload News (Admin Only)</h3>
-
-    <input type="text" id="newsTitle" placeholder="News Title"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="text" id="newsSummary" placeholder="News Summary"
-           style="padding:8px; margin:5px; width:250px;">
-    <input type="url" id="newsImage" placeholder="Image URL"
-           style="padding:8px; margin:5px; width:250px;">
-
-    <!-- IMAGE PREVIEW -->
-    <br>
-    <img id="imagePreview" style="display:none; width:230px; margin-top:10px; border-radius:10px;">
-    <br>
-    <button id="uploadBtn"
-            style="padding:8px 20px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
-      Upload News
-    </button>
-  </div>
-
-  <!-- ---------- NEWS DISPLAY AREA ---------- -->
-  <div id="newsContainer"
-       style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
-  </div>
+  <!-- ---------- NEWS DISPLAY ---------- -->
+  <div id="newsContainer" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;"></div>
 </section>
 
-<!-- ---------- FIREBASE SDK (MODULAR 12.6.0) ---------- -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-storage.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
   // ---------- FIREBASE CONFIG ----------
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAjuxh9gE9iQjnEMO6OTJK3ZUqGhSV9Geg",
-  authDomain: "malawisportswebsite-4f960.firebaseapp.com",
-  projectId: "malawisportswebsite-4f960",
-  storageBucket: "malawisportswebsite-4f960.firebasestorage.app",
-  messagingSenderId: "509037310300",
-  appId: "1:509037310300:web:9a010663d162a7aa53d199",
-  measurementId: "G-FZTWVF8JTL"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
+    authDomain: "malawi-academy-for-sports.firebaseapp.com",
+    projectId: "malawi-academy-for-sports",
+    storageBucket: "malawi-academy-for-sports.firebasestorage.app",
+    messagingSenderId: "328510653245",
+    appId: "1:328510653245:web:58e432add2e811faf6bb54",
+    measurementId: "G-D8GWZ6JV4R"
+  };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
+
   const db = getFirestore(app);
+  const storage = getStorage(app);
+  const auth = getAuth(app);
 
-  // ---------- VARIABLES ----------
-  const adminPassword = "Tblwat0921";
-  const adminLoginBtn = document.getElementById("adminLoginBtn");
-  const adminPasswordInput = document.getElementById("adminPasswordInput");
-  const uploadForm = document.getElementById("uploadForm");
-  const uploadBtn = document.getElementById("uploadBtn");
-  const newsContainer = document.getElementById("newsContainer");
-  const adminLoginDiv = document.getElementById("adminLogin");
-  const newsImageInput = document.getElementById("newsImage");
-  const imagePreview = document.getElementById("imagePreview");
+  // ---------- LOGIN ----------
+  const loginBtn = document.getElementById("loginBtn");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
 
-  // ---------- IMAGE PREVIEW ----------
-  newsImageInput.addEventListener("input", () => {
-    imagePreview.src = newsImageInput.value || "";
-    imagePreview.style.display = newsImageInput.value ? "block" : "none";
-  });
-
-  // ---------- ADMIN LOGIN ----------
-  adminLoginBtn.addEventListener("click", () => {
-    if(adminPasswordInput.value === adminPassword) {
-      uploadForm.style.display = "block";
-      adminLoginDiv.style.display = "none";
-      alert("Admin login successful!");
-      loadNews();
-    } else {
-      alert("Incorrect password!");
+  loginBtn.onclick = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+    } catch (err) {
+      alert(err.message);
     }
+  };
+
+  // ---------- AUTH STATE ----------
+  onAuthStateChanged(auth, user => {
+    document.getElementById("uploadForm").style.display = user ? "block" : "none";
+    document.getElementById("loginBox").style.display = user ? "none" : "block";
   });
 
   // ---------- UPLOAD NEWS ----------
-  uploadBtn.addEventListener("click", async () => {
+  document.getElementById("uploadBtn").onclick = async () => {
     const title = document.getElementById("newsTitle").value.trim();
     const summary = document.getElementById("newsSummary").value.trim();
-    const image = newsImageInput.value.trim();
+    const file = document.getElementById("newsImage").files[0];
+    const imageURLInput = document.getElementById("newsImageURL").value.trim();
 
-    if(!title || !summary || !image) {
-      alert("Please fill in all fields.");
+    if (!title || !summary || (!file && !imageURLInput)) {
+      alert("Fill all fields and provide an image or URL");
       return;
     }
 
-    try {
-      await addDoc(collection(db, "news"), { title, summary, image, date: serverTimestamp() });
-      alert("News uploaded successfully!");
-      document.getElementById("newsTitle").value = "";
-      document.getElementById("newsSummary").value = "";
-      newsImageInput.value = "";
-      imagePreview.style.display = "none";
-      loadNews();
-    } catch(err) {
-      console.error("Error uploading news:", err);
-      alert("Failed to upload news.");
+    let finalImageURL = "";
+
+    if (file) {
+      const imageRef = ref(storage, `news-images/${Date.now()}-${file.name}`);
+      await uploadBytes(imageRef, file);
+      finalImageURL = await getDownloadURL(imageRef);
+    } else {
+      finalImageURL = imageURLInput.trim();
     }
-  });
 
-  // ---------- LOAD NEWS + EDIT + DELETE ----------
+    await addDoc(collection(db, "news"), {
+      title,
+      summary,
+      image: finalImageURL,
+      createdAt: serverTimestamp()
+    });
+
+    alert("News uploaded!");
+    document.getElementById("newsTitle").value = "";
+    document.getElementById("newsSummary").value = "";
+    document.getElementById("newsImage").value = "";
+    document.getElementById("newsImageURL").value = "";
+
+    loadNews();
+  };
+
+  // ---------- LOAD NEWS ----------
   async function loadNews() {
+    const newsContainer = document.getElementById("newsContainer");
     newsContainer.innerHTML = "";
-    const q = query(collection(db, "news"), orderBy("date", "desc"));
-    const snapshot = await getDocs(q);
 
-    snapshot.forEach(docSnap => {
-      const news = docSnap.data();
-      const id = docSnap.id;
+    try {
+      // Use 'createdAt' for new documents
+      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
 
-      const card = document.createElement("div");
-      card.style.width = "300px";
-      card.style.background = "#fff";
-      card.style.borderRadius = "10px";
-      card.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-      card.style.paddingBottom = "15px";
-      card.style.marginBottom = "20px";
-
-      card.innerHTML = `
-        <img src="${news.image}" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
-        <div style="padding:15px;">
-          <h3 class="title">${news.title}</h3>
-          <p class="summary">${news.summary}</p>
-        </div>
-      `;
-
-      if(adminLoginDiv.style.display === "none") {
-        const editBtn = createButton("Edit", "orange");
-        const saveBtn = createButton("Save", "green"); saveBtn.style.display = "none";
-        const deleteBtn = createButton("Delete", "red");
-
-        editBtn.addEventListener("click", () => {
-          const titleEl = card.querySelector(".title");
-          const summaryEl = card.querySelector(".summary");
-          titleEl.outerHTML = `<input class="edit-title" value="${news.title}" style="width:90%; padding:5px; margin-bottom:8px;">`;
-          summaryEl.outerHTML = `<textarea class="edit-summary" style="width:90%; padding:5px; height:70px;">${news.summary}</textarea>`;
-          editBtn.style.display = "none";
-          saveBtn.style.display = "inline-block";
-        });
-
-        saveBtn.addEventListener("click", async () => {
-          const newTitle = card.querySelector(".edit-title").value;
-          const newSummary = card.querySelector(".edit-summary").value;
-          await updateDoc(doc(db, "news", id), { title: newTitle, summary: newSummary });
-          alert("News updated!");
-          loadNews();
-        });
-
-        deleteBtn.addEventListener("click", async () => {
-          if(confirm("Delete this news?")) {
-            await deleteDoc(doc(db, "news", id));
-            loadNews();
-          }
-        });
-
-        card.appendChild(editBtn);
-        card.appendChild(saveBtn);
-        card.appendChild(deleteBtn);
+      if (snap.empty) {
+        newsContainer.innerHTML = "<p>No news found.</p>";
+        return;
       }
 
-      newsContainer.appendChild(card);
-    });
+      snap.forEach(doc => {
+        const n = doc.data();
+        const imageURL = n.image?.trim() || "https://via.placeholder.com/300";
+        const newsDate = n.createdAt?.toDate ? n.createdAt.toDate().toLocaleString() : "";
+
+        newsContainer.innerHTML += `
+          <div style="width:300px; background:#fff; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+            <img src="${imageURL}" alt="${n.title}" style="width:100%; object-fit:cover; border-radius:10px 10px 0 0;">
+            <div style="padding:15px;">
+              <h3>${n.title || "No Title"}</h3>
+              <p style="font-size:12px; color:gray;">${newsDate}</p>
+              <p>${n.summary || ""}</p>
+            </div>
+          </div>
+        `;
+      });
+    } catch (err) {
+      console.error("Error loading news:", err);
+      newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+    }
   }
 
-  function createButton(text, color) {
-    const btn = document.createElement("button");
-    btn.textContent = text;
-    btn.style.margin = "5px";
-    btn.style.padding = "6px 12px";
-    btn.style.background = color;
-    btn.style.color = "white";
-    btn.style.border = "none";
-    btn.style.borderRadius = "5px";
-    btn.style.cursor = "pointer";
-    return btn;
-  }
-
-  // ---------- INITIAL LOAD ----------
-  loadNews(); // Shows news preview for public users
+  window.addEventListener("load", loadNews);
 </script>
-
  </section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -499,122 +471,164 @@ const firebaseConfig = {
             <p><strong>Qualification:</strong>Basic First Aid Certificate, Basketball Coaching Certificate  and Safeguarding Training Certificate.</p>
             <p>"Dedicated to building confidence, discipline, and teamwork in young athletes."</p>
         </div>
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG-20251115-WA0018.jpg"alt="Coach Flora Kaliyati">
-            <h2>Coach Cassius Gondwe</h2>
-            <p><strong>Sport:</strong> Netball</p>
-            <p><strong>Qualification:</strong> CAF C License</p>
-            <p>"Passionate about skill development and fostering a positive sports environment."</p>
-        </div>
-        <div class="coach-card">
-            <img src="https://via.placeholder.com/120" alt="Coach Mike Mvuma">
-            <h2>Coach Mike Mvuma</h2>
-            <p><strong>Sport:</strong> Football</p>
-            <p><strong>Qualification:</strong> CAF D License</p>
-            <p>"Focused on nurturing talent and teaching strategic thinking on the field."</p>
-        </div>
-        <div class="coach-card">
-            <img src="https://via.placeholder.com/120" alt="Coach Funny Phiri">
-            <h2>Coach Funny Phiri</h2>
-            <p><strong>Sport:</strong> Athletics</p>
+<div class="coach-card">
+    <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG-20251115-WA0018.jpg" alt="Coach Cassius Gondwe">
+    <h2>Coach Cassius Gondwe</h2>
+    <p><strong>Sport:</strong> Netball</p>
+    <p>
+        Coach Cassius Gondwe is a dedicated netball coach at the Malawi Academy for Sports.
+        He is passionate about developing young athletes through structured training,
+        teamwork, and discipline. His coaching approach emphasizes skill development,
+        confidence building, and creating a positive and supportive sporting environment
+        that enables players to reach their full potential.
+    </p>
+</div>
+
+       <div class="coach-card">
+    <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/MAS%20COACH.jpg"
+         alt="Coach Harry Mulumbe">
+
+    <h2>Coach Harry Mulumbe</h2>
+
+    <p><strong>Sport:</strong> Football</p>
+
+    <p><strong>Qualification:</strong> Coach Certification</p>
+
+    <p class="coach-bio">
+        Coach Harry Mulumbe is a committed football coach with a strong passion for youth development.
+        He emphasizes discipline, teamwork, and the development of fundamental football skills
+        to help young athletes reach their full potential.
+    </p>
+
+    <p class="coach-quote">
+        “Dedicated to shaping confident, skilled, and disciplined young footballers.”
+    </p>
+</div>
+
+    <div class="coach-card">
+    <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/coach%20memory.jpg" alt="Memory Zacharia">
+    <h2>Memory Zacharia</h2>
+    <p><strong>Sport:</strong> Football</p>
+    <p><strong>Qualifications:</strong> Football Coaching Certificate; First Aid and Player Safety Training; Youth Football Development Certificate</p>
+    <p>
+        Memory Zacharia is a dedicated female football coach at the Malawi Academy for Sports.
+        She is committed to developing young players by promoting technical skills, teamwork,
+        and discipline. Through positive mentorship and structured training, she empowers
+        athletes—especially girls—to grow in confidence, character, and performance both on
+        and off the pitch.
+    </p>
+</div>
+
+ <div class="coach-card">
+            <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/Coach%20kelvin%20koadza.jpg" alt="Coach kelvin kaoza">
+            <h2>Coach kelvin kaoza</h2>
+            <p><strong>Sport:</strong>BasketBall</p>
             <p><strong>Qualification:</strong> Level 1 Certified</p>
-            <p>"Encourages perseverance, endurance, and personal growth through athletics."</p>
-        </div>
-        <div class="coach-card">
-            <img src="https://via.placeholder.com/120" alt="Coach Alice Nyirenda">
-            <h2>Coach Alice Nyirenda</h2>
-            <p><strong>Sport:</strong> Volleyball</p>
-            <p><strong>Qualification:</strong> Level 2 Certified</p>
-            <p>"Inspires teamwork, dedication, and excellence in every practice and match."</p>
+            <p>"Coach Kelvin Koadza is a dedicated sports professional with extensive experience in coaching and athlete development. He is committed to nurturing talent and fostering excellence in sports at all levels.  ."</p>
         </div>
     </div>
 </section>
 
-<!-- ---------- STAFF ---------- -->
+<!-- ---------- STAFF SECTION ---------- -->
 <section id="staff" style="padding:50px 20px; background:#f9f9f9;">
     <h1 style="text-align:center; margin-bottom:20px;">Our Staff</h1>
     <p style="text-align:center; max-width:800px; margin:auto; margin-bottom:40px;">
-        Our staff members are highly skilled professionals, based at the <strong>Kamuzu Institute for Sports</strong>, 
-        dedicated to nurturing talent, coordinating programs, and ensuring excellence in all academy operations.
+        Our staff members are highly skilled professionals based at the
+        <strong>Kamuzu Institute for Sports</strong>, dedicated to nurturing talent,
+        coordinating programs, and ensuring excellence in all academy operations.
     </p>
 
-    <div class="coach-grid">
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/DSC_1431_copy_2248x1500.jpg" alt="Mrs. Suzanne Mbejere" class="modern-img">
+    <div class="staff-grid">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/DSC_1431_copy_2248x1500.jpg"
+                 alt="Mrs. Suzanne Mbejere" class="modern-img">
             <h2>Mrs. Suzanne Mbejere</h2>
             <p><strong>Position:</strong> Regional Recreation & Sports Development Manager</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/IMG-20250812-WA0001.jpg" alt="Mrs. Funny Mbabalo" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/IMG-20250812-WA0001.jpg"
+                 alt="Mrs. Funny Mbabalo" class="modern-img">
             <h2>Mrs. Funny Mbabalo</h2>
             <p><strong>Position:</strong> Recreation & Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/Officer%20RDSO.jpg" alt="Mr. Edgar Ntulumbwa" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/Officer%20RDSO.jpg"
+                 alt="Mr. Edgar Ntulumbwa" class="modern-img">
             <h2>Mr. Edgar Ntulumbwa</h2>
             <p><strong>Position:</strong> Recreation & Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/Secretary%20.jpg" alt="Mrs. Dorothy Kwalimbo" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/Secretary%20.jpg"
+                 alt="Mrs. Dorothy Kwalimbo" class="modern-img">
             <h2>Mrs. Dorothy Kwalimbo</h2>
             <p><strong>Position:</strong> Secretary</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://via.placeholder.com/300x300?text=Staff+Photo" alt="Mrs. Charity Chirwa" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/ADMINISTRATOR.jpg"
+                 alt="Mrs. Charity Chirwa" class="modern-img">
             <h2>Mrs. Charity Chirwa</h2>
             <p><strong>Position:</strong> Administrative Assistant</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://via.placeholder.com/300x300?text=Staff+Photo" alt="Mrs. Thokozani Gausi" class="modern-img">
+        <div class="staff-card">
+            <img src="https://via.placeholder.com/300x300?text=Staff+Photo"
+                 alt="Mrs. Thokozani Gausi" class="modern-img">
             <h2>Mrs. Thokozani Gausi</h2>
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Staf%204.jpg.jpg" alt="Mr. Blessings Chiomba" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Staf%204.jpg.jpg"
+                 alt="Mr. Blessings Chiomba" class="modern-img">
             <h2>Mr. Blessings Chiomba</h2>
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/609505bf4a8c091b36f17261b1219956faa64812/IMG-20251208-WA0000.jpg" alt="Mrs. Bridget Kausiwa" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/609505bf4a8c091b36f17261b1219956faa64812/IMG-20251208-WA0000.jpg"
+                 alt="Mrs. Bridget Kausiwa" class="modern-img">
             <h2>Mrs. Bridget Kausiwa</h2>
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
 
-        <div class="coach-card">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250816094720.jpg" alt="Mr. Arthur Sangulukani" class="modern-img">
+        <div class="staff-card">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250816094720.jpg"
+                 alt="Mr. Arthur Sangulukani" class="modern-img">
             <h2>Mr. Arthur Sangulukani</h2>
             <p><strong>Position:</strong> Sports Development Officer</p>
             <p><strong>Based:</strong> Kamuzu Institute for Sports</p>
         </div>
     </div>
+</section>
+
+<!-- ---------- STAFF MANAGEMENT PHOTO ---------- -->
 <section id="staff-management" style="text-align:center; padding:50px 20px; background:#f9f9f9;">
     <h1>All Staff Management – Kamuzu Institute for Sports</h1>
 
-    <div class="staff-group" style="max-width:1000px; margin:auto;">
+    <div class="staff-group" style="max-width:1200px; margin:auto;">
         <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/IMG-20251206-WA0006.jpg"
              alt="All Staff Management - Kamuzu Institute for Sports"
-             style="width:60%; height:auto; object-fit:contain; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+             style="width:70%; max-width:900px; height:auto; object-fit:contain;
+                    border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
 
         <p style="margin-top:15px; font-size:16px; color:#333;">
             This photo shows the full management team of the Kamuzu Institute for Sports.
         </p>
     </div>
 </section>
+
 
 
 <style>
@@ -681,20 +695,85 @@ const firebaseConfig = {
 <!-- ---------- ACHIEVERS ---------- -->
 <section id="achievers">
   <h1>Models & Achievers</h1>
-<p style="text-align:center; width:80%; margin:auto; font-size:18px;">
+  <p style="text-align:center; width:80%; margin:auto; font-size:18px;">
     Highlighting outstanding young athletes who have shown exceptional discipline, 
     talent, and achievement in their sports, inspiring others within the Malawi 
     Academy for Sports.
-</p>
-    <div class="achiever-grid">
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 1"><h2>Achiever 1</h2><p><strong>Sport:</strong> Basketball</p>   <p><strong>Achievements:</strong> 2024 District Champion, MVP Award, Represented Malawi in U16 Nationals.</p>
-  </div>
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 2"><h2>Achiever 2</h2><p><strong>Sport:</strong> Football</p>   <p><strong>Achievements:</strong> 2025 League Top Scorer, Regional Champion, Selected for National Youth Squad.</p>   </div>
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 3"><h2>Achiever 3</h2><p><strong>Sport:</strong> Netball</p></div>
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 4"><h2>Achiever 4</h2><p><strong>Sport:</strong> Athletics</p></div>
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 5"><h2>Achiever 5</h2><p><strong>Sport:</strong> Volleyball</p></div>
-        <div class="achiever-card"><img src="https://via.placeholder.com/120" alt="Achiever 6"><h2>Achiever 6</h2><p><strong>Sport:</strong> Paralympic Sports</p></div>
+  </p>
+
+  <div class="profile-cards">
+    <!-- Profile 1 -->
+    <div class="profile-card">
+      <img src="https://via.placeholder.com/120" alt="Achiever 1">
+      <div class="profile-content">
+        <h3>Achiever 1</h3>
+        <div class="role">Basketball</div>
+        <p><strong>Achievements:</strong> 2024 District Champion, MVP Award, Represented Malawi in U16 Nationals.</p>
+      </div>
     </div>
+
+    <!-- Profile 2 -->
+    <div class="profile-card">
+      <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/b1cc2f484c08e4260befd7dfca2d730d9875e774/Malawi%20Academy%20for%20Sports%20Website/Images/Chikondi%20Benjamin.jpg" alt="Chikondi Benjamin">
+      <div class="profile-content">
+        <h3>Chikondi Benjamin</h3>
+        <div class="role">Football</div>
+        <p><strong>Achievements:</strong> Regional Champion, Selected for National Youth Squad.</p>
+        <p>
+          Chikondi Benjamin, a student at the Malawi Academy for Sports, was selected for the regional football squad, 
+          recognizing his outstanding performance and talent.
+        </p>
+      </div>
+    </div>
+
+    <!-- Profile 3 -->
+    <div class="profile-card">
+      <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Images/Melia%20Soko%20MAS.jpg" alt="Melia Soko">
+      <div class="profile-content">
+        <h3>Melia Soko</h3>
+        <div class="role">Netball</div>
+        <p><strong>Achievements:</strong> Powerhouse center for Vanessa Sisters Netball Club; represented Malawi Queens in the 2025 African Netball Tournament.</p>
+      </div>
+    </div>
+
+    <!-- Profile 4 -->
+    <div class="profile-card">
+      <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/Natasha%20kipadura.jpg" alt="Natasha Kipadura">
+      <div class="profile-content">
+        <h3>Natasha Kipadura</h3>
+        <div class="role">Netball</div>
+        <p><strong>Achievements:</strong> Selected for Malawi National Youth Training Camp</p>
+        <p>
+          Natasha Kipadura is a talented netball player at the Malawi Academy for Sports.
+          She has demonstrated exceptional skill, discipline, and commitment.
+        </p>
+      </div>
+    </div>
+
+    <!-- Profile 5 -->
+    <div class="profile-card">
+      <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/khumbiso%20ndikelani.jpg" alt="Khumbiso Goodson">
+      <div class="profile-content">
+        <h3>Khumbiso Goodson</h3>
+        <div class="role">Football</div>
+        <p><strong>Achievements:</strong> Emerging Talent</p>
+        <p>
+          Khumbiso Goodson is a promising football player at the Malawi Academy for Sports.
+          She is recognized as a role model player due to her discipline, commitment, and outstanding football talent.
+        </p>
+      </div>
+    </div>
+
+    <!-- Profile 6 -->
+    <div class="profile-card">
+      <img src="https://via.placeholder.com/120" alt="Achiever 6">
+      <div class="profile-content">
+        <h3>Achiever 6</h3>
+        <div class="role">Paralympic Sports</div>
+        <p><strong>Achievements:</strong> To be updated</p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- ---------- ATHLETE REGISTRATION ---------- -->
 <section id="register">
@@ -708,15 +787,21 @@ const firebaseConfig = {
         <!-- Form -->
         <form action="https://formsubmit.co/rsdocentre@gmail.com" method="POST">
 
-            <!-- FormSubmit Settings -->
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_subject" value="New Athlete Registration Form Submitted">
-            <input type="hidden" name="_autoresponse" value="Thank you for registering! Your form has been received.">
+           <!-- FormSubmit Settings -->
+           <input type="hidden" name="_captcha" value="false">
+           <input type="hidden" name="_template" value="table">
+           <input type="hidden" name="_subject" value="New Athlete Registration Form Submitted">
+            <input type="hidden" name="_autoresponse" 
+            value="Thank you for registering with Malawi Academy for Sports! We are excited to have your child join our programs. Our team will review your submission and contact you if needed. Stay active and keep striving for excellence!">
 
-            <!-- Athlete Details -->
+             <!-- Athlete Details -->
             <label for="full_name">Full Name *</label>
             <input type="text" name="Full Name" id="full_name" placeholder="Enter full name" required>
+
+            <label for="athlete_phone">Athlete Phone Number *</label>
+            <input type="tel" name="Athlete Phone Number" id="athlete_phone" 
+                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                   pattern="(\+265|265|0)\d{8,9}" required>
 
             <label for="dob">Date of Birth *</label>
             <input type="date" name="Date of Birth" id="dob" required>
@@ -754,24 +839,33 @@ const firebaseConfig = {
             <label for="medical">Medical Information / Allergies</label>
             <textarea name="Medical Information" id="medical" placeholder="Specify any medical conditions or allergies"></textarea>
 
+            <!-- Emergency Contact -->
             <label for="emergency_name">Emergency Contact Name *</label>
             <input type="text" name="Emergency Contact Name" id="emergency_name" placeholder="Enter name" required>
 
             <label for="emergency_phone">Emergency Contact Phone *</label>
-            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="+265 ..." required>
+            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" 
+                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                   pattern="(\+265|265|0)\d{8,9}" required>
+                <label for="emergency_email">Emergency Contact Email (optional)</label>
+            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email">
+            <label for="emergency_phone">Emergency Contact Phone *</label>
+            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
+                   pattern="(\+265|265|0)\d{8,9}" required>
+
+            <label for="emergency_email">Emergency Contact Email *</label>
+            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email" required>
 
             <!-- Parental Consent -->
             <label for="parent_name">Parent/Guardian Full Name *</label>
             <input type="text" name="Parent/Guardian Full Name" id="parent_name" placeholder="Enter name" required>
 
             <label for="parent_phone">Parent/Guardian Phone Number *</label>
-            <input type="tel"
-                   name="Parent/Guardian Phone Number"
-                   id="parent_phone"
-                   value="+265 "
-                   pattern="\+265[0-9]{9}"
-                   placeholder="+265 999000000"
-                   required>
+            <input type="tel" name="Parent/Guardian Phone Number" id="parent_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
+                   pattern="(\+265|265|0)\d{8,9}" required>
+
+            <label for="parent_email">Parent/Guardian Email *</label>
+            <input type="email" name="Parent/Guardian Email" id="parent_email" placeholder="Enter email" required>
 
             <label>Parental Consent *</label>
             <p style="font-size:14px; background:#f0f0f0; padding:10px; border-radius:5px;">
@@ -1047,3 +1141,4 @@ const firebaseConfig = {
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
