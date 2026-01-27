@@ -38,18 +38,18 @@ img {
 ================================================== */
 section {
   padding: 60px 20px;
+  background: var(--white); /* FIX BLACK GAPS */
 }
 
 section h1 {
   text-align: center;
   font-size: 2rem;
   color: var(--green);
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 /* ==================================================
    UNIVERSAL PROFILE CARDS
-   (Staff | Coaches | Achievers / Models)
 ================================================== */
 .profile-cards {
   display: grid;
@@ -62,11 +62,16 @@ section h1 {
 .profile-card {
   background: #ffffff;
   border-radius: 12px;
-  border-top: 5px solid var(--green);   /* GREEN LINE */
+  border-top: 5px solid var(--green);
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   overflow: hidden;
   text-align: center;
+  padding-bottom: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card + .profile-card {
+  margin-top: 10px; /* separation line effect */
 }
 
 .profile-card:hover {
@@ -74,19 +79,19 @@ section h1 {
   box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-/* PROFILE IMAGE */
+/* ================= PROFILE IMAGE (FIXED) ================= */
 .profile-card img {
-  width: 100%;
-  height: 200px;
+  width: 160px;
+  height: 160px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;
-  margin: 0 auto;
-  display: block;
+  margin: 20px auto 10px;
 }
 
 /* PROFILE TEXT */
 .profile-content {
-  padding: 18px;
+  padding: 15px 20px;
 }
 
 .profile-content h3 {
@@ -104,7 +109,7 @@ section h1 {
 
 .profile-content p {
   font-size: 0.95rem;
-  color: #555;
+  color: #444;
   line-height: 1.5;
 }
 
@@ -185,18 +190,7 @@ button:hover {
 }
 
 /* ==================================================
-   CRITICAL FIX – TEXT VISIBILITY (CHROME BUG)
-================================================== */
-.profile-card,
-.profile-card h3,
-.profile-card p,
-.profile-card .role {
-  color: #333 !important;
-  background-color: #ffffff;
-}
-
-/* ==================================================
-   MOBILE-ONLY FIXES
+   MOBILE ONLY FIXES
 ================================================== */
 @media (max-width: 768px) {
 
@@ -204,34 +198,25 @@ button:hover {
     padding: 45px 15px;
   }
 
-  /* --------------------------
-     PROFILE CARDS CENTERED
-  -------------------------- */
-  #models-achievers .profile-cards,
-  #coaches .profile-cards,
-  #staff .profile-cards {
+  /* PROFILE CARDS MOBILE */
+  .profile-cards {
     display: flex;
     flex-direction: column;
-    align-items: center; /* center all cards */
+    align-items: center;
   }
 
   .profile-card {
     width: 95%;
-    margin: 15px auto;
-    text-align: center; /* center text */
+    margin-bottom: 20px;
   }
 
   .profile-card img {
-    height: 260px; /* larger on mobile */
-    margin: 0 auto;
-    display: block;
-    border-radius: 50%; /* round */
+    width: 200px;
+    height: 200px;
   }
 
-  .profile-content h3,
-  .profile-content .role,
-  .profile-content p {
-    text-align: center; /* center all text */
+  .profile-content {
+    text-align: center;
   }
 
   /* STAFF TEXT FULL WIDTH */
@@ -240,14 +225,14 @@ button:hover {
     text-align: center;
   }
 
-  /* REGISTRATION FORM */
+  /* REGISTRATION FORM MOBILE */
   #registration .form-box {
     width: 95%;
     padding: 20px;
-    border-left: none; /* remove red line */
+    border-left: none;
   }
 
-  /* GALLERY HORIZONTAL SLIDE */
+  /* GALLERY MOBILE SLIDE */
   .gallery-grid {
     display: flex;
     overflow-x: auto;
