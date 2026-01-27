@@ -1,242 +1,49 @@
 /* ==================================================
-   ROOT VARIABLES
-================================================== */
-:root {
-  --black: #000;
-  --green: #007a00;
-  --red: #d40000;
-  --white: #fff;
-  --light-gray: #f9f9f9;
-  --text-dark: #222;
-}
-
-/* ==================================================
-   GLOBAL RESET
-================================================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background: var(--light-gray);
-  color: var(--text-dark);
-  line-height: 1.6;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* ==================================================
-   HEADER & NAVIGATION
-================================================== */
-header {
-  background: var(--black);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 30px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.logo-text img {
-  width: 70px;
-  margin: 8px auto;
-  border-radius: 10px;
-}
-
-.navbar {
-  display: flex;
-  gap: 12px;
-  background: #111;
-  padding: 10px 15px;
-  border-radius: 8px;
-}
-
-.navbar a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 6px 10px;
-}
-
-.navbar a:hover {
-  color: var(--green);
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: white;
-}
-
-/* ==================================================
-   SECTIONS
-================================================== */
-section {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-section:nth-child(even) {
-  background: var(--light-gray);
-}
-
-section h1 {
-  text-align: center;
-  color: var(--green);
-  margin-bottom: 25px;
-  font-size: 2rem;
-}
-
-section p {
-  text-align: center;
-  max-width: 800px;
-  margin: auto;
-  font-size: 1rem;
-  margin-bottom: 25px;
-}
-
-/* ==================================================
-   PROFILE CARDS GRID (ACHIEVERS / STAFF / COACHES)
+   PROFILE CARDS GRID
+   (ACHIEVERS / STAFF / COACHES)
 ================================================== */
 .profile-cards,
 .staff-grid,
 .coach-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* auto-fill for brick-wall layout */
+  grid-template-columns: repeat(6, 1fr); /* ✅ 6 cards per row */
   gap: 25px;
-  max-width: 1400px;
-  margin: auto;
+  max-width: 1600px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 /* ==================================================
-   PROFILE / STAFF / COACH CARD STYLES
+   CARD STYLES (COMMON)
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
-  background: #fff;
+  background: #ffffff;
+  border-top: 5px solid var(--green); /* green top bar */
   border-radius: 14px;
-  border-top: 5px solid var(--green); /* green header for staff & achievers */
-  padding: 20px;
+  padding: 18px;
   text-align: center;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .profile-card:hover,
 .staff-card:hover,
 .coach-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-
-/* Profile Image */
-.profile-card img,
-.staff-card img,
-.coach-card img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-
-/* Name & Role */
-.profile-card h3,
-.staff-card h3,
-.coach-card h2 {
-  margin-bottom: 8px;
-  color: #222;
-  text-align: center;
-}
-
-.profile-card .role,
-.staff-card .role,
-.coach-card .role {
-  color: var(--green);
-  font-weight: 600;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-/* Paragraphs */
-.profile-card p,
-.staff-card p,
-.coach-card p {
-  color: #444;
-  font-size: 0.95rem;
-  margin-bottom: 10px;
-  text-align: center;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
 }
 
 /* ==================================================
-   RESPONSIVE LAYOUT
+   PROFILE IMAGES (BIGGER, CARDS COMPACT)
 ================================================== */
-@media (max-width: 1024px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .profile-card,
-  .staff-card,
-  .coach-card {
-    width: 95%;
-    margin: auto;
-  }
-}
-/* =============================== */
-/* GRID LAYOUT FOR CARDS */
-/* =============================== */
-.coach-grid,
-.staff-grid,
-.profile-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-  max-width: 1400px;
-  margin: auto;
-}
-
-.coach-card,
-.staff-card,
-.profile-card {
-  background: #fff;
-  border-top: 5px solid #007a00;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.coach-card img,
+.profile-card img,
 .staff-card img,
-.profile-card img {
+.coach-card img {
   width: 180px;
   height: 180px;
   object-fit: cover;
@@ -244,9 +51,81 @@ section p {
   margin-bottom: 12px;
 }
 
-.coach-card h2,
+/* ==================================================
+   NAMES
+================================================== */
+.profile-card h3,
+.staff-card h2,
 .staff-card h3,
-.profile-card h3 {
+.coach-card h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+/* ==================================================
+   ROLES / POSITIONS
+   (STAFF TEXT BLACK AS REQUESTED)
+================================================== */
+.profile-card .role {
+  color: var(--green);
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
+.staff-card strong,
+.staff-card p {
+  color: #000; /* ✅ staff positions black */
+  font-weight: normal;
+}
+
+.coach-card strong {
+  color: #222;
+}
+
+/* ==================================================
+   PARAGRAPHS
+================================================== */
+.profile-card p,
+.staff-card p,
+.coach-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 6px 0;
+  text-align: center;
+}
+
+/* ==================================================
+   RESPONSIVE BREAKPOINTS
+================================================== */
+@media (max-width: 1400px) {
+  .profile-cards,
+  .staff-grid,
+  .coach-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-cards,
+  .staff-grid,
+  .coach-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-cards,
+  .staff-grid,
+  .coach-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-cards,
+  .staff-grid,
+  .coach-grid {
+    grid-template-columns: 1fr;
+  }
+}
