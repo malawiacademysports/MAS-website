@@ -210,3 +210,43 @@ section p {
     margin: auto;
   }
 }
+/* =============================== */
+/* GRID LAYOUT FOR CARDS */
+/* =============================== */
+.coach-grid,
+.staff-grid,
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.coach-card,
+.staff-card,
+.profile-card {
+  background: #fff;
+  border-top: 5px solid #007a00;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.coach-card img,
+.staff-card img,
+.profile-card img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.coach-card h2,
+.staff-card h3,
+.profile-card h3 {
+  margin-bottom: 8px;
+}
+
