@@ -190,7 +190,7 @@ section p {
 }
 
 /* Staff positions black only */
-.staff-card p {
+.staff-role {
   color: #000;       /* entire paragraph text black */
   font-weight: normal;
 }
