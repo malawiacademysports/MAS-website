@@ -189,22 +189,19 @@ section p {
   margin-bottom: 8px;
 }
 
-/* Staff positions black only */
-.staff-role {
-  color: #000;       /* entire paragraph text black */
-  font-weight: normal;
-}
-
+/* Staff positions black and bold for Position: and Based: */
+.staff-card p.role,
 .staff-card p strong {
-  color: #000;       /* strong text inside paragraph black */
-  font-weight: normal;
+  color: #000;       /* very black text */
+  font-weight: bold;  /* bold for Position: and Based: */
+  margin-bottom: 8px;
 }
 
 /* Coaches strong text (labels) */
 .coach-card strong {
-  color: #222;
+  color: #222;       /* dark text for coach labels */
+  font-weight: bold;
 }
-
 
 /* ==================================================
    TEXT CONTENT
