@@ -7,15 +7,13 @@
   --red: #d40000;
   --white: #fff;
   --light-gray: #f9f9f9;
-  --text-dark: #222;
+  --text-dark: #333;
 }
 
 /* ==================================================
-   GLOBAL RESET
+   RESET
 ================================================== */
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -28,47 +26,38 @@ body {
   line-height: 1.6;
 }
 
-img {
-  max-width: 100%;
-  display: block;
+/* ==================================================
+   GLOBAL SECTIONS (NO BLACK GAPS)
+================================================== */
+section {
+  padding: 60px 20px;
+  background: #fff;
+}
+
+section h1 {
+  text-align: center;
+  color: var(--green);
+  margin-bottom: 20px;
+  font-size: 2rem;
 }
 
 /* ==================================================
    HEADER & NAV
 ================================================== */
 header {
-  background: var(--black);
-  color: var(--white);
+  background: #000;
+  color: #fff;
+  padding: 15px 30px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 30px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.logo-text {
-  text-align: center;
-}
-
-.logo-text img {
-  width: 70px;
-  margin: 8px auto;
-  border-radius: 10px;
-}
-
-.logo-text .academy {
-  color: var(--green);
-  font-weight: 700;
 }
 
 .navbar {
   display: flex;
   gap: 12px;
-  background: #111;
-  padding: 10px 15px;
-  border-radius: 8px;
+  flex-wrap: wrap;
 }
 
 .navbar a {
@@ -82,28 +71,18 @@ header {
   color: var(--green);
 }
 
-.menu-toggle {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: white;
-}
-
 /* ==================================================
-   SEARCH BAR (FIXED)
+   SEARCH BAR (DESKTOP CLEAN)
 ================================================== */
 .search-form {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 10px;
-  padding: 20px;
-  background: #fff;
+  margin: 25px auto;
 }
 
 .search-form input {
-  width: 280px;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
@@ -111,68 +90,39 @@ header {
 .search-form button {
   padding: 10px 18px;
   background: var(--green);
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
 }
 
 /* ==================================================
-   SECTIONS
-================================================== */
-section {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-section:nth-child(even) {
-  background: var(--light-gray);
-}
-
-section h1 {
-  text-align: center;
-  color: var(--green);
-  margin-bottom: 25px;
-  font-size: 2rem;
-}
-
-/* ==================================================
-   SPORTS PROGRAMS (FIXED)
+   SPORTS PROGRAMS
 ================================================== */
 .sports-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
 }
 
 .sport-card {
   background: #fff;
-  border-left: 6px solid var(--red);
-  padding: 20px;
+  border-left: 5px solid var(--green);
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
-  border-radius: 10px;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
 }
 
 /* ==================================================
-   NEWS SECTION (FIXED)
+   UNIVERSAL PROFILE CARDS
+   (Coaches | Staff | Achievers)
 ================================================== */
-#newsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* ==================================================
-   PROFILE CARDS (ACHIEVERS / COACHES / STAFF)
-================================================== */
-.profile-cards,
-.coach-grid {
+.coach-grid,
+.achiever-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
@@ -180,40 +130,24 @@ section h1 {
   margin: auto;
 }
 
-.profile-card,
-.coach-card {
+.coach-card,
+.achiever-card {
   background: #fff;
   border-radius: 14px;
-  border-top: 5px solid var(--green);
-  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  padding: 25px 20px;
   text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
-.profile-card img,
-.coach-card img {
+/* PERFECT ROUND IMAGES */
+.coach-card img,
+.achiever-card img {
   width: 160px;
   height: 160px;
   object-fit: cover;
   border-radius: 50%;
   margin: 0 auto 15px;
-}
-
-.profile-card h3,
-.coach-card h2 {
-  color: #222;
-  margin-bottom: 8px;
-}
-
-.profile-card p,
-.coach-card p {
-  color: #444;
-  font-size: 0.95rem;
-}
-
-/* Separation line between cards */
-.profile-card {
-  border-bottom: 3px solid #eee;
+  display: block;
 }
 
 /* ==================================================
@@ -225,6 +159,13 @@ section h1 {
   gap: 20px;
 }
 
+.gallery-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 /* ==================================================
    FORMS
 ================================================== */
@@ -234,26 +175,7 @@ section h1 {
   background: #fff;
   padding: 35px;
   border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background: var(--green);
-  color: white;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(0,0,0,.12);
 }
 
 /* ==================================================
@@ -273,44 +195,37 @@ footer {
 
   header {
     flex-direction: column;
-  }
-
-  .menu-toggle {
-    display: block;
+    text-align: center;
   }
 
   .navbar {
-    display: none;
-    flex-direction: column;
-    width: 100%;
+    justify-content: center;
   }
 
-  .navbar.active {
-    display: flex;
-  }
-
+  /* SPORTS → FULL WIDTH LIST */
   .sports-grid {
     display: flex;
     flex-direction: column;
   }
 
-  .profile-cards,
-  .coach-grid {
+  .sport-card {
+    width: 100%;
+  }
+
+  /* PROFILE CARDS STACKED */
+  .coach-grid,
+  .achiever-grid {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .profile-card,
-  .coach-card {
+  .coach-card,
+  .achiever-card {
     width: 95%;
   }
 
   .search-form {
     flex-direction: column;
-  }
-
-  .search-form input {
-    width: 100%;
   }
 }
