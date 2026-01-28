@@ -160,7 +160,7 @@ section p {
 #newsContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 30px;           /* space between cards */
   justify-content: center;
   max-width: 1400px;
   margin: auto;
@@ -168,35 +168,8 @@ section p {
 
 /* ---------- NEWS CARD ---------- */
 .news-card {
-  flex: 1 1 420px;    /* base width for desktop */
-  max-width: 480px;   /* prevent card from growing too much */
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  margin-bottom: 25px;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.news-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-}
-
-/* ---------- NEWS GRID ---------- */
-#newsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 35px;
-  justify-content: center;
-  max-width: 1400px;
-  margin: auto;
-}
-
-/* ---------- NEWS CARD ---------- */
-.news-card {
-  flex: 1 1 480px;    
-  max-width: 520px;   
+  flex: 1 1 480px;     /* base width for desktop */
+  max-width: 520px;    /* prevent card from getting too wide */
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
@@ -213,8 +186,8 @@ section p {
 /* ---------- IMAGE ---------- */
 .news-card img {
   width: 100%;
-  height: auto;       /* maintain full aspect ratio */
-  object-fit: contain; /* entire image fits inside card */
+  height: auto;        /* full image, no crop */
+  object-fit: contain; /* fit image fully inside card */
 }
 
 /* ---------- CONTENT ---------- */
@@ -235,25 +208,27 @@ section p {
 }
 
 .news-card p {
-  font-size: 1.1rem;    /* medium, readable */
+  font-size: 1.1rem;    /* medium size */
   line-height: 1.6;
   color: #333;
 }
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 1024px) {
-  .news-card { flex: 1 1 400px; }
-  .news-card img { height: auto; }
+  .news-card {
+    flex: 1 1 90%;      /* stack cards vertically on tablet */
+  }
 }
 
 @media (max-width: 768px) {
-  .news-card { flex: 1 1 90%; }
-  .news-card img { height: auto; }
+  .news-card {
+    flex: 1 1 100%;     /* full width on smaller mobile */
+  }
 }
 
 @media (max-width: 480px) {
   .news-card h3 { font-size: 1.2rem; }
-  .news-card p { font-size: 1rem; }
+  .news-card p  { font-size: 1rem; }
 }
 
 /* ==================================================
