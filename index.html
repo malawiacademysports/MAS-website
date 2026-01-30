@@ -617,16 +617,15 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <!-- ---------- GALLERY ---------- -->
 <section id="gallery">
     <h1>Gallery of Young Athletes</h1>
-
     <div class="gallery-container">
 
         <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Images/IMG20250910112442.jpg" alt="Football">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250910112442.jpg" alt="Football">
             <div class="overlay">Football</div>
         </div>
 
         <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Images/IMG-20251115-WA0016.jpg" alt="Netball">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG-20251115-WA0016.jpg" alt="Netball">
             <div class="overlay">Netball</div>
         </div>
 
@@ -636,12 +635,12 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         </div>
 
         <div class="gallery-item">
-            <img src="https://tse1.mm.bing.net/th/id/OIP.UIyT6VkIOi3o7fSH_NqDLwHaE8?rs=1&pid=ImgDetMain" alt="Volleyball">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.UIyT6VkIOi3o7fSH_NqDLwHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Volleyball">
             <div class="overlay">Volleyball</div>
         </div>
 
         <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/main/Images/IMG20250908165414.jpg" alt="Paralympic Sports">
+            <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250908165414.jpg" alt="Paralympic Sports">
             <div class="overlay">Paralympic Sports</div>
         </div>
 
@@ -671,20 +670,60 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         </div>
 
         <div class="gallery-item">
-            <a href="https://ibb.co/Zzc5rGp5" target="_blank">
-                <img src="https://i.ibb.co/PG1KyFvK/swimming.jpg" alt="Swimming">
-                <div class="overlay">Swimming</div>
-            </a>
-        </div>
-
-        <div class="gallery-item">
-            <img src="https://i.ibb.co/67jJdQMw/IMG-20241202-WA0008.jpg" alt="Football">
-            <div class="overlay">Football</div>
+            <img src="https://i.ibb.co/MxnrXnmj/IMG20251223103219.jpg" alt="Swimming">
+            <div class="overlay">Swimming</div>
         </div>
 
     </div>
 </section>
 
+<!-- CSS -->
+<style>
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+</style>
+</section>
 <!-- ---------- ACHIEVERS ---------- -->
 <section id="achievers">
   <h1>Models & Achievers</h1>
@@ -1153,6 +1192,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
