@@ -613,11 +613,14 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     line-height: 1.6;
     max-width: 800px;
 }
-</style>
+ </style>
+</section
 <!-- ---------- GALLERY ---------- -->
 <section id="gallery">
     <h1>Gallery of Young Athletes</h1>
-       <div class="gallery-grid"><div class="gallery-item">
+    <div class="gallery-container">
+
+        <div class="gallery-item">
             <img src="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/IMG20250910112442.jpg" alt="Football">
             <div class="overlay">Football</div>
         </div>
@@ -653,31 +656,78 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         </div>
 
         <div class="gallery-item">
-      <img src="https://i.ibb.co/Ld9Fh5Y7/IMG-20260129-WA0014.jpg" alt="Basketball">
-      <div class="overlay">Basketball</div></div>
-
-
+            <img src="https://i.ibb.co/Ld9Fh5Y7/IMG-20260129-WA0014.jpg" alt="Basketball">
+            <div class="overlay">Basketball</div>
+        </div>
 
         <div class="gallery-item">
             <img src="https://raw.githubusercontent.com/malawiacademysports/MAS-website/main/Malawi%20Academy%20for%20Sports%20Website/Images/karate.jpg" alt="Taekwondo">
             <div class="overlay">Taekwondo</div>
         </div>
- 
-     <div class="gallery-item">
-    <img src="https://i.ibb.co/k21s5YpF/IMG-20260130-WA0021.jpg" alt="Table Tennis">
-    <div class="overlay">Table Tennis</div>
-</div>
 
-<div class="gallery-item">
-    <a href="https://ibb.co/sdjnBjZD" target="_blank">
-        <img src="https://i.ibb.co/MxnrXnmj/IMG20251223103219.jpg" alt="Swimming">
-    </a>
-    <div class="overlay">Swimming</div>
-</div>
+        <div class="gallery-item">
+            <img src="https://i.ibb.co/k21s5YpF/IMG-20260130-WA0021.jpg" alt="Table Tennis">
+            <div class="overlay">Table Tennis</div>
+        </div>
 
-           
+        <div class="gallery-item">
+            <a href="https://ibb.co/sdjnBjZD" target="_blank">
+                <img src="https://i.ibb.co/MxnrXnmj/IMG20251223103219.jpg" alt="Swimming">
+            </a>
+            <div class="overlay">Swimming</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CSS -->
+<style>
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+</style>
+
  
-       </div>
+</div>
 </section>
 <!-- ---------- ACHIEVERS ---------- -->
 <section id="achievers">
@@ -1147,6 +1197,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <img id="imagePreview" 
      style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
      
+
 
 
 
