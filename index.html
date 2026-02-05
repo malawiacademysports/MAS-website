@@ -1263,9 +1263,21 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
 <!-- IMAGE PREVIEW ELEMENT (place inside your Upload Form area) -->
 <img id="imagePreview" 
-     style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">
-     
+     style="display:none; width:230px; margin-top:10px; border-radius:10px; border:2px solid #ddd;">    
+<!-- ✅ SLIDESHOW JAVASCRIPT GOES HERE -->
+<script>
+const slides = document.querySelectorAll(".bg-slide");
+let index = 0;
 
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 4000);
+</script>
+
+</body>
+</html>
 
 
 
