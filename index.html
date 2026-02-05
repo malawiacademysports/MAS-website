@@ -136,7 +136,8 @@ header .logo-text .council {
 
 /* ---------- HERO ---------- */
 .home { 
-    background: url('https://images.unsplash.com/photo-1517649763962-0c623066013b?fit=crop&w=1400&q=80') center/cover no-repeat; 
+    background: none;
+    background-color: #000;
     height: 70vh; 
     display: flex; 
     justify-content: center; 
@@ -144,7 +145,9 @@ header .logo-text .council {
     flex-direction: column; 
     color: var(--white); 
     text-shadow: 2px 2px 5px black; 
-    text-align: center; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 .home h1 { font-size: 50px; font-weight: 700; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 12px; }
 .home p { font-size: 22px; margin-bottom: 20px; }
@@ -1266,6 +1269,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
