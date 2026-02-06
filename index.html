@@ -351,53 +351,82 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+// ---------- LOAD NEWS WITH HORIZONTAL SLIDER AND DOTS ----------
+async function loadNews() {
+  const newsContainer = document.getElementById("newsContainer");
+  const dotsContainer = document.getElementById("newsDots");
+  newsContainer.innerHTML = "<p>Loading news...</p>";
+  dotsContainer.innerHTML = "";
 
-  // ---------- LOAD NEWS ----------
-  async function loadNews() {
-    const newsContainer = document.getElementById("newsContainer");
-    newsContainer.innerHTML = "<p>Loading news...</p>";
+  try {
+    // Query the "news" collection, order by createdAt descending
+    const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
 
-    try {
-      // Query the "news" collection, order by createdAt descending
-      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
-      const snap = await getDocs(q);
-
-      if (snap.empty) {
-        newsContainer.innerHTML = "<p>No news found.</p>";
-        return;
-      }
-
-      newsContainer.innerHTML = "";
-
-      snap.forEach(doc => {
-        const n = doc.data();
-
-  // Defensive handling of missing fields
-  const imageURL = n.image || "https://via.placeholder.com/300x180";
-  const title = n.title || "No title";
-  const summary = n.summary || "";
-  const date = n.createdAt?.toDate?.()
-    ? n.createdAt.toDate().toLocaleDateString()
-    : "Date not available";
-
-  newsContainer.innerHTML += `
-    <div class="news-card">
-      <img src="${imageURL}" alt="${title}">
-      <div class="content">
-        <h3>${title}</h3>
-        <small>${date}</small>
-        <p>${summary}</p>
-      </div>
-    </div>
-  `;
-});
-    } catch (err) {
-      console.error("Error loading news:", err);
-      newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+    if (snap.empty) {
+      newsContainer.innerHTML = "<p>No news found.</p>";
+      return;
     }
-  }
 
-  window.addEventListener("load", loadNews);
+    newsContainer.innerHTML = "";
+
+    snap.forEach((doc, index) => {
+      const n = doc.data();
+
+      // Defensive handling of missing fields
+      const imageURL = n.image || "https://via.placeholder.com/300x180";
+      const title = n.title || "No title";
+      const summary = n.summary || "";
+      const date = n.createdAt?.toDate?.()
+        ? n.createdAt.toDate().toLocaleDateString()
+        : "Date not available";
+
+      // Add news card
+      newsContainer.innerHTML += `
+        <div class="news-card">
+          <img src="${imageURL}" alt="${title}">
+          <div class="content">
+            <h3>${title}</h3>
+            <small>${date}</small>
+            <p>${summary}</p>
+          </div>
+        </div>
+      `;
+
+      // Add a dot for each card
+      const dot = document.createElement("span");
+      dot.classList.add("dot");
+      if (index === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => {
+        const card = newsContainer.children[index];
+        card.scrollIntoView({ behavior: "smooth", inline: "start" });
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    newsContainer.addEventListener("scroll", () => {
+      const cards = newsContainer.children;
+      let index = 0;
+      for (let i = 0; i < cards.length; i++) {
+        const cardLeft = cards[i].offsetLeft;
+        if (newsContainer.scrollLeft >= cardLeft - cards[i].offsetWidth / 2) {
+          index = i;
+        }
+      }
+      const dots = dotsContainer.children;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle("active", i === index);
+      }
+    });
+
+  } catch (err) {
+    console.error("Error loading news:", err);
+    newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+  }
+}
+
+window.addEventListener("load", loadNews);
 </script>
  </section>  
 <!-- ---------- COACHES ---------- -->
@@ -1290,6 +1319,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
