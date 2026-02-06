@@ -888,7 +888,6 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     </div>
   </div>
 </section>
-
 <!-- ---------- ATHLETE REGISTRATION ---------- -->
 <section id="register">
     <h1>Athlete Registration Forms</h1>
@@ -896,7 +895,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
         Please fill in all required information to register your child for the Malawi Academy for Sports programs.
     </p>
 
-    <div class="form-box">
+    <div class="form-box" style="border: 2px solid black; padding: 20px; border-radius: 10px; max-width: 700px; margin:auto;">
 
         <!-- Form -->
         <form action="https://formsubmit.co/rsdocentre@gmail.com" method="POST">
@@ -905,93 +904,100 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
            <input type="hidden" name="_captcha" value="false">
            <input type="hidden" name="_template" value="table">
            <input type="hidden" name="_subject" value="New Athlete Registration Form Submitted">
-            <input type="hidden" name="_autoresponse" 
-            value="Thank you for registering with Malawi Academy for Sports! We are excited to have your child join our programs. Our team will review your submission and contact you if needed. Stay active and keep striving for excellence!">
+           <input type="hidden" name="_autoresponse" 
+           value="Thank you for registering with Malawi Academy for Sports! We are excited to have your child join our programs. Our team will review your submission and contact you if needed. Stay active and keep striving for excellence!">
 
-             <!-- Athlete Details -->
-            <label for="full_name">Full Name *</label>
-            <input type="text" name="Full Name" id="full_name" placeholder="Enter full name" required>
+            <!-- ---------- ATHLETE DETAILS ---------- -->
+            <div style="border: 2px solid black; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h2>Athlete Details</h2>
 
-            <label for="athlete_phone">Athlete Phone Number *</label>
-            <input type="tel" name="Athlete Phone Number" id="athlete_phone" 
-                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
-                   pattern="(\+265|265|0)\d{8,9}" required>
+                <label for="full_name">Full Name *</label>
+                <input type="text" name="Full Name" id="full_name" placeholder="Enter full name" required>
 
-            <label for="dob">Date of Birth *</label>
-            <input type="date" name="Date of Birth" id="dob" required>
+                <label for="athlete_phone">Athlete Phone Number *</label>
+                <input type="tel" name="Athlete Phone Number" id="athlete_phone" 
+                       placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                       pattern="(\+265|265|0)\d{8,9}" required>
 
-            <label for="age">Age *</label>
-            <select name="Age Group" id="age" required>
-                <option value="">Select age</option>
-                <option value="6-8">6-8</option>
-                <option value="9-13">9-13</option>
-                <option value="14-18">14-18</option>
-            </select>
+                <label for="dob">Date of Birth *</label>
+                <input type="date" name="Date of Birth" id="dob" required>
 
-            <label for="gender">Gender *</label>
-            <select name="Gender" id="gender" required>
-                <option value="">Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
+                <label for="age">Age *</label>
+                <select name="Age Group" id="age" required>
+                    <option value="">Select age</option>
+                    <option value="6-8">6-8</option>
+                    <option value="9-13">9-13</option>
+                    <option value="14-18">14-18</option>
+                </select>
 
-            <label for="sport">Sport Code *</label>
-            <select name="Sport Code" id="sport" required>
-                <option value="">Select sport</option>
-                <option value="Basketball">Basketball</option>
-                <option value="Football">Football</option>
-                <option value="Netball">Netball</option>
-                <option value="Athletics">Athletics</option>
-                <option value="Volleyball">Volleyball</option>
-                <option value="Paralympic Sports">Paralympic Sports</option>
-                <option value="Kids Fun Games">Kids Fun Games</option>
-                <option value="Karate">Karate</option>
-                <option value="Judo">Judo</option>
-                <option value="Table Tennis">Table Tennis</option>
-            </select>
+                <label for="gender">Gender *</label>
+                <select name="Gender" id="gender" required>
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
 
-            <label for="medical">Medical Information / Allergies</label>
-            <textarea name="Medical Information" id="medical" placeholder="Specify any medical conditions or allergies"></textarea>
+                <label for="sport">Sport Code *</label>
+                <select name="Sport Code" id="sport" required>
+                    <option value="">Select sport</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Football">Football</option>
+                    <option value="Netball">Netball</option>
+                    <option value="Athletics">Athletics</option>
+                    <option value="Volleyball">Volleyball</option>
+                    <option value="Paralympic Sports">Paralympic Sports</option>
+                    <option value="Kids Fun Games">Kids Fun Games</option>
+                    <option value="Karate">Karate</option>
+                    <option value="Judo">Judo</option>
+                    <option value="Table Tennis">Table Tennis</option>
+                </select>
 
-            <!-- Emergency Contact -->
-            <label for="emergency_name">Emergency Contact Name *</label>
-            <input type="text" name="Emergency Contact Name" id="emergency_name" placeholder="Enter name" required>
+                <label for="medical">Medical Information / Allergies</label>
+                <textarea name="Medical Information" id="medical" placeholder="Specify any medical conditions or allergies"></textarea>
+            </div>
 
-            <label for="emergency_phone">Emergency Contact Phone *</label>
-            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" 
-                   placeholder="e.g. 0991234567, 0884563737, +265991234567"
-                   pattern="(\+265|265|0)\d{8,9}" required>
+            <!-- ---------- EMERGENCY CONTACT ---------- -->
+            <div style="border: 2px solid black; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h2>Emergency Contact</h2>
+
+                <label for="emergency_name">Emergency Contact Name *</label>
+                <input type="text" name="Emergency Contact Name" id="emergency_name" placeholder="Enter name" required>
+
+                <label for="emergency_phone">Emergency Contact Phone *</label>
+                <input type="tel" name="Emergency Contact Phone" id="emergency_phone" 
+                       placeholder="e.g. 0991234567, 0884563737, +265991234567"
+                       pattern="(\+265|265|0)\d{8,9}" required>
+
                 <label for="emergency_email">Emergency Contact Email (optional)</label>
-            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email">
-            <label for="emergency_phone">Emergency Contact Phone *</label>
-            <input type="tel" name="Emergency Contact Phone" id="emergency_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
-                   pattern="(\+265|265|0)\d{8,9}" required>
+                <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email">
+            </div>
 
-            <label for="emergency_email">Emergency Contact Email *</label>
-            <input type="email" name="Emergency Contact Email" id="emergency_email" placeholder="Enter email" required>
+            <!-- ---------- PARENTAL DETAILS ---------- -->
+            <div style="border: 2px solid black; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h2>Parent/Guardian Details</h2>
 
-            <!-- Parental Consent -->
-            <label for="parent_name">Parent/Guardian Full Name *</label>
-            <input type="text" name="Parent/Guardian Full Name" id="parent_name" placeholder="Enter name" required>
+                <label for="parent_name">Parent/Guardian Full Name *</label>
+                <input type="text" name="Parent/Guardian Full Name" id="parent_name" placeholder="Enter name" required>
 
-            <label for="parent_phone">Parent/Guardian Phone Number *</label>
-            <input type="tel" name="Parent/Guardian Phone Number" id="parent_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
-                   pattern="(\+265|265|0)\d{8,9}" required>
+                <label for="parent_phone">Parent/Guardian Phone Number *</label>
+                <input type="tel" name="Parent/Guardian Phone Number" id="parent_phone" placeholder="e.g. 0991234567, 0884563737, +265991234567" 
+                       pattern="(\+265|265|0)\d{8,9}" required>
 
-            <label for="parent_email">Parent/Guardian Email *</label>
-            <input type="email" name="Parent/Guardian Email" id="parent_email" placeholder="Enter email" required>
+                <label for="parent_email">Parent/Guardian Email *</label>
+                <input type="email" name="Parent/Guardian Email" id="parent_email" placeholder="Enter email" required>
 
-            <label>Parental Consent *</label>
-            <p style="font-size:14px; background:#f0f0f0; padding:10px; border-radius:5px;">
-                I, the parent/guardian, confirm that I have given full permission for my child to participate in the Malawi Academy for Sports programs.
-                I understand and agree to all requirements and responsibilities.
-            </p>
+                <label>Parental Consent *</label>
+                <p style="font-size:14px; background:#f0f0f0; padding:10px; border-radius:5px;">
+                    I, the parent/guardian, confirm that I have given full permission for my child to participate in the Malawi Academy for Sports programs.
+                    I understand and agree to all requirements and responsibilities.
+                </p>
 
-            <div style="margin:10px 0;">
-                <input type="checkbox" id="consent_check" name="Parent Confirmation" value="Yes" required>
-                <label for="consent_check" style="font-size:15px; font-weight:600;">
-                    I confirm that the information provided is accurate and I approve this registration.
-                </label>
+                <div style="margin:10px 0;">
+                    <input type="checkbox" id="consent_check" name="Parent Confirmation" value="Yes" required>
+                    <label for="consent_check" style="font-size:15px; font-weight:600;">
+                        I confirm that the information provided is accurate and I approve this registration.
+                    </label>
+                </div>
             </div>
 
             <!-- Submit Button -->
@@ -1289,6 +1295,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
