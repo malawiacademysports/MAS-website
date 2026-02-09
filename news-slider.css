@@ -1,0 +1,102 @@
+/* ---------- NEWS SLIDER CONTAINER ---------- */
+#newsSliderContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* Horizontal scroll for news cards */
+#newsContainer {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 15px;
+  padding-bottom: 10px;
+}
+
+/* Hide scrollbar */
+#newsContainer::-webkit-scrollbar {
+  display: none;
+}
+#newsContainer {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* ---------- NEWS CARD ---------- */
+.news-card {
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Images inside news card */
+.news-card img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+/* Card content */
+.news-card .content h3 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+.news-card .content small {
+  font-size: 12px;
+  color: #666;
+}
+.news-card .content p {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+/* ---------- DOTS ---------- */
+#newsDots {
+  text-align: center;
+  margin-top: 10px;
+}
+#newsDots .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#newsDots .dot.active {
+  background-color: #333;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media screen and (max-width: 768px) {
+  .news-card {
+    min-width: 250px;
+    max-width: 250px;
+  }
+  .news-card img {
+    max-height: 120px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .news-card {
+    min-width: 200px;
+    max-width: 200px;
+  }
+  .news-card img {
+    max-height: 100px;
+  }
+}
