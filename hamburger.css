@@ -6,6 +6,15 @@
     gap: 15px;
 }
 
+/* Header flex (logo left, hamburger right on mobile) */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
+}
+
 /* Hamburger icon */
 .hamburger {
     display: none;
@@ -14,7 +23,6 @@
     cursor: pointer;
     position: relative;
     z-index: 1000;
-    margin-left: auto; /* push to right */
 }
 
 .hamburger span {
