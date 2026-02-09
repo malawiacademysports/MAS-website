@@ -1337,20 +1337,34 @@ setInterval(() => {
 </script>
 <!-- HAMBURGER MENU JAVASCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+// Select elements
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMenu = document.getElementById('closeMenu');
 
-    const hamburger = document.getElementById("hamburger");
-    const menu = document.getElementById("mobileMenu");
+// Toggle menu on hamburger click
+hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    hamburger.classList.add('active');
+});
 
-    hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        menu.classList.toggle("open");
+// Close menu on X click
+closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('active');
+});
+
+// Optional: Close menu when clicking a link
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('active');
     });
-
 });
 </script>
 </body>
 </html>
+
 
 
 
