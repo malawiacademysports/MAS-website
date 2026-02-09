@@ -4,11 +4,12 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background: #fff;
     position: relative;
+    background: #fff;
     z-index: 1000;
 }
 
+/* Logo */
 .logo-text {
     display: flex;
     align-items: center;
@@ -19,22 +20,12 @@ header {
     height: 50px;
 }
 
-/* Desktop navbar */
-.navbar.desktop-menu {
-    display: flex;
-    gap: 15px;
-}
-
-/* Hamburger icon (hidden on desktop) */
+/* Hamburger icon */
 .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 50%; 
-    transform: translateY(-50%);
     z-index: 1100;
 }
 
@@ -98,10 +89,19 @@ header {
 
 /* --------------------- RESPONSIVE --------------------- */
 @media screen and (max-width: 768px) {
-    .desktop-menu {
-        display: none; /* hide desktop menu on mobile */
-    }
     .hamburger {
-        display: flex; /* show hamburger */
+        display: flex;
+    }
+}
+
+/* Desktop navbar hidden on mobile */
+.navbar.desktop-menu {
+    display: flex;
+    gap: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar.desktop-menu {
+        display: none;
     }
 }
