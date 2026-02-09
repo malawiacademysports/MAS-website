@@ -1335,24 +1335,21 @@ setInterval(() => {
 </script>
 <!-- HAMBURGER MENU JAVASCRIPT -->
 <script>
-const hamburger = document.getElementById("hamburger");
-const mobileMenu = document.getElementById("mobileMenu");
+document.addEventListener("DOMContentLoaded", () => {
 
-hamburger.addEventListener("click", () => {
-    // Toggle mobile menu
-    if (mobileMenu.style.display === "flex") {
-        mobileMenu.style.display = "none";
-        hamburger.classList.remove("active");
-    } else {
-        mobileMenu.style.display = "flex";
-        mobileMenu.style.flexDirection = "column";
-        mobileMenu.style.alignItems = "center";
-        hamburger.classList.add("active");
-    }
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        menu.classList.toggle("open");
+    });
+
 });
 </script>
 </body>
 </html>
+
 
 
 
