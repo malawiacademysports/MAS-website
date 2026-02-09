@@ -1333,6 +1333,7 @@ setInterval(() => {
   slides[index].classList.add("active");
 }, 4000);
 </script>
+
 <!-- HAMBURGER MENU JAVASCRIPT -->
 <script>
 // Select elements
@@ -1340,7 +1341,7 @@ const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const closeMenu = document.getElementById('closeMenu');
 
-// Open menu on hamburger click
+// Toggle menu on hamburger click
 hamburger.addEventListener('click', () => {
     mobileMenu.classList.add('open');
     hamburger.classList.add('active');
@@ -1352,7 +1353,7 @@ closeMenu.addEventListener('click', () => {
     hamburger.classList.remove('active');
 });
 
-// Close menu when clicking a menu link
+// Optional: Close menu when clicking a link
 document.querySelectorAll('.mobile-menu a').forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.classList.remove('open');
@@ -1362,6 +1363,7 @@ document.querySelectorAll('.mobile-menu a').forEach(link => {
 </script>
 </body>
 </html>
+
 
 
 
