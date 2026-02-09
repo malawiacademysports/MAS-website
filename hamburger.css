@@ -1,87 +1,52 @@
-/* ------------------ DESKTOP ------------------ */
-.navbar.desktop-menu {
-    display: flex;
-    gap: 15px;
-}
-
-/* Header Flex */
+/* --------------------- HEADER --------------------- */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
+    background: #fff;
     position: relative;
+    z-index: 1000;
 }
 
-/* Hamburger icon */
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-text img {
+    height: 50px;
+}
+
+/* Desktop navbar */
+.navbar.desktop-menu {
+    display: flex;
+    gap: 15px;
+}
+
+/* Hamburger icon (hidden on desktop) */
 .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    position: relative;
-    z-index: 1001; /* above menu */
+    position: absolute;
+    right: 20px;
+    top: 50%; 
+    transform: translateY(-50%);
+    z-index: 1100;
 }
 
 .hamburger span {
-    width: 25px;
+    width: 30px;
     height: 3px;
-    background: green; /* green lines */
+    background: green;
     border-radius: 2px;
     transition: 0.3s;
 }
 
-/* Mobile Sliding Menu */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    left: -250px; /* hidden by default */
-    width: 250px;
-    height: 100%;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    padding-top: 50px;
-    gap: 10px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    transition: left 0.3s ease;
-    z-index: 1000;
-}
-
-.mobile-menu a {
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #000;
-    border-bottom: 1px solid #eee;
-    transition: background 0.2s;
-}
-
-.mobile-menu a:hover {
-    background: #f0f0f0;
-}
-
-/* Close Button (black X on top-right inside menu) */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 30px;
-    cursor: pointer;
-    color: black; /* black X */
-}
-
-/* Show hamburger and hide desktop menu on mobile */
-@media screen and (max-width: 768px) {
-    .desktop-menu {
-        display: none;
-    }
-    .hamburger {
-        display: flex;
-        justify-content: center;
-    }
-}
-
-/* Hamburger animation (turns into X) */
+/* Hamburger animation when active (X) */
 .hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
@@ -89,10 +54,54 @@ header {
     opacity: 0;
 }
 .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Mobile menu visible state */
+/* --------------------- MOBILE MENU --------------------- */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* hidden initially */
+    width: 250px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    transition: left 0.3s ease;
+    z-index: 1050;
+}
+
 .mobile-menu.open {
-    left: 0;
+    left: 0; /* slide in from left */
+}
+
+.mobile-menu a {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+}
+
+/* Close button (X) inside menu */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+}
+
+/* --------------------- RESPONSIVE --------------------- */
+@media screen and (max-width: 768px) {
+    .desktop-menu {
+        display: none; /* hide desktop menu on mobile */
+    }
+    .hamburger {
+        display: flex; /* show hamburger */
+    }
 }
