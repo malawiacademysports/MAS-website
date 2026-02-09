@@ -20,12 +20,16 @@ header {
     height: 50px;
 }
 
-/* Hamburger icon */
+/* Hamburger icon (3 dots/lines) */
 .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
+    position: absolute;
+    top: 50%;   /* vertically middle */
+    right: 20px; /* from right */
+    transform: translateY(-50%);
     z-index: 1100;
 }
 
@@ -52,20 +56,20 @@ header {
 .mobile-menu {
     position: fixed;
     top: 0;
-    left: -250px; /* hidden initially */
+    right: -250px; /* hidden initially on right */
     width: 250px;
     height: 100%;
     background: #fff;
-    box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+    box-shadow: -2px 0 12px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     padding-top: 60px;
-    transition: left 0.3s ease;
+    transition: right 0.3s ease;
     z-index: 1050;
 }
 
 .mobile-menu.open {
-    left: 0; /* slide in from left */
+    right: 0; /* slide in from right */
 }
 
 .mobile-menu a {
@@ -92,16 +96,15 @@ header {
     .hamburger {
         display: flex;
     }
-}
 
-/* Desktop navbar hidden on mobile */
-.navbar.desktop-menu {
-    display: flex;
-    gap: 15px;
-}
-
-@media screen and (max-width: 768px) {
+    /* Desktop menu hidden on mobile */
     .navbar.desktop-menu {
         display: none;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .mobile-menu {
+        display: none; /* hide mobile menu on desktop */
     }
 }
