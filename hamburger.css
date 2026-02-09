@@ -6,12 +6,15 @@
     gap: 15px;
 }
 
-/* Hamburger icon (hidden on desktop) */
+/* Hamburger icon */
 .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    margin-left: auto; /* push to right */
 }
 
 .hamburger span {
@@ -29,7 +32,7 @@
     background: #fff;
     width: 100%;
     position: absolute;
-    top: 100%;
+    top: 100%; /* below header */
     left: 0;
     border-top: 1px solid #ccc;
     z-index: 999;
@@ -42,7 +45,7 @@
     border-bottom: 1px solid #eee;
 }
 
-/* Mobile only adjustments */
+/* Show hamburger and hide desktop menu on mobile */
 @media screen and (max-width: 768px) {
     .desktop-menu {
         display: none;
@@ -52,7 +55,7 @@
     }
 }
 
-/* Optional: Hamburger animation to X */
+/* Hamburger animation (turns into X) */
 .hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
