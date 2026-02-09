@@ -402,19 +402,19 @@ async function loadNews() {
     snap.forEach((doc, index) => {
       const n = doc.data();
 
-      // Defensive handling of missing fields
       const title = n.title || "No title";
       const summary = n.summary || "";
       const date = n.createdAt?.toDate?.()
         ? n.createdAt.toDate().toLocaleDateString()
         : "Date not available";
 
-      // NEW: handle multiple images (max 3)
+      // ---------- SUPPORT BOTH SINGLE IMAGE AND IMAGE ARRAY ----------
       const imagesArray = n.images && n.images.length > 0
-        ? n.images.slice(0, 3)
-        : ["https://via.placeholder.com/300x180"]; // fallback
+        ? n.images.slice(0, 3)           // take up to 3 images from array
+        : n.image 
+          ? [n.image]                     // fallback to single image
+          : ["https://via.placeholder.com/300x180"]; // placeholder if none
 
-      // Build images HTML
       const imagesHTML = imagesArray.map(url => `<img src="${url}" alt="${title}">`).join("");
 
       // Add news card
@@ -461,6 +461,7 @@ async function loadNews() {
     newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
   }
 }
+
 window.addEventListener("load", loadNews);
 </script>
  </section>  
@@ -1360,6 +1361,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
