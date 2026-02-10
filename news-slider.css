@@ -7,20 +7,22 @@
   padding: 10px;
 }
 
-/* Horizontal slider */
+/* ---------- HORIZONTAL SLIDER ---------- */
+
 #newsContainer {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 10px 5px;
+  padding: 10px 6px;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
 }
 
-/* Hide scrollbar */
 #newsContainer::-webkit-scrollbar {
   display: none;
 }
+
 #newsContainer {
   scrollbar-width: none;
 }
@@ -28,43 +30,42 @@
 /* ---------- NEWS CARD ---------- */
 
 .news-card {
-  flex: 0 0 360px; /* medium desktop card */
+  flex: 0 0 380px; /* medium desktop */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* ---------- IMAGE AREA ---------- */
 
 .news-images {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   padding: 8px;
 }
 
-/* Images — NO CROPPING */
+/* Auto layout for 1–3 images */
 
 .news-images img {
   width: 100%;
   height: auto;
-  object-fit: contain; /* 🔥 prevents cropping */
-  background: #f3f3f3;
+  object-fit: contain; /* NEVER crop */
+  background: #f2f2f2;
   border-radius: 6px;
-  max-height: 180px; /* prevents tall cards */
+  max-height: 220px;
 }
 
 /* ---------- CARD CONTENT ---------- */
 
 .news-card .content {
-  padding: 10px 14px 14px;
+  padding: 12px 14px 14px;
 }
 
 .news-card h3 {
-  font-size: 17px;
-  margin: 4px 0;
+  font-size: 18px;
+  margin: 5px 0;
 }
 
 .news-card small {
@@ -82,12 +83,12 @@
 
 #newsDots {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 #newsDots .dot {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   margin: 0 4px;
   background: #bbb;
   border-radius: 50%;
@@ -100,13 +101,13 @@
 
 /* ---------- RESPONSIVE ---------- */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .news-card {
     flex: 0 0 85%;
   }
 
   .news-images img {
-    max-height: 150px;
+    max-height: 180px;
   }
 }
 
@@ -116,6 +117,6 @@
   }
 
   .news-images img {
-    max-height: 130px;
+    max-height: 150px;
   }
 }
