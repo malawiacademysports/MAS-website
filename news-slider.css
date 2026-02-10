@@ -8,21 +8,21 @@
 }
 
 /* ---------- HORIZONTAL SLIDER ---------- */
-
 #newsContainer {
   display: flex;
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 10px 6px;
-  -webkit-overflow-scrolling: touch;
+  padding: 12px;
   cursor: grab;
+
+  /* important */
+  white-space: nowrap;
 }
 
 #newsContainer::-webkit-scrollbar {
   display: none;
 }
-
 #newsContainer {
   scrollbar-width: none;
 }
@@ -30,7 +30,7 @@
 /* ---------- NEWS CARD ---------- */
 
 .news-card {
-  flex: 0 0 380px; /* medium desktop */
+  flex: 0 0 520px; /* BIG desktop card */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
@@ -120,3 +120,4 @@
     max-height: 150px;
   }
 }
+
