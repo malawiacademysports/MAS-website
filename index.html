@@ -348,18 +348,15 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
       ★ Latest News & Updates
     </h2>
+
+    <!-- News container where Firebase news will appear -->
     <div id="newsContainer"></div>
   </div>
 </section>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    query,
-    orderBy
-  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
   // ---------- FIREBASE CONFIG ----------
   const firebaseConfig = {
@@ -373,6 +370,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
   // ---------- LOAD NEWS ----------
   async function loadNews() {
     const newsContainer = document.getElementById("newsContainer");
@@ -418,7 +416,8 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   }
 
   window.addEventListener("load", loadNews);
-</script
+</script>
+
  </section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1316,6 +1315,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
