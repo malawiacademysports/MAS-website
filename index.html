@@ -355,63 +355,78 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 </section>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+  // Firebase core
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-  // ---------- FIREBASE CONFIG ----------
+  // Analytics
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+
+  // Firestore
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  // ---------- CONFIG ----------
   const firebaseConfig = {
     apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
     authDomain: "malawi-academy-for-sports.firebaseapp.com",
     projectId: "malawi-academy-for-sports",
     storageBucket: "malawi-academy-for-sports.firebasestorage.app",
     messagingSenderId: "328510653245",
-    appId: "1:328510653245:web:58e432add2e811faf6bb54"
+    appId: "1:328510653245:web:58e432add2e811faf6bb54",
+    measurementId: "G-D8GWZ6JV4R"
   };
 
+  // ---------- INIT ----------
   const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
   const db = getFirestore(app);
 
   // ---------- LOAD NEWS ----------
   async function loadNews() {
-    const newsContainer = document.getElementById("newsContainer");
-    newsContainer.innerHTML = "<p>Loading news...</p>";
+    const container = document.getElementById("newsContainer");
+    container.innerHTML = "<p>Loading news...</p>";
 
     try {
       const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
       const snap = await getDocs(q);
 
       if (snap.empty) {
-        newsContainer.innerHTML = "<p>No news found.</p>";
+        container.innerHTML = "<p>No news found.</p>";
         return;
       }
 
-      newsContainer.innerHTML = "";
+      container.innerHTML = "";
 
       snap.forEach(doc => {
         const n = doc.data();
 
-        const imageURL = n.image || "https://via.placeholder.com/300x180";
+        const image = n.image || "https://via.placeholder.com/300";
         const title = n.title || "No title";
         const summary = n.summary || "";
         const date = n.createdAt?.toDate?.()
           ? n.createdAt.toDate().toLocaleDateString()
-          : "Date not available";
+          : "";
 
-        newsContainer.innerHTML += `
+        container.insertAdjacentHTML("beforeend", `
           <div class="news-card">
-            <img src="${imageURL}" alt="${title}">
+            <img src="${image}">
             <div class="content">
               <h3>${title}</h3>
               <small>${date}</small>
               <p>${summary}</p>
             </div>
           </div>
-        `;
+        `);
       });
 
     } catch (err) {
-      console.error("Error loading news:", err);
-      newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+      console.error(err);
+      container.innerHTML = "<p>Error loading news.</p>";
     }
   }
 
@@ -1315,6 +1330,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
