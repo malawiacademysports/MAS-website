@@ -382,13 +382,15 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   const db = getFirestore(app);
 // ---------- LOAD NEWS WITH HORIZONTAL SLIDER AND DOTS ----------
 async function loadNews() {
+
   const newsContainer = document.getElementById("newsContainer");
   const dotsContainer = document.getElementById("newsDots");
+
   newsContainer.innerHTML = "<p>Loading news...</p>";
   dotsContainer.innerHTML = "";
 
   try {
-    // Query the "news" collection, order by createdAt descending
+
     const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
 
@@ -400,6 +402,7 @@ async function loadNews() {
     newsContainer.innerHTML = "";
 
     snap.forEach((doc, index) => {
+
       const n = doc.data();
 
       const title = n.title || "No title";
@@ -408,19 +411,31 @@ async function loadNews() {
         ? n.createdAt.toDate().toLocaleDateString()
         : "Date not available";
 
-      // ---------- SUPPORT BOTH SINGLE IMAGE AND IMAGE ARRAY ----------
-      const imagesArray = n.images && n.images.length > 0
-        ? n.images.slice(0, 3)           // take up to 3 images from array
-        : n.image 
-          ? [n.image]                     // fallback to single image
-          : ["https://via.placeholder.com/300x180"]; // placeholder if none
+      // ---------- SAFE IMAGE HANDLING ----------
+      let imagesArray = [];
 
-      const imagesHTML = imagesArray.map(url => `<img src="${url}" alt="${title}">`).join("");
+      if (Array.isArray(n.images) && n.images.length > 0) {
+        imagesArray = n.images; // multi-image document
+      }
+      else if (typeof n.image === "string" && n.image.trim() !== "") {
+        imagesArray = [n.image]; // single image document
+      }
+      else {
+        imagesArray = ["https://via.placeholder.com/300x180"];
+      }
 
-      // Add news card
+      // Build images grid
+      const imagesHTML = imagesArray
+        .map(url => `<img src="${url}" alt="${title}">`)
+        .join("");
+
+      // ---------- ADD NEWS CARD ----------
       newsContainer.innerHTML += `
         <div class="news-card">
-          ${imagesHTML}
+          <div class="news-images">
+            ${imagesHTML}
+          </div>
+
           <div class="content">
             <h3>${title}</h3>
             <small>${date}</small>
@@ -429,37 +444,57 @@ async function loadNews() {
         </div>
       `;
 
-      // Add a dot for each card
+      // ---------- DOT NAVIGATION ----------
       const dot = document.createElement("span");
       dot.classList.add("dot");
+
       if (index === 0) dot.classList.add("active");
+
       dot.addEventListener("click", () => {
         const card = newsContainer.children[index];
-        card.scrollIntoView({ behavior: "smooth", inline: "start" });
+        card.scrollIntoView({
+          behavior: "smooth",
+          inline: "start"
+        });
       });
+
       dotsContainer.appendChild(dot);
+
     });
 
-    // Update active dot on scroll
+    // ---------- UPDATE DOTS ON SCROLL ----------
     newsContainer.addEventListener("scroll", () => {
+
       const cards = newsContainer.children;
       let activeIndex = 0;
+
       for (let i = 0; i < cards.length; i++) {
-        const cardLeft = cards[i].offsetLeft;
-        if (newsContainer.scrollLeft >= cardLeft - cards[i].offsetWidth / 2) {
+
+        const left = cards[i].offsetLeft;
+
+        if (newsContainer.scrollLeft >= left - cards[i].offsetWidth / 2) {
           activeIndex = i;
         }
+
       }
+
       const dots = dotsContainer.children;
+
       for (let i = 0; i < dots.length; i++) {
         dots[i].classList.toggle("active", i === activeIndex);
       }
+
     });
 
-  } catch (err) {
+  }
+
+  catch (err) {
+
     console.error("Error loading news:", err);
     newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
+
   }
+
 }
 
 window.addEventListener("load", loadNews);
@@ -1361,6 +1396,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
