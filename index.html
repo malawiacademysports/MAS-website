@@ -413,22 +413,22 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
           : "";
 
         container.insertAdjacentHTML("beforeend", `
-          <div class="news-card">
-            <img src="${image}">
-            <div class="content">
-              <h3>${title}</h3>
-              <small>${date}</small>
-              <p>${summary}</p>
-            </div>
+        <div class="news-card">
+          <img src="${image}" alt="News image">
+          <div class="content">
+            <h3>${title}</h3>
+            <small>${date}</small>
+            <p>${summary}</p>
           </div>
-        `);
-      });
+        </div>
+      `);
+    });
 
-    } catch (err) {
-      console.error(err);
-      container.innerHTML = "<p>Error loading news.</p>";
-    }
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "<p>Error loading news.</p>";
   }
+}
 
   window.addEventListener("load", loadNews);
 </script>
@@ -1330,6 +1330,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
