@@ -380,9 +380,8 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-// ---------- LOAD NEWS WITH HORIZONTAL SLIDER AND DOTS ----------
+// ---------- LOAD NEWS WITH HORIZONTAL SLIDER, ARROWS, AND DOTS ----------
 async function loadNews() {
-
   const newsContainer = document.getElementById("newsContainer");
   const dotsContainer = document.getElementById("newsDots");
 
@@ -390,7 +389,6 @@ async function loadNews() {
   dotsContainer.innerHTML = "";
 
   try {
-
     const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
 
@@ -402,99 +400,86 @@ async function loadNews() {
     newsContainer.innerHTML = "";
 
     snap.forEach((doc, index) => {
-
       const n = doc.data();
-
       const title = n.title || "No title";
       const summary = n.summary || "";
       const date = n.createdAt?.toDate?.()
         ? n.createdAt.toDate().toLocaleDateString()
         : "Date not available";
 
-      // ---------- SAFE IMAGE HANDLING ----------
+      // ---------- HANDLE SINGLE OR MULTIPLE IMAGES ----------
       let imagesArray = [];
-
       if (Array.isArray(n.images) && n.images.length > 0) {
-        imagesArray = n.images; // multi-image document
-      }
-      else if (typeof n.image === "string" && n.image.trim() !== "") {
-        imagesArray = [n.image]; // single image document
-      }
-      else {
-        imagesArray = ["https://via.placeholder.com/300x180"];
+        imagesArray = n.images; // multiple images
+      } else if (typeof n.image === "string" && n.image.trim() !== "") {
+        imagesArray = [n.image]; // single image
+      } else {
+        imagesArray = ["https://via.placeholder.com/300x180"]; // fallback
       }
 
-      // Build images grid
+      // Create HTML for all images (works for 1 or more)
       const imagesHTML = imagesArray
         .map(url => `<img src="${url}" alt="${title}">`)
         .join("");
 
       // ---------- ADD NEWS CARD ----------
-      newsContainer.innerHTML += `
-        <div class="news-card">
-          <div class="news-images">
-            ${imagesHTML}
-          </div>
-
-          <div class="content">
-            <h3>${title}</h3>
-            <small>${date}</small>
-            <p>${summary}</p>
-          </div>
+      const card = document.createElement("div");
+      card.classList.add("news-card");
+      card.innerHTML = `
+        <div class="news-images">
+          ${imagesHTML}
+        </div>
+        <div class="content">
+          <h3>${title}</h3>
+          <small>${date}</small>
+          <p>${summary}</p>
         </div>
       `;
+      newsContainer.appendChild(card);
 
       // ---------- DOT NAVIGATION ----------
       const dot = document.createElement("span");
       dot.classList.add("dot");
-
       if (index === 0) dot.classList.add("active");
-
       dot.addEventListener("click", () => {
-        const card = newsContainer.children[index];
-        card.scrollIntoView({
-          behavior: "smooth",
-          inline: "start"
-        });
+        card.scrollIntoView({ behavior: "smooth", inline: "start" });
       });
-
       dotsContainer.appendChild(dot);
-
     });
 
     // ---------- UPDATE DOTS ON SCROLL ----------
     newsContainer.addEventListener("scroll", () => {
-
       const cards = newsContainer.children;
       let activeIndex = 0;
-
       for (let i = 0; i < cards.length; i++) {
-
         const left = cards[i].offsetLeft;
-
         if (newsContainer.scrollLeft >= left - cards[i].offsetWidth / 2) {
           activeIndex = i;
         }
-
       }
-
       const dots = dotsContainer.children;
-
       for (let i = 0; i < dots.length; i++) {
         dots[i].classList.toggle("active", i === activeIndex);
       }
-
     });
 
-  }
+    // ---------- OPTIONAL: ARROWS ----------
+    const leftArrow = document.querySelector(".arrow.left");
+    const rightArrow = document.querySelector(".arrow.right");
+    const scrollAmount = 320; // adjust to card width + gap
+    if (leftArrow && rightArrow) {
+      leftArrow.addEventListener("click", () => {
+        newsContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      });
+      rightArrow.addEventListener("click", () => {
+        newsContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      });
+    }
 
-  catch (err) {
-
+  } catch (err) {
     console.error("Error loading news:", err);
     newsContainer.innerHTML = "<p>Error loading news. Check console.</p>";
-
   }
-
 }
 
 window.addEventListener("load", loadNews);
@@ -1396,6 +1381,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
