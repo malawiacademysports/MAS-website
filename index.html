@@ -347,17 +347,22 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   <div style="max-width:1400px; margin:auto;">
 
     <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
-      ★ Latest News & Updates
-    </h2>
+  <h2>★ Latest News & Updates</h2>
 
-    <div class="news-slider-wrapper">
-  <div id="newsContainer"></div>
-  <div id="newsDots" class="dots-container"></div>
-    </div>
+  <div class="news-slider-wrapper">
+    <!-- Left arrow -->
+    <button class="arrow left">&#10094;</button>
 
+    <!-- News container -->
+    <div id="newsContainer"></div>
+
+    <!-- Right arrow -->
+    <button class="arrow right">&#10095;</button>
   </div>
-</section>
 
+  <!-- Dots navigation -->
+  <div id="newsDots" class="dots-container"></div>
+</section>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
   import {
@@ -1381,6 +1386,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
