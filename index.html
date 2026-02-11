@@ -1391,15 +1391,30 @@ closeBtn.addEventListener("click", () => {
 <script>
 function scrollNews(direction) {
   const container = document.getElementById("newsContainer");
+  const card = container.querySelector(':first-child'); // get first card
+  if (!card) return; // exit if no cards
 
-  container.scrollBy({
-    left: direction * 350,
-    behavior: "smooth"
+  const gap = 20; // match your CSS gap between cards
+  const cardWidth = card.offsetWidth + gap; // card width + gap
+  const maxScroll = container.scrollWidth - container.clientWidth; // last scrollable position
+
+  // Calculate new scroll position
+  let newScroll = container.scrollLeft + direction * cardWidth;
+
+  // Prevent scrolling beyond edges
+  if (newScroll < 0) newScroll = 0;
+  if (newScroll > maxScroll) newScroll = maxScroll;
+
+  // Smooth scroll to new position
+  container.scrollTo({
+    left: newScroll,
+    behavior: 'smooth'
   });
 }
 </script>
 </body>
 </html>
+
 
 
 
