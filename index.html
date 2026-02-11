@@ -349,118 +349,13 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <!-- Slider wrapper -->
-    <div style="position:relative; display:flex; align-items:center;">
-
-      <!-- LEFT ARROW -->
-      <button class="news-arrow-left" onclick="scrollNews(-1)">
-        &#10094;
-      </button>
-
-      <!-- News container -->
-      <div id="newsContainer" style="
-        display:flex;
-        flex-wrap:nowrap;
-        gap:20px;           
-        overflow-x:auto;
-        scroll-behavior:smooth;
-        scrollbar-width:none;
-        padding-bottom:10px;
-      ">
-        <!-- Firebase cards appear here -->
-      </div>
-
-      <!-- RIGHT ARROW -->
-      <button class="news-arrow-right" onclick="scrollNews(1)">
-        &#10095;
-      </button>
-
+    <div class="news-slider-wrapper">
+  <div id="newsContainer"></div>
+  <div id="newsDots" class="dots-container"></div>
     </div>
+
   </div>
 </section>
-<!-- RESPONSIVE CARDS & ARROWS -->
-<style>
-/* ---------- NEWS CONTAINER ---------- */
-#newsContainer {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 0 100px; /* side spacing so arrows don’t squeeze cards */
-}
-
-#newsContainer::-webkit-scrollbar {
-  display: none;
-}
-
-/* ---------- CARD SIZE — NO CROPPING ---------- */
-#newsContainer > * {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 500px;
-
-  /* natural height */
-  min-height: 280px;
-
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: visible; /* prevents text cropping */
-}
-
-/* ---------- IMAGE (UNCHANGED) ---------- */
-#newsContainer > * img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  flex-shrink: 0;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-/* ---------- ARROWS ---------- */
-.news-arrow-left,
-.news-arrow-right {
-  position: absolute;
-  top: 50%;
-  z-index: 10;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  border: none;
-  font-size: 26px;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-
-.news-arrow-left { left: -40px; }
-.news-arrow-right { right: -40px; }
-
-/* ---------- RESPONSIVE CARD WIDTHS ---------- */
-@media (min-width: 600px) {
-  #newsContainer > * {
-    width: calc(50% - 10px);
-  }
-}
-
-@media (min-width: 900px) {
-  #newsContainer > * {
-    width: calc(33.333% - 13.33px);
-  }
-}
-
-@media (min-width: 1200px) {
-  #newsContainer > * {
-    width: calc(25% - 15px);
-  }
-}
-<style>
 <script type="module">
   // Firebase core
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1447,6 +1342,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
