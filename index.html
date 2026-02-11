@@ -349,7 +349,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <!-- Slider wrapper -->
+  <!-- Slider wrapper -->
     <div style="position:relative; display:flex; align-items:center;">
 
       <!-- LEFT ARROW -->
@@ -372,10 +372,11 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       <div id="newsContainer" style="
         display:flex;
         flex-wrap:nowrap;
-        gap:15px;
+        gap:20px;              /* Increased gap for nicer spacing */
         overflow-x:auto;
         scroll-behavior:smooth;
         scrollbar-width:none;
+        padding-bottom:10px;    /* Avoid cutting off shadows */
       ">
 
         <!-- Firebase cards appear here -->
@@ -405,8 +406,11 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <!-- FORCE NEWS CARDS SIDE BY SIDE -->
 <style>
 #newsContainer > * {
-  min-width: 320px;
-  flex-shrink: 0;
+  min-width: 320px;   /* Card width */
+  flex-shrink: 0;     /* Prevent shrinking */
+}
+#newsContainer::-webkit-scrollbar {
+  display: none;      /* Hide scrollbar on Chrome/Safari */
 }
 </style>
 <script type="module">
@@ -1396,6 +1400,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
