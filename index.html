@@ -381,34 +381,37 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 
 <!-- RESPONSIVE CARDS & ARROWS -->
 <style>
+/* ---------- NEWS CONTAINER ---------- */
 #newsContainer {
   display: flex;
   flex-wrap: nowrap;
-  gap: 20px;
+  gap: 20px;                 /* space between cards */
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 0 40px; /* ensure first/last card fully visible */
+  padding: 0 100px;          /* extra space on sides so arrows don’t squeeze cards */
 }
 
+/* ---------- NEWS CARDS ---------- */
 #newsContainer > * {
-  flex: 0 0 auto;        /* prevent shrinking */
+  flex: 0 0 auto;            /* prevent shrinking */
   width: 100%;
-  max-width: 400px;      /* card width */
-  max-height: 250px;     /* medium height */
-  overflow: hidden;       /* hide excess content */
+  max-width: 400px;          /* medium card width */
+  max-height: 250px;         /* medium card height */
+  overflow: hidden;          /* hide content overflow */
 }
 
 #newsContainer > * img {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* keeps image fitting inside medium card */
+  object-fit: cover;         /* image fits perfectly inside card */
 }
 
+/* ---------- HIDE SCROLLBAR ---------- */
 #newsContainer::-webkit-scrollbar {
-  display: none; /* hide scrollbar */
+  display: none;
 }
 
-/* Arrows */
+/* ---------- ARROWS ---------- */
 .news-arrow-left,
 .news-arrow-right {
   position: absolute;
@@ -417,20 +420,35 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   background: rgba(0,0,0,0.6);
   color: white;
   border: none;
-  font-size: 26px;
-  padding: 8px 12px;
+  font-size: 26px;           /* arrow size stays same */
+  padding: 8px 12px;         /* clickable area */
   cursor: pointer;
   border-radius: 50%;
   transform: translateY(-50%);
 }
 
-.news-arrow-left { left: 10px; }
-.news-arrow-right { right: 10px; }
+/* Move arrows outward to give cards more horizontal space */
+.news-arrow-left { left: -40px; }
+.news-arrow-right { right: -40px; }
 
-/* Responsive card widths */
-@media (min-width: 600px) { #newsContainer > * { width: calc(50% - 10px); } }
-@media (min-width: 900px) { #newsContainer > * { width: calc(33.333% - 13.33px); } }
-@media (min-width: 1200px) { #newsContainer > * { width: calc(25% - 15px); } }
+/* ---------- RESPONSIVE CARD WIDTHS ---------- */
+@media (min-width: 600px) {
+  #newsContainer > * {
+    width: calc(50% - 10px);  /* 2 cards per view */
+  }
+}
+
+@media (min-width: 900px) {
+  #newsContainer > * {
+    width: calc(33.333% - 13.33px); /* 3 cards per view */
+  }
+}
+
+@media (min-width: 1200px) {
+  #newsContainer > * {
+    width: calc(25% - 15px);  /* 4 cards per view */
+  }
+}
 </style>
 <script type="module">
   // Firebase core
@@ -1418,6 +1436,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
