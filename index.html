@@ -1383,14 +1383,20 @@ function scrollNews(direction) {
   const container = document.getElementById("newsContainer");
   if (!container) return;
 
-  const containerWidth = container.clientWidth; // visible width of container
-  const maxScroll = container.scrollWidth - containerWidth;
+  const card = container.querySelector(':first-child');
+  if (!card) return;
+
+  // Calculate total scroll distance: card width + gap
+  const style = window.getComputedStyle(card);
+  const gap = parseInt(style.marginRight || 20); // fallback to 20 if margin not set
+  const cardWidth = card.offsetWidth + gap;
 
   // Calculate new scroll position
-  let newScroll = container.scrollLeft + direction * containerWidth;
+  let newScroll = container.scrollLeft + direction * cardWidth;
 
-  // Prevent scrolling beyond edges
+  // Prevent scrolling beyond first/last card
   if (newScroll < 0) newScroll = 0;
+  const maxScroll = container.scrollWidth - container.clientWidth;
   if (newScroll > maxScroll) newScroll = maxScroll;
 
   container.scrollTo({
@@ -1401,6 +1407,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
