@@ -1370,8 +1370,20 @@ closeBtn.addEventListener("click", () => {
     mobileMenu.classList.remove("open");
 });
 </script>
+<!-- NEWS ARROW SCROLL SCRIPT -->
+<script>
+function scrollNews(direction) {
+  const container = document.getElementById("newsContainer");
+
+  container.scrollBy({
+    left: direction * 350,
+    behavior: "smooth"
+  });
+}
+</script>
 </body>
 </html>
+
 
 
 
