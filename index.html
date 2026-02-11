@@ -349,22 +349,11 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-  <!-- Slider wrapper -->
+    <!-- Slider wrapper -->
     <div style="position:relative; display:flex; align-items:center;">
 
       <!-- LEFT ARROW -->
-      <button onclick="scrollNews(-1)" style="
-        position:absolute;
-        left:-10px;
-        z-index:10;
-        background:rgba(0,0,0,0.6);
-        color:white;
-        border:none;
-        font-size:26px;
-        padding:8px 12px;
-        cursor:pointer;
-        border-radius:50%;
-      ">
+      <button class="news-arrow-left" onclick="scrollNews(-1)">
         &#10094;
       </button>
 
@@ -372,30 +361,17 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       <div id="newsContainer" style="
         display:flex;
         flex-wrap:nowrap;
-        gap:20px;              /* Increased gap for nicer spacing */
+        gap:20px;              /* spacing between cards */
         overflow-x:auto;
         scroll-behavior:smooth;
         scrollbar-width:none;
-        padding-bottom:10px;    /* Avoid cutting off shadows */
+        padding-bottom:10px;
       ">
-
         <!-- Firebase cards appear here -->
-        
       </div>
 
       <!-- RIGHT ARROW -->
-      <button onclick="scrollNews(1)" style="
-        position:absolute;
-        right:-10px;
-        z-index:10;
-        background:rgba(0,0,0,0.6);
-        color:white;
-        border:none;
-        font-size:26px;
-        padding:8px 12px;
-        cursor:pointer;
-        border-radius:50%;
-      ">
+      <button class="news-arrow-right" onclick="scrollNews(1)">
         &#10095;
       </button>
 
@@ -403,16 +379,42 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   </div>
 </section>
 
-<!-- FORCE NEWS CARDS SIDE BY SIDE -->
+<!-- FORCE NEWS CARDS SIDE BY SIDE & ARROW FIX -->
 <style>
 #newsContainer > * {
-  min-width: 320px;   /* Card width */
-  flex-shrink: 0;     /* Prevent shrinking */
+  min-width: 320px;   /* card width */
+  flex-shrink: 0;
 }
 #newsContainer::-webkit-scrollbar {
-  display: none;      /* Hide scrollbar on Chrome/Safari */
+  display: none;      /* hide scrollbar */
 }
-</style>
+
+/* Arrow styling and position fixes */
+.news-arrow-left,
+.news-arrow-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 26px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.news-arrow-left {
+  left: 0;
+  transform: translate(-50%, -50%);  /* keeps it half outside without cutting content */
+}
+
+.news-arrow-right {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+</style
 <script type="module">
   // Firebase core
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1386,15 +1388,14 @@ function scrollNews(direction) {
   const card = container.querySelector(':first-child');
   if (!card) return;
 
-  // Calculate total scroll distance: card width + gap
-  const style = window.getComputedStyle(card);
-  const gap = parseInt(style.marginRight || 20); // fallback to 20 if margin not set
+  // Total scroll distance: card width + gap
+  const gap = 20; // must match CSS gap
   const cardWidth = card.offsetWidth + gap;
 
   // Calculate new scroll position
   let newScroll = container.scrollLeft + direction * cardWidth;
 
-  // Prevent scrolling beyond first/last card
+  // Prevent scrolling beyond edges
   if (newScroll < 0) newScroll = 0;
   const maxScroll = container.scrollWidth - container.clientWidth;
   if (newScroll > maxScroll) newScroll = maxScroll;
@@ -1407,6 +1408,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
