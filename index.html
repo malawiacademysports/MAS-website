@@ -361,11 +361,10 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       <div id="newsContainer" style="
         display:flex;
         flex-wrap:nowrap;
-        gap:20px;              /* spacing between cards */
+        gap:20px;
         overflow-x:auto;
         scroll-behavior:smooth;
-        scrollbar-width:none;
-        padding-bottom:10px;
+        padding:0 40px; /* extra padding so first/last card is fully visible */
       ">
         <!-- Firebase cards appear here -->
       </div>
@@ -379,22 +378,21 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   </div>
 </section>
 
-<!-- FORCE NEWS CARDS SIDE BY SIDE & ARROW FIX -->
 <style>
 #newsContainer > * {
-  min-width: 320px;   /* card width */
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 400px;
 }
 #newsContainer::-webkit-scrollbar {
-  display: none;      /* hide scrollbar */
+  display: none;
 }
 
-/* Arrow styling and position fixes */
+/* Arrows */
 .news-arrow-left,
 .news-arrow-right {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   z-index: 10;
   background: rgba(0,0,0,0.6);
   color: white;
@@ -403,18 +401,22 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 50%;
+  transform: translateY(-50%);
 }
 
 .news-arrow-left {
-  left: 0;
-  transform: translate(-50%, -50%);  /* keeps it half outside without cutting content */
+  left: 10px; /* keep inside container */
 }
 
 .news-arrow-right {
-  right: 0;
-  transform: translate(50%, -50%);
+  right: 10px; /* keep inside container */
 }
-</style
+
+/* Responsive card widths */
+@media (min-width: 600px) { #newsContainer > * { width: calc(50% - 10px); } }
+@media (min-width: 900px) { #newsContainer > * { width: calc(33.333% - 13.33px); } }
+@media (min-width: 1200px) { #newsContainer > * { width: calc(25% - 15px); } }
+</style>
 <script type="module">
   // Firebase core
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1385,19 +1387,12 @@ function scrollNews(direction) {
   const container = document.getElementById("newsContainer");
   if (!container) return;
 
-  const card = container.querySelector(':first-child');
-  if (!card) return;
+  const containerWidth = container.clientWidth; // visible width
+  const maxScroll = container.scrollWidth - containerWidth;
 
-  // Total scroll distance: card width + gap
-  const gap = 20; // must match CSS gap
-  const cardWidth = card.offsetWidth + gap;
+  let newScroll = container.scrollLeft + direction * containerWidth;
 
-  // Calculate new scroll position
-  let newScroll = container.scrollLeft + direction * cardWidth;
-
-  // Prevent scrolling beyond edges
   if (newScroll < 0) newScroll = 0;
-  const maxScroll = container.scrollWidth - container.clientWidth;
   if (newScroll > maxScroll) newScroll = maxScroll;
 
   container.scrollTo({
@@ -1408,6 +1403,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
