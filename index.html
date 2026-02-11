@@ -387,25 +387,32 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
+  padding: 0 40px; /* ensure first/last card fully visible */
 }
 
 #newsContainer > * {
-  flex: 0 0 auto;   /* prevents shrinking */
-  width: 100%;      /* mobile: 1 card per view */
-  max-width: 400px; /* optional max card width for desktop */
+  flex: 0 0 auto;        /* prevent shrinking */
+  width: 100%;
+  max-width: 400px;      /* card width */
+  max-height: 250px;     /* medium height */
+  overflow: hidden;       /* hide excess content */
+}
+
+#newsContainer > * img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* keeps image fitting inside medium card */
 }
 
 #newsContainer::-webkit-scrollbar {
   display: none; /* hide scrollbar */
 }
 
-/* Arrows styling */
+/* Arrows */
 .news-arrow-left,
 .news-arrow-right {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   z-index: 10;
   background: rgba(0,0,0,0.6);
   color: white;
@@ -414,36 +421,16 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 50%;
+  transform: translateY(-50%);
 }
 
-.news-arrow-left {
-  left: 0;
-  transform: translate(-50%, -50%);
-}
+.news-arrow-left { left: 10px; }
+.news-arrow-right { right: 10px; }
 
-.news-arrow-right {
-  right: 0;
-  transform: translate(50%, -50%);
-}
-
-/* Responsive: adjust number of visible cards */
-@media (min-width: 600px) {
-  #newsContainer > * {
-    width: calc(50% - 10px); /* 2 cards per view */
-  }
-}
-
-@media (min-width: 900px) {
-  #newsContainer > * {
-    width: calc(33.333% - 13.33px); /* 3 cards per view */
-  }
-}
-
-@media (min-width: 1200px) {
-  #newsContainer > * {
-    width: calc(25% - 15px); /* 4 cards per view */
-  }
-}
+/* Responsive card widths */
+@media (min-width: 600px) { #newsContainer > * { width: calc(50% - 10px); } }
+@media (min-width: 900px) { #newsContainer > * { width: calc(33.333% - 13.33px); } }
+@media (min-width: 1200px) { #newsContainer > * { width: calc(25% - 15px); } }
 </style>
 <script type="module">
   // Firebase core
@@ -1415,7 +1402,7 @@ function scrollNews(direction) {
   const container = document.getElementById("newsContainer");
   if (!container) return;
 
-  const containerWidth = container.clientWidth; // visible width
+  const containerWidth = container.clientWidth;
   const maxScroll = container.scrollWidth - containerWidth;
 
   let newScroll = container.scrollLeft + direction * containerWidth;
@@ -1431,6 +1418,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
