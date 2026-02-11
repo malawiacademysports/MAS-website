@@ -371,11 +371,16 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       <!-- News container -->
       <div id="newsContainer" style="
         display:flex;
+        flex-wrap:nowrap;
         gap:15px;
         overflow-x:auto;
         scroll-behavior:smooth;
         scrollbar-width:none;
-      "></div>
+      ">
+
+        <!-- Firebase cards appear here -->
+        
+      </div>
 
       <!-- RIGHT ARROW -->
       <button onclick="scrollNews(1)" style="
@@ -396,6 +401,14 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     </div>
   </div>
 </section>
+
+<!-- FORCE NEWS CARDS SIDE BY SIDE -->
+<style>
+#newsContainer > * {
+  min-width: 320px;
+  flex-shrink: 0;
+}
+</style>
 <script type="module">
   // Firebase core
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1383,6 +1396,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
