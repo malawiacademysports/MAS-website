@@ -388,22 +388,28 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
   gap: 20px;                 /* space between cards */
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 0 100px;          /* extra space on sides so arrows don’t squeeze cards */
+  padding: 0 100px;          /* space on sides so arrows don’t squeeze cards */
 }
 
 /* ---------- NEWS CARDS ---------- */
 #newsContainer > * {
   flex: 0 0 auto;            /* prevent shrinking */
   width: 100%;
-  max-width: 400px;          /* medium card width */
-  max-height: 250px;         /* medium card height */
-  overflow: hidden;          /* hide content overflow */
+  max-width: 400px;          /* card width */
+  overflow: visible;         /* allow text/details to show */
+  background: #fff;          /* optional: card background */
+  border-radius: 8px;        /* optional: card rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* optional shadow */
 }
 
+/* ---------- NEWS IMAGE ---------- */
 #newsContainer > * img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;         /* image fits perfectly inside card */
+  height: 200px;             /* medium image height */
+  object-fit: cover;         /* keep image fit inside card */
+  display: block;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 /* ---------- HIDE SCROLLBAR ---------- */
@@ -1436,6 +1442,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
