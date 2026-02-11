@@ -349,11 +349,53 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <!-- News container where Firebase news will appear -->
-    <div id="newsContainer"></div>
+    <!-- Slider wrapper -->
+    <div style="position:relative; display:flex; align-items:center;">
+
+      <!-- LEFT ARROW -->
+      <button onclick="scrollNews(-1)" style="
+        position:absolute;
+        left:-10px;
+        z-index:10;
+        background:rgba(0,0,0,0.6);
+        color:white;
+        border:none;
+        font-size:26px;
+        padding:8px 12px;
+        cursor:pointer;
+        border-radius:50%;
+      ">
+        &#10094;
+      </button>
+
+      <!-- News container -->
+      <div id="newsContainer" style="
+        display:flex;
+        gap:15px;
+        overflow-x:auto;
+        scroll-behavior:smooth;
+        scrollbar-width:none;
+      "></div>
+
+      <!-- RIGHT ARROW -->
+      <button onclick="scrollNews(1)" style="
+        position:absolute;
+        right:-10px;
+        z-index:10;
+        background:rgba(0,0,0,0.6);
+        color:white;
+        border:none;
+        font-size:26px;
+        padding:8px 12px;
+        cursor:pointer;
+        border-radius:50%;
+      ">
+        &#10095;
+      </button>
+
+    </div>
   </div>
 </section>
-
 <script type="module">
   // Firebase core
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1330,6 +1372,7 @@ closeBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
