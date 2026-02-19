@@ -112,45 +112,115 @@ section p {
   text-align: center;
   margin-bottom: 25px;
 }
-
 /* ==================================================
-   PROFILE CARD GRIDS
-   (ACHIEVERS / STAFF / COACHES)
+   UNIFIED PROFILE GRID (6-COLUMNS DESKTOP)
 ================================================== */
 .profile-cards,
 .staff-grid,
 .coach-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* ⬛⬛⬛⬛⬛⬛ */
-  gap: 25px;
-  max-width: 1600px;
-  margin: 40px auto;
-  padding: 0 20px;
+    display: grid;
+    /* Forces 6 columns on large screens as requested */
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 20px;
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 /* ==================================================
-   CARD DESIGN (COMMON)
+   CLEAN CARD DESIGN (MATCHING SCREENSHOT)
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
-  background: #fff;
-  border-top: 5px solid var(--green); /* green header bar */
-  border-radius: 14px;
-  padding: 18px;
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: #ffffff;
+    border-radius: 20px; /* Large rounded corners for the card */
+    overflow: hidden;    /* Clips the image to the card's corners */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+    height: 100%;       /* Ensures all cards in a row are equal height */
 }
 
 .profile-card:hover,
 .staff-card:hover,
 .coach-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+}
+
+/* FULL IMAGE STYLING */
+.profile-card img, 
+.staff-card img, 
+.coach-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Keeps images perfectly square */
+    object-fit: cover;
+    /* Matches the top rounding of the card */
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+/* TEXT CONTENT AREA */
+.profile-content,
+.staff-card, 
+.coach-card {
+    padding: 15px 10px 20px;
+}
+
+/* Category Label (e.g., BASKETBALL, FOOTBALL) */
+.card-header,
+.role,
+.staff-role {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+/* Name Title */
+.profile-card h3, 
+.staff-card h3, 
+.coach-card h2 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #000;
+    font-weight: 700;
+}
+
+/* Description Text */
+.profile-card p,
+.staff-card p,
+.coach-card p {
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+/* ==================================================
+   RESPONSIVE TWEAKS
+================================================== */
+@media (max-width: 1300px) {
+    .profile-cards, .staff-grid, .coach-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .profile-cards, .staff-grid, .coach-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-cards, .staff-grid, .coach-grid {
+        grid-template-columns: 1fr;
+    }
 }
 /* ==================================================
    NEWS SECTION STYLES
