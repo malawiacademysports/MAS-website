@@ -34,7 +34,7 @@ img {
 }
 
 /* ==================================================
-   HEADER
+   HEADER & NAVIGATION
 ================================================== */
 header {
   background: var(--black);
@@ -84,7 +84,8 @@ section h1 {
 }
 
 /* ==================================================
-   MODERN PROFILE GRID
+   PROFILE CARD GRIDS
+   (ACHIEVERS / STAFF / COACHES)
 ================================================== */
 .profile-cards,
 .staff-grid,
@@ -93,31 +94,33 @@ section h1 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 35px;
   max-width: 1400px;
-  margin: auto;
+  margin: 50px auto;
+  padding: 0 20px;
 }
 
 /* ==================================================
-   MODERN EDGE-TO-EDGE CARD
+   EDGE-TO-EDGE CARD DESIGN
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
   background: #fff;
   border-radius: 18px;
-  overflow: hidden; /* Makes image touch edges */
+  overflow: hidden; /* makes image touch edges */
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   transition: all 0.35s ease;
+  padding: 0; /* remove white space around image */
 }
 
 .profile-card:hover,
 .staff-card:hover,
 .coach-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+  box-shadow: 0 22px 45px rgba(0,0,0,0.15);
 }
 
 /* ==================================================
-   EDGE-TO-EDGE IMAGE
+   EDGE-TO-EDGE IMAGES
 ================================================== */
 .profile-card img,
 .staff-card img,
@@ -128,7 +131,7 @@ section h1 {
 }
 
 /* ==================================================
-   CONTENT AREA (Padding moved here)
+   CONTENT AREA
 ================================================== */
 .profile-card .content,
 .staff-card .content,
@@ -138,7 +141,7 @@ section h1 {
 }
 
 /* ==================================================
-   NAME
+   NAME STYLING
 ================================================== */
 .profile-card h3,
 .staff-card h2,
@@ -149,7 +152,7 @@ section h1 {
 }
 
 /* ==================================================
-   ROLE TAG
+   ROLE / TAG
 ================================================== */
 .profile-card .role,
 .profile-card .role-tag {
@@ -253,6 +256,7 @@ section h1 {
    RESPONSIVE
 ================================================== */
 @media (max-width: 768px) {
+
   section {
     padding: 60px 15px;
   }
