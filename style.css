@@ -240,19 +240,20 @@ section p {
 }
 
 /* ==================================================
-   ACHIEVERS / STAFF / COACHES IMAGES (rounded corners)
+   ACHIEVERS / STAFF / COACHES IMAGES (ROUNDED CORNERS)
 ================================================== */
 .profile-cards .profile-card img,
 .staff-grid .staff-card img,
 .coach-grid .coach-card img {
   width: 180px !important;
   height: 180px !important;
-  object-fit: contain !important;  /* fit full image without cropping */
-  border-radius: 16px !important;  /* soft rounded corners */
-  background-color: #f0f0f0 !important; /* optional background */
+  object-fit: contain !important;      /* fit full image */
+  border-radius: 16px !important;      /* soft rounded corners */
+  background-color: #f0f0f0 !important;
   padding: 4px !important;
   margin-bottom: 12px !important;
 }
+
 /* ==================================================
    RESPONSIVE BREAKPOINTS
 ================================================== */
