@@ -6,7 +6,7 @@
   --green: #007a00;
   --red: #d40000;
   --white: #fff;
-  --light-gray: #f9f9f9;
+  --light-gray: #f4f6f8;
   --text-dark: #222;
 }
 
@@ -29,12 +29,12 @@ body {
 }
 
 img {
-  max-width: 100%;
+  width: 100%;
   display: block;
 }
 
 /* ==================================================
-   HEADER & NAVIGATION
+   HEADER
 ================================================== */
 header {
   background: var(--black);
@@ -50,271 +50,192 @@ header {
 
 .logo-text img {
   width: 70px;
-  margin: 8px auto;
   border-radius: 10px;
 }
 
 .navbar {
   display: flex;
-  gap: 12px;
-  background: #111;
-  padding: 10px 15px;
-  border-radius: 8px;
+  gap: 15px;
 }
 
 .navbar a {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  padding: 6px 10px;
+  transition: 0.3s;
 }
 
 .navbar a:hover {
   color: var(--green);
 }
 
-.menu-toggle {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: white;
-}
-
 /* ==================================================
    SECTIONS
 ================================================== */
 section {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-section:nth-child(even) {
-  background: var(--light-gray);
+  padding: 80px 20px;
 }
 
 section h1 {
   text-align: center;
   color: var(--green);
-  margin-bottom: 20px;
-  font-size: 2rem;
-}
-
-section p {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto 25px;
-  font-size: 1rem;
-}
-
-/* Staff Management Main Title */
-.staff-management-title {
-  color: var(--green);
-  text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
+  font-size: 2.2rem;
 }
 
 /* ==================================================
-   CARD DESIGN (COMMON)
+   MODERN PROFILE GRID
+================================================== */
+.profile-cards,
+.staff-grid,
+.coach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* ==================================================
+   MODERN EDGE-TO-EDGE CARD
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
   background: #fff;
-  border-top: 5px solid var(--green);
-  border-radius: 14px;
-  padding: 18px;
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 18px;
+  overflow: hidden; /* Makes image touch edges */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: all 0.35s ease;
 }
 
 .profile-card:hover,
 .staff-card:hover,
 .coach-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+}
+
+/* ==================================================
+   EDGE-TO-EDGE IMAGE
+================================================== */
+.profile-card img,
+.staff-card img,
+.coach-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+/* ==================================================
+   CONTENT AREA (Padding moved here)
+================================================== */
+.profile-card .content,
+.staff-card .content,
+.coach-card .content {
+  padding: 22px;
+  text-align: center;
+}
+
+/* ==================================================
+   NAME
+================================================== */
+.profile-card h3,
+.staff-card h2,
+.staff-card h3,
+.coach-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* ==================================================
+   ROLE TAG
+================================================== */
+.profile-card .role,
+.profile-card .role-tag {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+}
+
+/* ==================================================
+   TEXT
+================================================== */
+.profile-card p,
+.staff-card p,
+.coach-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
 }
 
 /* ==================================================
    NEWS SECTION
 ================================================== */
 #newsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 40px;
   max-width: 1400px;
   margin: auto;
 }
 
 .news-card {
-  flex: 1 1 480px;
-  max-width: 520px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
-  margin-bottom: 30px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  transition: 0.3s;
 }
 
 .news-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
 }
 
 .news-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 280px;
+  object-fit: cover;
 }
 
 .news-card .content {
-  padding: 20px;
+  padding: 25px;
 }
 
 .news-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.5rem;
-  color: #222;
-}
-
-.news-card small {
-  color: #555;
-  display: block;
-  margin-bottom: 12px;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
 }
 
 .news-card p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
+  font-size: 1rem;
+  color: #555;
 }
 
 /* ==================================================
-   NAMES
-================================================== */
-.profile-card h3,
-.staff-card h2,
-.staff-card h3,
-.coach-card h2 {
-  font-size: 18px;
-  margin-bottom: 6px;
-  color: #222;
-}
-
-/* ==================================================
-   ROLES / POSITIONS
-================================================== */
-.profile-card .role {
-  color: var(--green);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.staff-card p.role,
-.staff-card p strong {
-  color: #000;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.coach-card strong {
-  color: #222;
-  font-weight: bold;
-}
-
-/* ==================================================
-   TEXT CONTENT
-================================================== */
-.profile-card p,
-.staff-card p,
-.coach-card p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin: 6px 0;
-  text-align: center;
-}
-
-/* ==================================================
-   ACHIEVERS / STAFF / COACHES IMAGES (ROUNDED CORNERS)
-================================================== */
-.profile-cards .profile-card img,
-.staff-grid .staff-card img,
-.coach-grid .coach-card img {
-  width: 180px !important;
-  height: 180px !important;
-  object-fit: contain !important;      /* fit full image */
-  border-radius: 16px !important;      /* soft rounded corners */
-  background-color: #f0f0f0 !important;
-  padding: 4px !important;
-  margin-bottom: 12px !important;
-}
-
-/* ==================================================
-   RESPONSIVE BREAKPOINTS
-================================================== */
-@media (max-width: 1400px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 1024px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-cards,
-  .staff-grid,
-  .coach-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ==================================================
-   HOME / HERO SECTION (Slideshow)
+   HERO SECTION
 ================================================== */
 .home {
   position: relative;
-  height: 70vh;
-  background-color: #000;
+  height: 80vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
   text-align: center;
-  padding: 20px;
+  color: #fff;
   overflow: hidden;
 }
 
 .bg-slide {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  background-size: contain;
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-color: #000;
+  background-size: cover;
+  background-position: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -325,6 +246,24 @@ section p {
 
 .home-content {
   position: relative;
-  z-index: 10;
-  color: #fff;
+  z-index: 2;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 15px;
+  }
+
+  .profile-card img,
+  .staff-card img,
+  .coach-card img {
+    height: 220px;
+  }
+
+  .news-card img {
+    height: 220px;
+  }
 }
