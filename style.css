@@ -121,7 +121,7 @@ section p {
 .staff-grid,
 .coach-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* ⬛⬛⬛⬛⬛⬛ */
+  grid-template-columns: repeat(6, 1fr);
   gap: 25px;
   max-width: 1600px;
   margin: 40px auto;
@@ -152,6 +152,7 @@ section p {
   transform: translateY(-4px);
   box-shadow: 0 10px 22px rgba(0,0,0,0.15);
 }
+
 /* ==================================================
    NEWS SECTION STYLES
 ================================================== */
@@ -160,7 +161,7 @@ section p {
 #newsContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;           /* space between cards */
+  gap: 30px;
   justify-content: center;
   max-width: 1400px;
   margin: auto;
@@ -168,8 +169,8 @@ section p {
 
 /* ---------- NEWS CARD ---------- */
 .news-card {
-  flex: 1 1 480px;     /* base width for desktop */
-  max-width: 520px;    /* prevent card from getting too wide */
+  flex: 1 1 480px;
+  max-width: 520px;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
@@ -186,8 +187,8 @@ section p {
 /* ---------- IMAGE ---------- */
 .news-card img {
   width: 100%;
-  height: auto;        /* full image, no crop */
-  object-fit: contain; /* fit image fully inside card */
+  height: auto;
+  object-fit: contain;
 }
 
 /* ---------- CONTENT ---------- */
@@ -208,7 +209,7 @@ section p {
 }
 
 .news-card p {
-  font-size: 1.1rem;    /* medium size */
+  font-size: 1.1rem;
   line-height: 1.6;
   color: #333;
 }
@@ -216,13 +217,13 @@ section p {
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 1024px) {
   .news-card {
-    flex: 1 1 90%;      /* stack cards vertically on tablet */
+    flex: 1 1 90%;
   }
 }
 
 @media (max-width: 768px) {
   .news-card {
-    flex: 1 1 100%;     /* full width on smaller mobile */
+    flex: 1 1 100%;
   }
 }
 
@@ -232,15 +233,17 @@ section p {
 }
 
 /* ==================================================
-   PROFILE IMAGES
+   PROFILE IMAGES (FULLY ROUNDED, NO CROPPING)
 ================================================== */
 .profile-card img,
 .staff-card img,
 .coach-card img {
   width: 180px;
   height: 180px;
-  object-fit: cover;
-  border-radius: 50%;
+  object-fit: contain;        /* fit entire image without cropping */
+  border-radius: 50%;         /* fully rounded */
+  background-color: #f0f0f0;  /* optional background for empty space */
+  padding: 4px;               /* optional padding */
   margin-bottom: 12px;
 }
 
@@ -270,14 +273,14 @@ section p {
 /* Staff positions black and bold for Position: and Based: */
 .staff-card p.role,
 .staff-card p strong {
-  color: #000;       /* very black text */
-  font-weight: bold;  /* bold for Position: and Based: */
+  color: #000;
+  font-weight: bold;
   margin-bottom: 8px;
 }
 
 /* Coaches strong text (labels) */
 .coach-card strong {
-  color: #222;       /* dark text for coach labels */
+  color: #222;
   font-weight: bold;
 }
 
@@ -334,14 +337,14 @@ section p {
 .home {
   position: relative;
   height: 70vh;
-  background-color: #000; /* fallback black */
+  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
   padding: 20px;
-  overflow: hidden; /* slides stay inside */
+  overflow: hidden;
 }
 
 .bg-slide {
@@ -354,16 +357,16 @@ section p {
   background-position: top center;
   background-repeat: no-repeat;
   background-color: #000;
-  opacity: 0; /* hidden by default */
+  opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
 .bg-slide.active {
-  opacity: 1; /* visible slide */
+  opacity: 1;
 }
 
 .home-content {
   position: relative;
-  z-index: 10; /* text stays above slides */
+  z-index: 10;
   color: #fff;
 }
