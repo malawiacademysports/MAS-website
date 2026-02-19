@@ -117,15 +117,16 @@ section p {
    PROFILE CARD GRIDS
    (ACHIEVERS / STAFF / COACHES)
 ================================================== */
-.profile-cards,
-.staff-grid,
-.coach-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 25px;
-  max-width: 1600px;
-  margin: 40px auto;
-  padding: 0 20px;
+.profile-cards .profile-card img,
+.staff-grid .staff-card img,
+.coach-grid .coach-card img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain !important;        /* override previous object-fit */
+  border-radius: 50% !important;         /* ensure circle */
+  background-color: #f0f0f0;             /* optional */
+  padding: 4px;                           /* optional */
+  margin-bottom: 12px;
 }
 
 /* ==================================================
