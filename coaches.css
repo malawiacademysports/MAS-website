@@ -11,17 +11,17 @@
   color: #007a00;
 }
 
-/* 7‑column grid on larger screens */
+/* Grid layout */
 #coaches .coach-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
   gap: 20px;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 15px;
 }
 
-/* Card */
+/* Card setup */
 #coaches .coach-card {
   background: #fff;
   border-radius: 18px;
@@ -30,45 +30,52 @@
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   transition: 0.3s ease;
+  height: 500px;          /* total card height */
 }
 
+/* Hover effect */
 #coaches .coach-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-/* Portrait Image at top */
+/* Image occupies top 50% of the card */
 #coaches .coach-card img {
   width: 100%;
-  aspect-ratio: 3 / 4;          /* vertical portrait */
-  object-fit: cover;            /* no white gaps */
+  height: 50%;            /* top half */
+  object-fit: cover;
   object-position: center;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
-/* Text under image */
+/* Text content in bottom half */
 #coaches .coach-card h2,
 #coaches .coach-card p {
   text-align: center;
-  padding: 8px 12px;
+  padding: 5px 12px;
   margin: 0;
+  flex: 1;               /* fill remaining bottom half */
+  overflow: auto;        /* scroll if text too long */
 }
 
 #coaches .coach-card h2 {
   font-size: 1.2rem;
   color: #007a00;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 #coaches .coach-card p {
   font-size: 0.95rem;
   color: #444;
   line-height: 1.5;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-/* Responsiveness */
+/* Responsive adjustments */
 @media (max-width: 1200px) {
   #coaches .coach-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -77,5 +84,8 @@
 @media (max-width: 768px) {
   #coaches .coach-grid {
     grid-template-columns: 1fr;
+  }
+  #coaches .coach-card {
+    height: 400px;  /* smaller card on mobile */
   }
 }
