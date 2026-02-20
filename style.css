@@ -106,14 +106,22 @@ section p {
   font-size: 1rem;
 }
 
+/* Staff Management Main Title (explicit, safe override) */
+.staff-management-title {
+  color: var(--green);
+  text-align: center;
+  margin-bottom: 25px;
+}
+
 /* ==================================================
-   GRID LAYOUTS
+   PROFILE CARD GRIDS
+   (ACHIEVERS / STAFF / COACHES)
 ================================================== */
 .profile-cards,
 .staff-grid,
 .coach-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr); /* ⬛⬛⬛⬛⬛⬛ */
   gap: 25px;
   max-width: 1600px;
   margin: 40px auto;
@@ -121,12 +129,13 @@ section p {
 }
 
 /* ==================================================
-   PROFILE & STAFF CARDS (CIRCULAR IMAGE STYLE)
+   CARD DESIGN (COMMON)
 ================================================== */
 .profile-card,
-.staff-card {
+.staff-card,
+.coach-card {
   background: #fff;
-  border-top: 5px solid var(--green);
+  border-top: 5px solid var(--green); /* green header bar */
   border-radius: 14px;
   padding: 18px;
   text-align: center;
@@ -134,18 +143,100 @@ section p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .profile-card:hover,
-.staff-card:hover {
+.staff-card:hover,
+.coach-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 22px rgba(0,0,0,0.15);
 }
+/* ==================================================
+   NEWS SECTION STYLES
+================================================== */
 
-/* Circular images ONLY for profile & staff */
+/* ---------- NEWS GRID ---------- */
+#newsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;           /* space between cards */
+  justify-content: center;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* ---------- NEWS CARD ---------- */
+.news-card {
+  flex: 1 1 480px;     /* base width for desktop */
+  max-width: 520px;    /* prevent card from getting too wide */
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+  margin-bottom: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+}
+
+/* ---------- IMAGE ---------- */
+.news-card img {
+  width: 100%;
+  height: auto;        /* full image, no crop */
+  object-fit: contain; /* fit image fully inside card */
+}
+
+/* ---------- CONTENT ---------- */
+.news-card .content {
+  padding: 20px;
+}
+
+.news-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.news-card small {
+  color: #555;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.news-card p {
+  font-size: 1.1rem;    /* medium size */
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .news-card {
+    flex: 1 1 90%;      /* stack cards vertically on tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .news-card {
+    flex: 1 1 100%;     /* full width on smaller mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .news-card h3 { font-size: 1.2rem; }
+  .news-card p  { font-size: 1rem; }
+}
+
+/* ==================================================
+   PROFILE IMAGES
+================================================== */
 .profile-card img,
-.staff-card img {
+.staff-card img,
+.coach-card img {
   width: 180px;
   height: 180px;
   object-fit: cover;
@@ -154,48 +245,52 @@ section p {
 }
 
 /* ==================================================
-   MODERN COACH CARD (HALF IMAGE TOP STYLE)
+   NAMES
 ================================================== */
-.coach-card {
-  background: #fff;
-  border-radius: 18px;
-  overflow: hidden;
-  padding: 0;
-  text-align: left;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  transition: 0.3s ease;
-}
-
-.coach-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.18);
-}
-
-/* FULL WIDTH IMAGE TOP */
-.coach-card img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-/* Coach Content */
+.profile-card h3,
+.staff-card h2,
+.staff-card h3,
 .coach-card h2 {
-  margin: 15px 18px 6px;
   font-size: 18px;
-  color: var(--text-dark);
+  margin-bottom: 6px;
+  color: #222;
 }
 
-.coach-card p {
-  margin: 0 18px 12px;
-  font-size: 14px;
-  color: #555;
-  text-align: left;
-}
+/* ==================================================
+   ROLES / POSITIONS
+================================================== */
 
-.coach-card strong {
+/* Achievers role green */
+.profile-card .role {
   color: var(--green);
   font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Staff positions black and bold for Position: and Based: */
+.staff-card p.role,
+.staff-card p strong {
+  color: #000;       /* very black text */
+  font-weight: bold;  /* bold for Position: and Based: */
+  margin-bottom: 8px;
+}
+
+/* Coaches strong text (labels) */
+.coach-card strong {
+  color: #222;       /* dark text for coach labels */
+  font-weight: bold;
+}
+
+/* ==================================================
+   TEXT CONTENT
+================================================== */
+.profile-card p,
+.staff-card p,
+.coach-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 6px 0;
+  text-align: center;
 }
 
 /* ==================================================
@@ -231,4 +326,44 @@ section p {
   .coach-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==================================================
+   HOME / HERO SECTION (Slideshow)
+================================================== */
+.home {
+  position: relative;
+  height: 70vh;
+  background-color: #000; /* fallback black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden; /* slides stay inside */
+}
+
+.bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #000;
+  opacity: 0; /* hidden by default */
+  transition: opacity 1s ease-in-out;
+}
+
+.bg-slide.active {
+  opacity: 1; /* visible slide */
+}
+
+.home-content {
+  position: relative;
+  z-index: 10; /* text stays above slides */
+  color: #fff;
 }
