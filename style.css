@@ -128,15 +128,14 @@ section p {
   margin: 40px auto;
   padding: 0 20px;
 }
-
 /* ==================================================
-   CARD DESIGN (COMMON)
+   CARD DESIGN (COMMON FOR PROFILE & STAFF)
 ================================================== */
+
 .profile-card,
-.staff-card,
-.coach-card {
+.staff-card {
   background: #fff;
-  border-top: 5px solid var(--green); /* green header bar */
+  border-top: 5px solid var(--green);
   border-radius: 14px;
   padding: 18px;
   text-align: center;
@@ -148,10 +147,54 @@ section p {
 }
 
 .profile-card:hover,
-.staff-card:hover,
-.coach-card:hover {
+.staff-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+}
+
+
+/* ==================================================
+   MODERN COACH CARD (HALF IMAGE TOP)
+================================================== */
+
+.coach-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;   /* VERY IMPORTANT */
+  padding: 0;         /* remove white space */
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transition: 0.3s ease;
+}
+
+.coach-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.18);
+}
+
+/* IMAGE TOP HALF */
+.coach-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+/* CONTENT BOTTOM HALF */
+.coach-card h2 {
+  margin: 15px 18px 6px;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
+.coach-card p {
+  margin: 0 18px 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.coach-card p strong {
+  color: var(--green);
 }
 /* ==================================================
    NEWS SECTION STYLES
