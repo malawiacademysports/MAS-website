@@ -85,7 +85,7 @@ section h1 {
 }
 
 /* ==================================================
-   PROFILE / STAFF / COACH CARD GRIDS
+   PROFILE CARD GRIDS
 ================================================== */
 .profile-cards,
 .staff-grid,
@@ -99,22 +99,19 @@ section h1 {
 }
 
 /* ==================================================
-   CARD DESIGN (STAFF / COACHES / ACHIEVERS)
-   Updated for vertical portrait images
+   CARD DESIGN (ONLY STAFF / COACHES / ACHIEVERS)
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
   background: #fff;
   border-radius: 18px;
-  overflow: hidden;
+  overflow: hidden; /* image touches edges */
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   transition: all 0.35s ease;
-  display: flex;
-  flex-direction: column;  /* Stack image on top, content below */
+  padding: 0;
 }
 
-/* Hover effect */
 .profile-card:hover,
 .staff-card:hover,
 .coach-card:hover {
@@ -123,33 +120,49 @@ section h1 {
 }
 
 /* ==================================================
-   IMAGE STYLING: Portrait 3:4 or 4:5
-   Top corners rounded only
+   FORCE RECTANGLE IMAGES (STRONG TARGETING)
 ================================================== */
-.profile-card img,
-.staff-card img,
-.coach-card img {
+
+/* Coaches */
+#coaches .coach-card img {
   width: 100%;
-  aspect-ratio: 3 / 4;           /* Vertical portrait */
-  object-fit: cover;             /* Cover entire area without stretching */
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  display: block;
-  flex: 1 0 50%;                 /* Take roughly half the card height */
-  margin: 0;                     /* Remove white gaps */
+  height: 260px;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+/* Staff */
+#staff .staff-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+/* Achievers */
+#achievers .profile-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 0 !important;
 }
 
 /* ==================================================
    CONTENT AREA
 ================================================== */
 .profile-card .profile-content,
-.staff-card .staff-content,
-.coach-card .coach-content {
-  padding: 22px;
+.staff-card,
+.coach-card {
   text-align: center;
-  flex: 1; /* Take remaining space below the image */
+}
+
+.profile-content {
+  padding: 22px;
+}
+
+.staff-card,
+.coach-card {
+  padding: 22px;
 }
 
 /* ==================================================
@@ -187,12 +200,97 @@ section h1 {
 }
 
 /* ==================================================
-   RESPONSIVE ADJUSTMENTS
+   NEWS SECTION
+================================================== */
+#newsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+}
+
+.news-card img {
+  height: 280px;
+  object-fit: cover;
+}
+
+.news-card .content {
+  padding: 25px;
+}
+
+.news-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.news-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ==================================================
+   HERO SECTION
+================================================== */
+.home {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.bg-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.bg-slide.active {
+  opacity: 1;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==================================================
+   RESPONSIVE
 ================================================== */
 @media (max-width: 768px) {
+
+  section {
+    padding: 60px 15px;
+  }
+
   #coaches .coach-card img,
   #staff .staff-card img,
   #achievers .profile-card img {
-    aspect-ratio: 3 / 4; /* maintain portrait ratio on mobile */
+    height: 220px;
+  }
+
+  .news-card img {
+    height: 220px;
   }
 }
