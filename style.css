@@ -85,7 +85,6 @@ section h1 {
 
 /* ==================================================
    PROFILE CARD GRIDS
-   (ACHIEVERS / STAFF / COACHES)
 ================================================== */
 .profile-cards,
 .staff-grid,
@@ -99,17 +98,17 @@ section h1 {
 }
 
 /* ==================================================
-   EDGE-TO-EDGE CARD DESIGN
+   CARD DESIGN (ONLY STAFF / COACHES / ACHIEVERS)
 ================================================== */
 .profile-card,
 .staff-card,
 .coach-card {
   background: #fff;
   border-radius: 18px;
-  overflow: hidden; /* makes image touch edges */
+  overflow: hidden; /* keeps image edge-to-edge */
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   transition: all 0.35s ease;
-  padding: 0; /* remove white space around image */
+  padding: 0;
 }
 
 .profile-card:hover,
@@ -120,7 +119,7 @@ section h1 {
 }
 
 /* ==================================================
-   EDGE-TO-EDGE IMAGES
+   FIXED RECTANGLE IMAGES (ONLY THESE CARDS)
 ================================================== */
 .profile-card img,
 .staff-card img,
@@ -128,6 +127,7 @@ section h1 {
   width: 100%;
   height: 260px;
   object-fit: cover;
+  border-radius: 0 !important; /* ensures no round images */
 }
 
 /* ==================================================
@@ -177,7 +177,7 @@ section h1 {
 }
 
 /* ==================================================
-   NEWS SECTION
+   NEWS SECTION (UNCHANGED)
 ================================================== */
 #newsContainer {
   display: grid;
@@ -220,7 +220,7 @@ section h1 {
 }
 
 /* ==================================================
-   HERO SECTION
+   HERO SECTION (UNCHANGED)
 ================================================== */
 .home {
   position: relative;
