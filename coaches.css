@@ -1,20 +1,20 @@
-/* ======================= COACHES SECTION ======================= */
+/* ---------- COACHES SECTION ---------- */
 #coaches .coach-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns on large screens */
+  gap: 20px;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 #coaches .coach-card {
   background: #fff;
   border-radius: 18px;
-  overflow: hidden;
+  overflow: hidden; /* ensure image touches top corners */
   display: flex;
   flex-direction: column;
-  height: 420px;
+  height: auto;
   box-shadow: 0 12px 35px rgba(0,0,0,0.1);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
@@ -24,24 +24,27 @@
   box-shadow: 0 18px 45px rgba(0,0,0,0.15);
 }
 
+/* IMAGE AT TOP */
 #coaches .coach-card img {
   width: 100%;
-  flex: 1 1 60%;
   height: auto;
-  aspect-ratio: 3/4;
-  object-fit: cover;
+  aspect-ratio: 3/4; /* vertical portrait */
+  object-fit: cover; /* fully cover container, no gaps */
   object-position: center;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   display: block;
+  flex-shrink: 0; /* prevent shrinking */
 }
 
+/* CONTENT BELOW IMAGE */
 #coaches .coach-card h2,
 #coaches .coach-card p {
   text-align: center;
-  padding: 8px 16px;
+  padding: 8px 12px;
+  margin: 0;
 }
 
 #coaches .coach-card h2 {
@@ -58,11 +61,14 @@
   margin-bottom: 6px;
 }
 
-@media (max-width: 768px) {
-  #coaches .coach-card {
-    height: 360px;
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  #coaches .coach-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
+}
 
+@media (max-width: 768px) {
   #coaches .coach-card img {
     aspect-ratio: 3/4;
   }
