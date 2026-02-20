@@ -16,9 +16,11 @@
 <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="hamburger.css">
 <link rel="stylesheet" href="coaches.css">
+<link rel="stylesheet" href="swiper3D.css" />
 <style>
 :root {
     --black: #000000;
@@ -1279,7 +1281,40 @@ setInterval(() => {
   slides[index].classList.add("active");
 }, 4000);
 </script>
-<!-- HAMBURGER MENU JAVASCRIPT -->
+ <!-- 1️⃣ Swiper JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+  <!-- 2️⃣ Initialize Swiper -->
+  <script>
+    const swiper3D = new Swiper('.mySwiper3D', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 200,
+            modifier: 1,
+            slideShadows: true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    });
+  </script>
+    
+    <!-- HAMBURGER MENU JAVASCRIPT -->
 <script>
 const hamburger = document.querySelector(".hamburger");
 const mobileMenu = document.getElementById("mobileMenu"); // safer
@@ -1297,8 +1332,8 @@ closeBtn.addEventListener("click", () => {
     mobileMenu.classList.remove("open");
 });
 </script>
-<!-- NEWS ARROW SCROLL SCRIPT -->
-<script>
+<!-- NEWS ARROW SCROLL SCRIPT -->    
+ <script>
 function scrollNews(direction) {
   const container = document.getElementById("newsContainer");
   if (!container) return;
@@ -1319,6 +1354,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
