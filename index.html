@@ -1343,8 +1343,38 @@ closeBtn.addEventListener("click", () => {
 });
 </script>
 <!-- 3D News Carousel SCRIPT -->
-   
-    
+   <script>
+const carousel = document.getElementById("newsContainer");
+let angle = 0;
+
+function setup3DNewsSlider() {
+  const cards = carousel.children;
+  const total = cards.length;
+
+  if (total === 0) return;
+
+  const rotateDeg = 360 / total;
+  const radius = 450;
+
+  for (let i = 0; i < total; i++) {
+    cards[i].style.position = 'absolute';
+    cards[i].style.transform = `rotateY(${i * rotateDeg}deg) translateZ(${radius}px)`;
+  }
+
+  document.getElementById("next").onclick = () => {
+    angle -= rotateDeg;
+    carousel.style.transform = `rotateY(${angle}deg)`;
+  };
+
+  document.getElementById("prev").onclick = () => {
+    angle += rotateDeg;
+    carousel.style.transform = `rotateY(${angle}deg)`;
+  };
+}
+
+// Call after Firebase finishes loading news cards
+window.addEventListener('load', setup3DNewsSlider);
+</script> 
     <!-- NEWS ARROW SCROLL SCRIPT -->    
  <script>
 function scrollNews(direction) {
@@ -1367,6 +1397,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
