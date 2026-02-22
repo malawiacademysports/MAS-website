@@ -352,9 +352,19 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <div class="news-slider-wrapper">
-  <div id="newsContainer"></div>
-  <div id="newsDots" class="dots-container"></div>
+    <!-- 3D News Slider -->
+    <div class="news-slider-wrapper" 
+         style="position:relative; perspective:1200px; width:100%; max-width:400px; height:420px; margin:auto;">
+      
+      <!-- Firebase news cards will appear here -->
+      <div id="newsContainer" class="carousel"></div>
+
+      <!-- Navigation Buttons -->
+      <button id="prev" class="nav-btn" 
+              style="position:absolute; top:50%; left:-50px; transform:translateY(-50%); font-size:25px; cursor:pointer;">❮</button>
+      <button id="next" class="nav-btn" 
+              style="position:absolute; top:50%; right:-50px; transform:translateY(-50%); font-size:25px; cursor:pointer;">❯</button>
+
     </div>
 
   </div>
@@ -1354,6 +1364,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
