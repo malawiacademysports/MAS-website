@@ -367,37 +367,43 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 </section>
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
- <script type="module">
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
-import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.esm.browser.min.js";
 
 // Firebase config
-const firebaseConfig = { 
-  apiKey:"AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
-  authDomain:"malawi-academy-for-sports.firebaseapp.com",
-  projectId:"malawi-academy-for-sports",
-  storageBucket:"malawi-academy-for-sports.firebasestorage.app",
-  messagingSenderId:"328510653245",
-  appId:"1:328510653245:web:58e432add2e811faf6bb54",
-  measurementId:"G-D8GWZ6JV4R"
+const firebaseConfig = {
+  apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
+  authDomain: "malawi-academy-for-sports.firebaseapp.com",
+  projectId: "malawi-academy-for-sports",
+  storageBucket: "malawi-academy-for-sports.firebasestorage.app",
+  messagingSenderId: "328510653245",
+  appId: "1:328510653245:web:58e432add2e811faf6bb54",
+  measurementId: "G-D8GWZ6JV4R"
 };
 
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
 const db = getFirestore(app);
 
-const container = document.getElementById("newsContainer");
-
 async function loadNews() {
+  const container = document.getElementById("newsContainer");
   container.innerHTML = "";
 
   try {
-    const q = query(collection(db, "news"), orderBy("createdAt","desc")); // ensure createdAt exists in all docs
+    const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
 
-    if(snap.empty){
+    if (snap.empty) {
       container.innerHTML = "<p>No news found.</p>";
       return;
     }
@@ -405,10 +411,15 @@ async function loadNews() {
     snap.forEach(doc => {
       const n = doc.data();
 
-      const image = n.image && n.image.length > 0 ? n.image : "https://via.placeholder.com/300";
+      const image = n.image && n.image.length > 0
+        ? n.image
+        : "https://via.placeholder.com/300";
+
       const title = n.title || "No title";
       const summary = n.summary || "";
-      const date = n.createdAt?.toDate?.() ? n.createdAt.toDate().toLocaleDateString() : "";
+      const date = n.createdAt?.toDate?.()
+        ? n.createdAt.toDate().toLocaleDateString()
+        : "";
 
       container.insertAdjacentHTML("beforeend", `
         <div class="swiper-slide">
@@ -424,8 +435,8 @@ async function loadNews() {
       `);
     });
 
-    // ✅ Initialize Swiper AFTER all slides are added
-    new Swiper(".mySwiper", {
+    // Initialize Swiper AFTER slides exist
+    new Swiper(".newsSwiper", {
       effect: "coverflow",
       grabCursor: true,
       centeredSlides: true,
@@ -434,9 +445,9 @@ async function loadNews() {
       coverflowEffect: {
         rotate: 25,
         stretch: 0,
-        depth: 200,
+        depth: 150,
         modifier: 1,
-        slideShadows: true
+        slideShadows: false
       },
       navigation: {
         nextEl: ".swiper-button-next",
@@ -444,15 +455,14 @@ async function loadNews() {
       }
     });
 
-  } catch(err) {
-    console.error("Error loading news:", err);
+  } catch (err) {
+    console.error(err);
     container.innerHTML = "<p>Error loading news.</p>";
   }
 }
 
 window.addEventListener("load", loadNews);
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </section>  
 <!-- ---------- COACHES ---------- -->
@@ -1370,6 +1380,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
