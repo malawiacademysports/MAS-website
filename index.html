@@ -364,7 +364,7 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
     </div>
   </div>
 </section>
-<script type="module">
+ <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
 import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
@@ -391,7 +391,7 @@ async function loadNews() {
   container.innerHTML = "";
 
   try {
-    const q = query(collection(db, "news"), orderBy("createdAt","desc"));
+    const q = query(collection(db, "news"), orderBy("createdAt","desc")); // ensure createdAt exists in all docs
     const snap = await getDocs(q);
 
     if(snap.empty){
@@ -402,15 +402,10 @@ async function loadNews() {
     snap.forEach(doc => {
       const n = doc.data();
 
-      // ✅ Use Firebase image or fallback placeholder
-      const image = n.image && n.image.length > 0 
-                      ? n.image 
-                      : "https://via.placeholder.com/300";
+      const image = n.image && n.image.length > 0 ? n.image : "https://via.placeholder.com/300";
       const title = n.title || "No title";
       const summary = n.summary || "";
-      const date = n.createdAt?.toDate?.()
-                   ? n.createdAt.toDate().toLocaleDateString()
-                   : "";
+      const date = n.createdAt?.toDate?.() ? n.createdAt.toDate().toLocaleDateString() : "";
 
       container.insertAdjacentHTML("beforeend", `
         <div class="swiper-slide">
@@ -426,7 +421,7 @@ async function loadNews() {
       `);
     });
 
-    // Initialize Swiper
+    // ✅ Initialize Swiper AFTER all slides are added
     new Swiper(".mySwiper", {
       effect: "coverflow",
       grabCursor: true,
@@ -447,15 +442,16 @@ async function loadNews() {
     });
 
   } catch(err) {
-    console.error(err);
+    console.error("Error loading news:", err);
     container.innerHTML = "<p>Error loading news.</p>";
   }
 }
 
 window.addEventListener("load", loadNews);
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
- </section>  
+</section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
   <h1 style="text-align:center; color:#007a00;">Meet Our Coaches</h1>
@@ -1371,6 +1367,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
