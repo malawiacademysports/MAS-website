@@ -354,12 +354,16 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <div class="news-slider-wrapper">
-  <div id="newsContainer"></div>
-  <div id="newsDots" class="dots-container"></div>
-    </div>
+    <!-- Swiper -->
+    <div class="swiper newsSwiper">
+      <div id="newsContainer" class="swiper-wrapper"></div>
 
+      <!-- Navigation -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
   </div>
+</section>
 </section>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1375,6 +1379,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
