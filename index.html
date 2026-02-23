@@ -359,8 +359,8 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       <div id="newsContainer" class="swiper-wrapper"></div>
 
       <!-- Navigation -->
-      <div class="swiper-button-prev">⬆️ Previous</div>
-      <div class="swiper-button-next">⬇️ Next</div>
+      <div class="swiper-button-prev"> Previous</div>
+      <div class="swiper-button-next">Next</div>
     </div>
   </div>
 </section>
@@ -370,7 +370,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase
 import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.esm.browser.min.js";
 
-// Firebase Config
+// Firebase config
 const firebaseConfig = { 
   apiKey:"AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
   authDomain:"malawi-academy-for-sports.firebaseapp.com",
@@ -399,14 +399,18 @@ async function loadNews() {
       return;
     }
 
-    snap.forEach(doc=>{
+    snap.forEach(doc => {
       const n = doc.data();
-      const image = n.image || "https://via.placeholder.com/300";
+
+      // ✅ Use Firebase image or fallback placeholder
+      const image = n.image && n.image.length > 0 
+                      ? n.image 
+                      : "https://via.placeholder.com/300";
       const title = n.title || "No title";
       const summary = n.summary || "";
       const date = n.createdAt?.toDate?.()
-        ? n.createdAt.toDate().toLocaleDateString()
-        : "";
+                   ? n.createdAt.toDate().toLocaleDateString()
+                   : "";
 
       container.insertAdjacentHTML("beforeend", `
         <div class="swiper-slide">
@@ -429,11 +433,20 @@ async function loadNews() {
       centeredSlides: true,
       slidesPerView: "auto",
       loop: true,
-      coverflowEffect: { rotate: 25, stretch: 0, depth: 200, modifier: 1, slideShadows: true },
-      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      coverflowEffect: {
+        rotate: 25,
+        stretch: 0,
+        depth: 200,
+        modifier: 1,
+        slideShadows: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
     });
 
-  } catch(err){
+  } catch(err) {
     console.error(err);
     container.innerHTML = "<p>Error loading news.</p>";
   }
@@ -441,7 +454,6 @@ async function loadNews() {
 
 window.addEventListener("load", loadNews);
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
  </section>  
 <!-- ---------- COACHES ---------- -->
@@ -1359,6 +1371,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
