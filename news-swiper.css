@@ -1,0 +1,28 @@
+/* Swiper Container */
+.mySwiper {
+  width: 100%;
+  padding: 40px 0;
+}
+
+/* Slide size */
+.swiper-slide {
+  width: 300px;
+}
+
+/* News Card Design */
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.news-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.news-card .content {
+  padding: 15px;
+}
