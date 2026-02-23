@@ -1,20 +1,22 @@
-/* Swiper Container */
 .mySwiper {
   width: 100%;
-  padding: 40px 0;
+  padding: 60px 0;
 }
 
-/* Slide size */
 .swiper-slide {
-  width: 300px;
+  width: 300px;      /* fixed width for proper single row */
+  display: flex;
+  justify-content: center;
 }
 
-/* News Card Design */
 .news-card {
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .news-card img {
@@ -25,4 +27,40 @@
 
 .news-card .content {
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-card .content h3 {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+  color: #000;
+}
+
+.news-card .content small {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.news-card .content p {
+  margin: 0;
+  color: #333;
+  font-size: 0.95em;
+  flex: 1;
+}
+
+/* Navigation arrows styling */
+.swiper-button-prev,
+.swiper-button-next {
+  background: #007a00;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background: #005f00;
 }
