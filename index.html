@@ -354,106 +354,81 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
       ★ Latest News & Updates
     </h2>
 
-    <!-- Swiper Container -->
-    <div class="swiper mySwiper" style="width:100%; padding:40px 0;">
-      <div id="newsContainer" class="swiper-wrapper"></div>
-
-      <!-- Navigation -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+    <div class="news-slider-wrapper">
+  <div id="newsContainer"></div>
+  <div id="newsDots" class="dots-container"></div>
     </div>
 
   </div>
 </section>
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+  // Firebase core
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.esm.browser.min.js";
+  // Analytics
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
-  authDomain: "malawi-academy-for-sports.firebaseapp.com",
-  projectId: "malawi-academy-for-sports",
-  storageBucket: "malawi-academy-for-sports.firebasestorage.app",
-  messagingSenderId: "328510653245",
-  appId: "1:328510653245:web:58e432add2e811faf6bb54",
-  measurementId: "G-D8GWZ6JV4R"
-};
+  // Firestore
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-getAnalytics(app);
-const db = getFirestore(app);
+  // ---------- CONFIG ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyALlin8FDXtdEDMtVg02aD4SFGEL1uQdd4",
+    authDomain: "malawi-academy-for-sports.firebaseapp.com",
+    projectId: "malawi-academy-for-sports",
+    storageBucket: "malawi-academy-for-sports.firebasestorage.app",
+    messagingSenderId: "328510653245",
+    appId: "1:328510653245:web:58e432add2e811faf6bb54",
+    measurementId: "G-D8GWZ6JV4R"
+  };
 
-async function loadNews() {
-  const container = document.getElementById("newsContainer");
-  container.innerHTML = "";
+  // ---------- INIT ----------
+  const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
+  const db = getFirestore(app);
 
-  try {
-    const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
-    const snap = await getDocs(q);
+  // ---------- LOAD NEWS ----------
+  async function loadNews() {
+    const container = document.getElementById("newsContainer");
+    container.innerHTML = "<p>Loading news...</p>";
 
-    if (snap.empty) {
-      container.innerHTML = "<p>No news found.</p>";
-      return;
-    }
+    try {
+      const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
 
-    snap.forEach(doc => {
-      const n = doc.data();
+      if (snap.empty) {
+        container.innerHTML = "<p>No news found.</p>";
+        return;
+      }
 
-      const image = n.image && n.image.length > 0
-        ? n.image
-        : "https://via.placeholder.com/300";
+      container.innerHTML = "";
 
-      const title = n.title || "No title";
-      const summary = n.summary || "";
-      const date = n.createdAt?.toDate?.()
-        ? n.createdAt.toDate().toLocaleDateString()
-        : "";
+      snap.forEach(doc => {
+        const n = doc.data();
 
-      container.insertAdjacentHTML("beforeend", `
-        <div class="swiper-slide">
-          <div class="news-card">
-            <img src="${image}" alt="News image">
-            <div class="content">
-              <h3>${title}</h3>
-              <small>${date}</small>
-              <p>${summary}</p>
-            </div>
+        const image = n.image || "https://via.placeholder.com/300";
+        const title = n.title || "No title";
+        const summary = n.summary || "";
+        const date = n.createdAt?.toDate?.()
+          ? n.createdAt.toDate().toLocaleDateString()
+          : "";
+
+        container.insertAdjacentHTML("beforeend", `
+        <div class="news-card">
+          <img src="${image}" alt="News image">
+          <div class="content">
+            <h3>${title}</h3>
+            <small>${date}</small>
+            <p>${summary}</p>
           </div>
         </div>
       `);
-    });
-
-    // Initialize Swiper AFTER slides exist
-    new Swiper(".newsSwiper", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      loop: true,
-      coverflowEffect: {
-        rotate: 25,
-        stretch: 0,
-        depth: 150,
-        modifier: 1,
-        slideShadows: false
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
     });
 
   } catch (err) {
@@ -462,9 +437,8 @@ async function loadNews() {
   }
 }
 
-window.addEventListener("load", loadNews);
+  window.addEventListener("load", loadNews);
 </script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </section>  
 <!-- ---------- COACHES ---------- -->
 <section id="coaches">
@@ -1381,6 +1355,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
