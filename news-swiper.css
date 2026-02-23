@@ -1,14 +1,17 @@
+/* Swiper container */
 .mySwiper {
   width: 100%;
-  padding: 60px 0;
+  padding: 60px 0; /* vertical space above/below slides */
 }
 
+/* Each slide arranged in one horizontal row */
 .swiper-slide {
-  width: 300px;      /* fixed width for proper single row */
   display: flex;
   justify-content: center;
+  width: auto; /* ensures slide width matches your card, avoids clipping */
 }
 
+/* News cards - unchanged visuals */
 .news-card {
   background: #fff;
   border-radius: 12px;
@@ -16,7 +19,6 @@
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .news-card img {
@@ -49,7 +51,7 @@
   flex: 1;
 }
 
-/* Navigation arrows styling */
+/* Navigation arrows */
 .swiper-button-prev,
 .swiper-button-next {
   background: #007a00;
@@ -58,6 +60,7 @@
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  z-index: 10;
 }
 
 .swiper-button-prev:hover,
