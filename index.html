@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/wsangulukani-alt/Mncssports-websites/refs/heads/main/Images/file_00000000f6f471f78eff7ffe561aeb27.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://malawiacademysports.github.io/MAS-website/#register">
-    <!-- Favicon -->
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -349,22 +349,17 @@ section h1, section h2 { text-align: center; color: var(--green); margin-bottom:
 <!-- ---------- LATEST NEWS & UPDATES ---------- -->
 <section id="newsSection" style="padding:50px 20px; background:#f9f9f9;">
   <div style="max-width:1400px; margin:auto;">
+
     <h2 style="text-align:center; font-size:2em; margin-bottom:40px; color:#000;">
       ★ Latest News & Updates
     </h2>
 
-    <!-- Swiper -->
-    <div class="swiper newsSwiper">
-      <div id="newsContainer" class="swiper-wrapper"></div>
-
-      <!-- Navigation -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+    <div class="news-slider-wrapper">
+  <div id="newsContainer"></div>
+  <div id="newsDots" class="dots-container"></div>
     </div>
+
   </div>
-</section>
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </section>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -1378,6 +1373,7 @@ function scrollNews(direction) {
 </script>
 </body>
 </html>
+
 
 
 
