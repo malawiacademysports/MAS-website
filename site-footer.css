@@ -1,31 +1,41 @@
 /* Footer Styles */
 .site-footer {
-    background: #111;           /* Dark background */
-    color: #fff;                /* White text */
-    text-align: center;         /* Center everything */
-    padding: 25px 15px;         /* Top/Bottom 25px, Left/Right 15px */
+    background-color: #111;       /* Dark background */
+    color: #fff;                  /* White text */
+    padding: 30px 20px;           /* Top/Bottom 30px, sides 20px */
     font-family: Arial, sans-serif;
 }
 
+.site-footer .footer-container {
+    max-width: 1100px;            /* Limit width to prevent cropping */
+    margin: 0 auto;               /* Center container */
+    text-align: center;
+}
+
 .site-footer .footer-main {
-    font-size: 16px;
-    margin-bottom: 12px;        /* Space between main text and developer credit */
+    font-size: 18px;
+    margin-bottom: 15px;          /* Space between main text and developer credit */
+    line-height: 1.5;
+    word-wrap: break-word;        /* Prevent text from cropping */
 }
 
 .site-footer .developer-credit {
     font-size: 14px;
     color: #ccc;
-    line-height: 1.6;           /* Space between lines */
+    line-height: 1.6;
+    word-wrap: break-word;        /* Full words stay visible */
 }
 
-/* Responsive for Mobile */
-@media (max-width: 768px) {
+/* Mobile adjustments */
+@media (max-width: 768px){
     .site-footer {
-        padding: 20px 10px;
+        padding: 25px 15px;
     }
+
     .site-footer .footer-main {
-        font-size: 14px;
+        font-size: 16px;
     }
+
     .site-footer .developer-credit {
         font-size: 13px;
     }
